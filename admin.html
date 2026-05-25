@@ -581,6 +581,10 @@
         <span class="icon">📧</span> Newsletter
         <span class="badge" id="badgeNewsletter">0</span>
       </div>
+      <div class="nav-item" onclick="showTab('avis')">
+  <span class="icon">⭐</span> Avis clients
+  <span class="badge" id="badgeAvis">0</span>
+</div>
     </nav>
     <div class="sidebar-footer">
       <button class="btn-logout" onclick="logout()">🚪 Déconnexion</button>
@@ -617,6 +621,12 @@
           <div class="stat-label">Messages</div>
           <div class="stat-value" id="statMessages">—</div>
           <div class="stat-sub">Non lus</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-label">Avis clients</div>
+          <div class="stat-value" id="statAvis">—</div>
+          <div class="stat-sub">En attente</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon">📧</div>
@@ -699,14 +709,35 @@
       </div>
     </div>
 
+
+    <!-- Avis clients -->
+    <div id="tab-avis" class="tab-content">
+      <div class="page-header">
+        <div>
+          <h1>Avis clients</h1>
+          <p>Validez ou rejetez les avis soumis par les clients</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn-refresh" onclick="loadAvis()">🔄 Actualiser</button>
+          <button class="btn-vider" onclick="viderTable('avis')">🗑️ Vider</button>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <h3>Tous les avis</h3>
+          <span id="countAvis">—</span>
+        </div>
+        <div id="avisTable"><div class="loading">Chargement...</div></div>
+      </div>
+    </div>
+
   </main>
 </div>
 
 <!-- Toast -->
 <div class="toast-admin" id="toastAdmin"></div>
-
 <script>
-const API_URL = 'https://cabane-des-arts-backend.onrender.com/api';
+  const API_URL = 'https://cabane-des-arts-backend.onrender.com/api';
 let token = localStorage.getItem('adminToken');
 
 // ===== AUTH =====
@@ -775,11 +806,12 @@ function showTab(tab) {
   else if (tab === 'reservations') loadReservations();
   else if (tab === 'messages') loadMessages();
   else if (tab === 'newsletter') loadNewsletter();
+  else if (tab === 'avis') loadAvis();
 }
 
 // ===== LOAD ALL =====
 async function loadAll() {
-  await Promise.all([loadCommandes(), loadReservations(), loadMessages(), loadNewsletter()]);
+  await Promise.all([loadCommandes(), loadReservations(), loadMessages(), loadNewsletter(), loadAvis()]);
 }
 
 // ===== COMMANDES =====
@@ -988,19 +1020,73 @@ function showToast(msg, type = 'success') {
 }
 
 
+
+// ===== AVIS CLIENTS =====
+async function loadAvis() {
+  try {
+    const res = await fetch(API_URL + '/avis/admin');
+    const data = await res.json();
+
+    const enAttente = data.filter(a => a.statut === 'en_attente').length;
+    document.getElementById('badgeAvis').textContent = enAttente;
+    if(document.getElementById('statAvis')) document.getElementById('statAvis').textContent = enAttente;
+    document.getElementById('countAvis').textContent = data.length + ' avis — ' + enAttente + ' en attente';
+
+    if (data.length === 0) {
+      document.getElementById('avisTable').innerHTML = '<div class="empty-state"><div class="emoji">⭐</div><p>Aucun avis pour linstant</p></div>';
+      return;
+    }
+
+    let html = '<table><thead><tr><th>#</th><th>Client</th><th>Produit</th><th>Note</th><th>Commentaire</th><th>Date</th><th>Statut</th></tr></thead><tbody>';
+
+    data.forEach(a => {
+      const etoiles = '⭐'.repeat(a.note) + '☆'.repeat(5 - a.note);
+      html += '<tr>' +
+        '<td class="td-bold">#' + a.id + '</td>' +
+        '<td><div class="td-bold">' + a.nom + '</div><div class="td-muted">' + a.email + '</div></td>' +
+        '<td class="td-muted">' + (a.produit || '—') + '</td>' +
+        '<td>' + etoiles + '</td>' +
+        '<td style="max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer" title="' + a.commentaire + '" onclick="alert(\'' + a.commentaire.replace(/'/g, "\\'") + '\')">' + a.commentaire + '</td>' +
+        '<td class="td-muted">' + formatDate(a.created_at) + '</td>' +
+        '<td><select class="select-statut" onchange="updateStatutAvis(' + a.id + ', this.value)">' +
+        ['en_attente','validé','rejeté'].map(s => '<option value="' + s + '"' + (a.statut === s ? ' selected' : '') + '>' + s + '</option>').join('') +
+        '</select></td>' +
+        '</tr>';
+    });
+
+    html += '</tbody></table>';
+    document.getElementById('avisTable').innerHTML = html;
+  } catch (err) {
+    document.getElementById('avisTable').innerHTML = '<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>';
+  }
+}
+
+async function updateStatutAvis(id, statut) {
+  try {
+    const res = await fetch(API_URL + '/avis/' + id + '/statut', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ statut })
+    });
+    if (res.ok) showToast('Avis ' + statut, 'success');
+    else showToast('Erreur mise à jour', 'error');
+  } catch { showToast('Erreur serveur', 'error'); }
+}
+
 // ===== VIDER TABLE =====
 async function viderTable(table) {
-  const noms = { commandes: 'les commandes', reservations: 'les réservations', messages: 'les messages', newsletter: 'les abonnés newsletter' };
+  const noms = { commandes: 'les commandes', reservations: 'les réservations', messages: 'les messages', newsletter: 'les abonnés newsletter', avis: 'les avis clients' };
   if (!window.confirm('⚠️ Voulez-vous vraiment supprimer tout(e)s ' + noms[table] + ' ? Cette action est irréversible.')) return;
 
   const urls = {
     commandes: API_URL + '/commandes',
     reservations: API_URL + '/reservations',
     messages: API_URL + '/contact',
-    newsletter: API_URL + '/newsletter/all'
+    newsletter: API_URL + '/newsletter/all',
+    avis: API_URL + '/avis'
   };
 
-  const loaders = { commandes: loadCommandes, reservations: loadReservations, messages: loadMessages, newsletter: loadNewsletter };
+  const loaders = { commandes: loadCommandes, reservations: loadReservations, messages: loadMessages, newsletter: loadNewsletter, avis: loadAvis };
 
   try {
     const res = await fetch(urls[table], { method: 'DELETE' });
