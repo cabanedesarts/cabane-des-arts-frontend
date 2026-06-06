@@ -1329,7 +1329,7 @@
                     (ev.lieu ? '<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#8A7B6A;margin-bottom:8px;"><span>📍</span>' + ev.lieu + '</div>' : '') +
                     '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:16px;border-top:1px solid #E8DDD0;">' +
                     '<span style="font-weight:700;color:' + color + ';font-size:15px;">' + prix + '</span>' +
-                    (ev.prix > 0 ? '<a href="#reservations" style="padding:8px 18px;background:' + color + ';color:white;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;">Réserver</a>' : '<span style="padding:8px 18px;background:#EAFAF1;color:#2D7A4F;border-radius:8px;font-size:13px;font-weight:600;">Entrée libre</span>') +
+                    (ev.prix > 0 ? '<button onclick="reserverEvenement(\'' + ev.titre.replace(/'/g, "\\'") + '\',' + ev.prix + ')" style="padding:8px 18px;background:' + color + ';color:white;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;">Réserver</button>' : '<span style="padding:8px 18px;background:#EAFAF1;color:#2D7A4F;border-radius:8px;font-size:13px;font-weight:600;">Entrée libre</span>') +
                     '</div>' +
                     '</div>' +
                     '</div>';
@@ -1350,6 +1350,17 @@
         }
         loadAgenda();
     });
+    </script>
+
+
+    <script>
+    function reserverEvenement(titre, prix) {
+        document.getElementById('resAtelier').value = titre;
+        document.getElementById('resPrice').value = prix;
+        document.getElementById('modalAtelierInfo').textContent = 'Événement : ' + titre;
+        document.getElementById('modalAtelierPrice').textContent = 'Prix : ' + Number(prix).toLocaleString('fr-FR') + ' FCFA';
+        document.getElementById('reservationModal').classList.add('active');
+    }
     </script>
 
 </body>
