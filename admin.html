@@ -585,6 +585,10 @@
   <span class="icon">⭐</span> Avis clients
   <span class="badge" id="badgeAvis">0</span>
 </div>
+      <div class="nav-item" onclick="showTab('evenements')">
+        <span class="icon">🗓️</span> Événements
+        <span class="badge" id="badgeEvenements">0</span>
+      </div>
     </nav>
     <div class="sidebar-footer">
       <button class="btn-logout" onclick="logout()">🚪 Déconnexion</button>
@@ -731,6 +735,156 @@
       </div>
     </div>
 
+
+    <!-- Événements -->
+    <div id="tab-evenements" class="tab-content">
+      <div class="page-header">
+        <div>
+          <h1>Événements & Agenda</h1>
+          <p>Gérez les événements et ateliers de la Cabane</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn-refresh" onclick="loadEvenements()">🔄 Actualiser</button>
+          <button class="btn-refresh" style="background:linear-gradient(135deg,#B5561A,#C8922A);color:white;border-color:transparent;" onclick="showFormEvenement()">➕ Nouvel événement</button>
+          <button class="btn-vider" onclick="viderTable('evenements')">🗑️ Vider</button>
+        </div>
+      </div>
+
+      <!-- Formulaire ajout/modification -->
+      <div id="formEvenementCard" class="table-card" style="display:none;margin-bottom:24px;padding:24px;">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:20px;" id="formEvenementTitle">Nouvel événement</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Titre *</label>
+            <input id="evTitre" type="text" placeholder="Ex: Atelier Tressage" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Type</label>
+            <select id="evType" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+              <option value="atelier">Atelier</option>
+              <option value="exposition">Exposition</option>
+              <option value="vente">Vente</option>
+              <option value="evenement">Événement</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Date début *</label>
+            <input id="evDateDebut" type="date" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Date fin</label>
+            <input id="evDateFin" type="date" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Lieu</label>
+            <input id="evLieu" type="text" placeholder="Ex: Cabane des Arts, Porto-Novo" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Prix (FCFA)</label>
+            <input id="evPrix" type="number" placeholder="0 = Gratuit" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+          </div>
+          <div style="grid-column:1/-1;">
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Description *</label>
+            <textarea id="evDescription" rows="3" placeholder="Décrivez l'événement..." style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;resize:vertical;"></textarea>
+          </div>
+          <div style="grid-column:1/-1;">
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Statut</label>
+            <select id="evStatut" style="width:200px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+              <option value="publié">Publié</option>
+              <option value="brouillon">Brouillon</option>
+              <option value="annulé">Annulé</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:20px;">
+          <button onclick="saveEvenement()" style="padding:10px 24px;background:linear-gradient(135deg,#B5561A,#C8922A);border:none;border-radius:8px;color:white;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;">💾 Enregistrer</button>
+          <button onclick="cancelFormEvenement()" style="padding:10px 24px;background:white;border:1px solid var(--border);border-radius:8px;color:var(--dark);font-family:inherit;font-size:14px;cursor:pointer;">Annuler</button>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <h3>Tous les événements</h3>
+          <span id="countEvenements">—</span>
+        </div>
+        <div id="evenementsTable"><div class="loading">Chargement...</div></div>
+      </div>
+    </div>
+
+    <!-- Événements -->
+    <div id="tab-evenements" class="tab-content">
+      <div class="page-header">
+        <div>
+          <h1>Événements & Agenda</h1>
+          <p>Gérez les événements et ateliers de la Cabane</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn-refresh" onclick="loadEvenements()">🔄 Actualiser</button>
+          <button class="btn-refresh" style="background:linear-gradient(135deg,#B5561A,#C8922A);color:white;border-color:transparent;" onclick="showFormEvenement()">➕ Nouvel événement</button>
+          <button class="btn-vider" onclick="viderTable('evenements')">🗑️ Vider</button>
+        </div>
+      </div>
+
+      <div id="formEvenementCard" class="table-card" style="display:none;margin-bottom:24px;padding:24px;">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:20px;" id="formEvenementTitle">Nouvel événement</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Titre *</label>
+            <input id="evTitre" type="text" placeholder="Ex: Atelier Tressage" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Type</label>
+            <select id="evType" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+              <option value="atelier">Atelier</option>
+              <option value="exposition">Exposition</option>
+              <option value="vente">Vente</option>
+              <option value="evenement">Événement</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Date début *</label>
+            <input id="evDateDebut" type="date" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Date fin</label>
+            <input id="evDateFin" type="date" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Lieu</label>
+            <input id="evLieu" type="text" placeholder="Ex: Cabane des Arts, Porto-Novo" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Prix (FCFA)</label>
+            <input id="evPrix" type="number" placeholder="0 = Gratuit" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+          </div>
+          <div style="grid-column:1/-1;">
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Description *</label>
+            <textarea id="evDescription" rows="3" placeholder="Décrivez l'événement..." style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;resize:vertical;"></textarea>
+          </div>
+          <div style="grid-column:1/-1;">
+            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Statut</label>
+            <select id="evStatut" style="width:200px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+              <option value="publié">Publié</option>
+              <option value="brouillon">Brouillon</option>
+              <option value="annulé">Annulé</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:20px;">
+          <button onclick="saveEvenement()" style="padding:10px 24px;background:linear-gradient(135deg,#B5561A,#C8922A);border:none;border-radius:8px;color:white;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;">💾 Enregistrer</button>
+          <button onclick="cancelFormEvenement()" style="padding:10px 24px;background:white;border:1px solid var(--border);border-radius:8px;color:var(--dark);font-family:inherit;font-size:14px;cursor:pointer;">Annuler</button>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <h3>Tous les événements</h3>
+          <span id="countEvenements">—</span>
+        </div>
+        <div id="evenementsTable"><div class="loading">Chargement...</div></div>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -807,11 +961,12 @@ function showTab(tab) {
   else if (tab === 'messages') loadMessages();
   else if (tab === 'newsletter') loadNewsletter();
   else if (tab === 'avis') loadAvis();
+  else if (tab === 'evenements') loadEvenements();
 }
 
 // ===== LOAD ALL =====
 async function loadAll() {
-  await Promise.all([loadCommandes(), loadReservations(), loadMessages(), loadNewsletter(), loadAvis()]);
+  await Promise.all([loadCommandes(), loadReservations(), loadMessages(), loadNewsletter(), loadAvis(), loadEvenements()]);
 }
 
 // ===== COMMANDES =====
@@ -1073,9 +1228,153 @@ async function updateStatutAvis(id, statut) {
   } catch { showToast('Erreur serveur', 'error'); }
 }
 
+
+// ===== ÉVÉNEMENTS =====
+async function loadEvenements() {
+  try {
+    const res = await fetch(API_URL + '/evenements/admin');
+    const data = await res.json();
+
+    document.getElementById('badgeEvenements').textContent = data.length;
+    document.getElementById('countEvenements').textContent = data.length + ' événement(s)';
+
+    if (data.length === 0) {
+      document.getElementById('evenementsTable').innerHTML = '<div class="empty-state"><div class="emoji">📅</div><p>Aucun événement pour linstant</p></div>';
+      return;
+    }
+
+    let html = '<table><thead><tr><th>#</th><th>Titre</th><th>Type</th><th>Date début</th><th>Lieu</th><th>Prix</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
+
+    data.forEach(ev => {
+      const prix = ev.prix > 0 ? Number(ev.prix).toLocaleString('fr-FR') + ' FCFA' : 'Gratuit';
+      html += '<tr>' +
+        '<td class="td-bold">#' + ev.id + '</td>' +
+        '<td class="td-bold">' + ev.titre + '</td>' +
+        '<td class="td-muted">' + ev.type + '</td>' +
+        '<td class="td-muted">' + ev.date_debut + '</td>' +
+        '<td class="td-muted">' + (ev.lieu || '—') + '</td>' +
+        '<td class="td-bold">' + prix + '</td>' +
+        '<td><span class="statut ' + (ev.statut === 'publié' ? 'confirmée' : ev.statut === 'annulé' ? 'annulée' : 'en_attente') + '">' + ev.statut + '</span></td>' +
+        '<td style="display:flex;gap:8px;">' +
+        '<button onclick="editEvenement(' + ev.id + ')" style="padding:5px 12px;background:#1B3A6B;border:none;border-radius:6px;color:white;font-size:12px;cursor:pointer;">✏️ Modifier</button>' +
+        '<button onclick="deleteEvenement(' + ev.id + ')" style="padding:5px 12px;background:var(--danger);border:none;border-radius:6px;color:white;font-size:12px;cursor:pointer;">🗑️</button>' +
+        '</td>' +
+        '</tr>';
+    });
+
+    html += '</tbody></table>';
+    document.getElementById('evenementsTable').innerHTML = html;
+  } catch (err) {
+    document.getElementById('evenementsTable').innerHTML = '<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>';
+  }
+}
+
+function showFormEvenement() {
+  editingEvenementId = null;
+  document.getElementById('formEvenementTitle').textContent = 'Nouvel événement';
+  document.getElementById('evTitre').value = '';
+  document.getElementById('evDescription').value = '';
+  document.getElementById('evDateDebut').value = '';
+  document.getElementById('evDateFin').value = '';
+  document.getElementById('evLieu').value = '';
+  document.getElementById('evPrix').value = '';
+  document.getElementById('evType').value = 'atelier';
+  document.getElementById('evStatut').value = 'publié';
+  document.getElementById('formEvenementCard').style.display = 'block';
+}
+
+function cancelFormEvenement() {
+  document.getElementById('formEvenementCard').style.display = 'none';
+  editingEvenementId = null;
+}
+
+async function editEvenement(id) {
+  try {
+    const res = await fetch(API_URL + '/evenements/admin');
+    const data = await res.json();
+    const ev = data.find(e => e.id === id);
+    if (!ev) return;
+
+    editingEvenementId = id;
+    document.getElementById('formEvenementTitle').textContent = 'Modifier événement #' + id;
+    document.getElementById('evTitre').value = ev.titre;
+    document.getElementById('evDescription').value = ev.description;
+    document.getElementById('evDateDebut').value = ev.date_debut;
+    document.getElementById('evDateFin').value = ev.date_fin || '';
+    document.getElementById('evLieu').value = ev.lieu || '';
+    document.getElementById('evPrix').value = ev.prix || 0;
+    document.getElementById('evType').value = ev.type;
+    document.getElementById('evStatut').value = ev.statut;
+    document.getElementById('formEvenementCard').style.display = 'block';
+    document.getElementById('formEvenementCard').scrollIntoView({ behavior: 'smooth' });
+  } catch (err) {
+    showToast('Erreur lors du chargement', 'error');
+  }
+}
+
+async function saveEvenement() {
+  const titre = document.getElementById('evTitre').value.trim();
+  const description = document.getElementById('evDescription').value.trim();
+  const date_debut = document.getElementById('evDateDebut').value;
+
+  if (!titre || !description || !date_debut) {
+    showToast('Titre, description et date sont obligatoires', 'error');
+    return;
+  }
+
+  const body = {
+    titre,
+    description,
+    date_debut,
+    date_fin: document.getElementById('evDateFin').value || null,
+    lieu: document.getElementById('evLieu').value.trim() || null,
+    type: document.getElementById('evType').value,
+    prix: parseInt(document.getElementById('evPrix').value) || 0,
+    statut: document.getElementById('evStatut').value
+  };
+
+  try {
+    let res;
+    if (editingEvenementId) {
+      res = await fetch(API_URL + '/evenements/' + editingEvenementId, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+    } else {
+      res = await fetch(API_URL + '/evenements', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+    }
+
+    const data = await res.json();
+    if (res.ok) {
+      showToast(data.message, 'success');
+      cancelFormEvenement();
+      loadEvenements();
+    } else {
+      showToast(data.erreur || 'Erreur', 'error');
+    }
+  } catch (err) {
+    showToast('Impossible de joindre le serveur', 'error');
+  }
+}
+
+async function deleteEvenement(id) {
+  if (!window.confirm('Supprimer cet événement ?')) return;
+  try {
+    const res = await fetch(API_URL + '/evenements/' + id, { method: 'DELETE' });
+    const data = await res.json();
+    if (res.ok) { showToast(data.message, 'success'); loadEvenements(); }
+    else showToast(data.erreur || 'Erreur', 'error');
+  } catch { showToast('Erreur serveur', 'error'); }
+}
+
 // ===== VIDER TABLE =====
 async function viderTable(table) {
-  const noms = { commandes: 'les commandes', reservations: 'les réservations', messages: 'les messages', newsletter: 'les abonnés newsletter', avis: 'les avis clients' };
+  const noms = { commandes: 'les commandes', reservations: 'les réservations', messages: 'les messages', newsletter: 'les abonnés newsletter', avis: 'les avis clients', evenements: 'les événements' };
   if (!window.confirm('⚠️ Voulez-vous vraiment supprimer tout(e)s ' + noms[table] + ' ? Cette action est irréversible.')) return;
 
   const urls = {
@@ -1083,7 +1382,8 @@ async function viderTable(table) {
     reservations: API_URL + '/reservations',
     messages: API_URL + '/contact',
     newsletter: API_URL + '/newsletter/all',
-    avis: API_URL + '/avis'
+    avis: API_URL + '/avis',
+    evenements: API_URL + '/evenements'
   };
 
   const loaders = { commandes: loadCommandes, reservations: loadReservations, messages: loadMessages, newsletter: loadNewsletter, avis: loadAvis };
@@ -1096,6 +1396,110 @@ async function viderTable(table) {
   } catch (err) {
     showToast('Impossible de joindre le serveur', 'error');
   }
+}
+
+
+// ===== ÉVÉNEMENTS =====
+let editingEvenementId = null;
+
+async function loadEvenements() {
+  try {
+    const res = await fetch(API_URL + '/evenements/admin');
+    const data = await res.json();
+    document.getElementById('badgeEvenements').textContent = data.length;
+    document.getElementById('countEvenements').textContent = data.length + ' événement(s)';
+    if (data.length === 0) {
+      document.getElementById('evenementsTable').innerHTML = '<div class="empty-state"><div class="emoji">📅</div><p>Aucun événement pour linstant</p></div>';
+      return;
+    }
+    let html = '<table><thead><tr><th>#</th><th>Titre</th><th>Type</th><th>Date début</th><th>Lieu</th><th>Prix</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
+    data.forEach(ev => {
+      const prix = ev.prix > 0 ? Number(ev.prix).toLocaleString('fr-FR') + ' FCFA' : 'Gratuit';
+      html += '<tr>' +
+        '<td class="td-bold">#' + ev.id + '</td>' +
+        '<td class="td-bold">' + ev.titre + '</td>' +
+        '<td class="td-muted">' + ev.type + '</td>' +
+        '<td class="td-muted">' + ev.date_debut + '</td>' +
+        '<td class="td-muted">' + (ev.lieu || '—') + '</td>' +
+        '<td class="td-bold">' + prix + '</td>' +
+        '<td><span class="statut ' + (ev.statut === 'publié' ? 'confirmée' : ev.statut === 'annulé' ? 'annulée' : 'en_attente') + '">' + ev.statut + '</span></td>' +
+        '<td style="display:flex;gap:8px;">' +
+        '<button onclick="editEvenement(' + ev.id + ')" style="padding:5px 12px;background:#1B3A6B;border:none;border-radius:6px;color:white;font-size:12px;cursor:pointer;">✏️</button>' +
+        '<button onclick="deleteEvenement(' + ev.id + ')" style="padding:5px 12px;background:var(--danger);border:none;border-radius:6px;color:white;font-size:12px;cursor:pointer;">🗑️</button>' +
+        '</td></tr>';
+    });
+    html += '</tbody></table>';
+    document.getElementById('evenementsTable').innerHTML = html;
+  } catch (err) {
+    document.getElementById('evenementsTable').innerHTML = '<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>';
+  }
+}
+
+function showFormEvenement() {
+  editingEvenementId = null;
+  document.getElementById('formEvenementTitle').textContent = 'Nouvel événement';
+  ['evTitre','evDescription','evLieu','evPrix'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('evDateDebut').value = '';
+  document.getElementById('evDateFin').value = '';
+  document.getElementById('evType').value = 'atelier';
+  document.getElementById('evStatut').value = 'publié';
+  document.getElementById('formEvenementCard').style.display = 'block';
+}
+
+function cancelFormEvenement() {
+  document.getElementById('formEvenementCard').style.display = 'none';
+  editingEvenementId = null;
+}
+
+async function editEvenement(id) {
+  const res = await fetch(API_URL + '/evenements/admin');
+  const data = await res.json();
+  const ev = data.find(e => e.id === id);
+  if (!ev) return;
+  editingEvenementId = id;
+  document.getElementById('formEvenementTitle').textContent = 'Modifier événement #' + id;
+  document.getElementById('evTitre').value = ev.titre;
+  document.getElementById('evDescription').value = ev.description;
+  document.getElementById('evDateDebut').value = ev.date_debut;
+  document.getElementById('evDateFin').value = ev.date_fin || '';
+  document.getElementById('evLieu').value = ev.lieu || '';
+  document.getElementById('evPrix').value = ev.prix || 0;
+  document.getElementById('evType').value = ev.type;
+  document.getElementById('evStatut').value = ev.statut;
+  document.getElementById('formEvenementCard').style.display = 'block';
+  document.getElementById('formEvenementCard').scrollIntoView({ behavior: 'smooth' });
+}
+
+async function saveEvenement() {
+  const titre = document.getElementById('evTitre').value.trim();
+  const description = document.getElementById('evDescription').value.trim();
+  const date_debut = document.getElementById('evDateDebut').value;
+  if (!titre || !description || !date_debut) { showToast('Titre, description et date sont obligatoires', 'error'); return; }
+  const body = { titre, description, date_debut,
+    date_fin: document.getElementById('evDateFin').value || null,
+    lieu: document.getElementById('evLieu').value.trim() || null,
+    type: document.getElementById('evType').value,
+    prix: parseInt(document.getElementById('evPrix').value) || 0,
+    statut: document.getElementById('evStatut').value
+  };
+  try {
+    const url = editingEvenementId ? API_URL + '/evenements/' + editingEvenementId : API_URL + '/evenements';
+    const method = editingEvenementId ? 'PUT' : 'POST';
+    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json();
+    if (res.ok) { showToast(data.message, 'success'); cancelFormEvenement(); loadEvenements(); }
+    else showToast(data.erreur || 'Erreur', 'error');
+  } catch { showToast('Impossible de joindre le serveur', 'error'); }
+}
+
+async function deleteEvenement(id) {
+  if (!window.confirm('Supprimer cet événement ?')) return;
+  try {
+    const res = await fetch(API_URL + '/evenements/' + id, { method: 'DELETE' });
+    const data = await res.json();
+    if (res.ok) { showToast(data.message, 'success'); loadEvenements(); }
+    else showToast(data.erreur || 'Erreur', 'error');
+  } catch { showToast('Erreur serveur', 'error'); }
 }
 
 // ===== INIT =====
