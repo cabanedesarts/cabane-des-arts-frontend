@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cabane des Arts - Espace de création, formation et transmission dédié à l'artisanat et aux arts inspirés des cultures locales du Bénin">
+    <meta name="keywords" content="artisanat Bénin, Porto-Novo, art africain, textile, tressage, accessoires traditionnels">
+    <meta name="author" content="Cabane des Arts">
+    <meta name="theme-color" content="#C4943B">
+    
+    <title>Boutique | Cabane des Arts</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ========== HEADER ========== -->
+    <header class="header" id="header">
+        <!-- Barre supérieure -->
+        <div class="top-bar">
+            <div class="container">
+                <div class="top-bar-content">
+                    <div class="top-bar-left">
+                        <a href="tel:+22961750141" class="top-bar-item">
+                            <i class="fas fa-phone"></i> +229 01 61 75 01 41
+                        </a>
+                        <span class="top-bar-separator">|</span>
+                        <a href="tel:+2290154540684" class="top-bar-item">
+                            <i class="fas fa-phone"></i> +229 01 54 54 06 84
+                        </a>
+                        <span class="top-bar-separator">|</span>
+                        <a href="mailto:cabanedesarts61@gmail.com" class="top-bar-item">
+                            <i class="fas fa-envelope"></i> cabanedesarts61@gmail.com
+                        </a>
+                    </div>
+                    <div class="top-bar-right">
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/CabaneDesArts" target="_blank" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/cabane_des_arts" target="_blank" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.youtube.com/channel/UCnYrRoik0l54eAIrJpQTi5w" target="_blank" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="https://wa.me/22961750141?text=Bonjour%20Cabane%20des%20Arts" target="_blank" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                        <div class="language-switcher">
+                            <button class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
+                            <span class="lang-separator">|</span>
+                            <button class="lang-btn" data-lang="en" aria-label="English">EN</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation principale -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <a href="index.html" class="logo">
+                        <img src="logo.jpg" alt="Logo" style="width:50px; height:50px; border-radius:10px;">
+                        <div class="logo-text">
+                            <span class="logo-title">Cabane des Arts</span>
+                            <span class="logo-subtitle">Porto-Novo, Bénin</span>
+                        </div>
+                    </a>
+                    
+                    <ul class="nav-menu" id="navMenu">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link active" data-i18n="nav.home">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="histoire.html" class="nav-link" data-i18n="nav.story">Notre Histoire</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="galerie.html" class="nav-link" data-i18n="nav.gallery">Galerie & Cours</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="boutique.html" class="nav-link active" data-i18n="nav.shop">Boutique</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="agenda.html" class="nav-link" data-i18n="nav.events">Agenda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="nav-actions">
+                        <button class="cart-btn" id="cartBtn" aria-label="Panier">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </button>
+                        <!-- BOUTON MODE SOMBRE -->
+                        <button id="theme-toggle" class="theme-toggle">
+                            🌙 Mode Sombre
+                        </button>
+                        <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========== PANIER LATÉRAL ========== -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-bag"></i> <span data-i18n="cart.title">Mon Panier</span></h3>
+            <button class="cart-close" id="cartClose" aria-label="Fermer le panier">&times;</button>
+        </div>
+        <div class="cart-body" id="cartBody">
+            <div class="cart-empty" id="cartEmpty">
+                <i class="fas fa-shopping-cart"></i>
+                <p data-i18n="cart.empty">Votre panier est vide</p>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-total">
+                <span data-i18n="cart.total">Total</span>
+                <span id="cartTotal">0 FCFA</span>
+            </div>
+            <button class="btn btn-primary btn-full" id="checkoutBtn">
+                <i class="fas fa-lock"></i> <span data-i18n="cart.checkout">Commander</span>
+            </button>
+            <div class="payment-methods">
+                <span><i class="fas fa-mobile-alt"></i> MTN MoMo</span>
+                <span><i class="fas fa-mobile-alt"></i> Moov Money</span>
+                <span><i class="fas fa-mobile-alt"></i> Celtiis</span>
+            </div>
+        </div>
+    </div>
+
+    
+<!-- ========== SECTION BOUTIQUE ========== -->
+    <section id="boutique" class="boutique-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle" data-i18n="boutique.subtitle">Boutique</span>
+                <h2 class="section-title" data-i18n="boutique.title">Nos Œuvres à la Vente</h2>
+                <div class="section-divider">
+                    <span class="divider-line"></span>
+                    <i class="fas fa-store"></i>
+                    <span class="divider-line"></span>
+                </div>
+            </div>
+            
+            <div class="boutique-grid" id="boutiqueGrid">
+                <!-- Produits de la boutique injectés dynamiquement -->
+            </div>
+            
+            <div class="boutique-info">
+                <div class="info-box">
+                    <h4><i class="fas fa-truck"></i> <span data-i18n="boutique.delivery">Livraison</span></h4>
+                    <ul>
+                        <li>📍 <span data-i18n="boutique.pickup">Retrait à la Cabane (Porto-Novo)</span></li>
+                        <li>🚚 <span data-i18n="boutique.local">Livraison locale (Porto-Novo)</span></li>
+                        <li>🇧🇯 <span data-i18n="boutique.national">Livraison nationale (Bénin)</span></li>
+                        <li>✈️ <span data-i18n="boutique.international">Livraison internationale</span></li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h4><i class="fas fa-credit-card"></i> <span data-i18n="boutique.payment">Paiement</span></h4>
+                    <ul>
+                        <li>📱 MTN Mobile Money</li>
+                        <li>📱 Moov Money</li>
+                        <li>📱 Celtiis</li>
+                        <li>💵 <span data-i18n="boutique.cod">Paiement à la livraison</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+<!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <div class="footer-logo">
+                        <img src="logo.jpg" alt="La Cabane des Arts" class="logo-img">
+                    </div>
+                    <p data-i18n="footer.desc">
+                        Espace de création, de formation et de transmission dédié à l'artisanat 
+                        et aux arts inspirés des cultures locales du Bénin.
+                    </p>
+                    <p class="footer-slogan" data-i18n="footer.slogan">Créer pour Transformer, Vendre pour Élever</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 data-i18n="footer.quicklinks">Liens rapides</h4>
+                    <ul>
+                        <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
+                        <li><a href="histoire.html" data-i18n="nav.story">Notre Histoire</a></li>
+                        <li><a href="galerie.html" data-i18n="nav.gallery">Galerie & Cours</a></li>
+                        <li><a href="boutique.html" data-i18n="nav.shop">Boutique</a></li>
+                        <li><a href="agenda.html" data-i18n="nav.events">Agenda</a></li>
+                        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 data-i18n="footer.disciplines">Disciplines</h4>
+                    <ul>
+                        <li><span data-i18n="tags.textile">Création Textile</span></li>
+                        <li><span data-i18n="tags.tressage">Tressage Artisanal</span></li>
+                        <li><span data-i18n="tags.accessoires">Accessoires de Mode</span></li>
+                        <li><span data-i18n="tags.tapisserie">Tapisserie Artisanale</span></li>
+                        <li><span data-i18n="tags.parures">Parures Traditionnelles</span></li>
+                        <li><span data-i18n="tags.ornements">Ornements</span></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 data-i18n="footer.contact">Contact</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> Porto-Novo, Adjina, Rue de l'Inspection, Bénin</li>
+                        <li><i class="fas fa-phone"></i> +229 01 61 75 01 41</li>
+                        <li><i class="fas fa-phone"></i> +229 01 54 54 06 84</li>
+                        <li><i class="fas fa-envelope"></i> cabanedesarts61@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 La Cabane des Arts - Porto-Novo, Bénin. <span data-i18n="footer.rights">Tous droits réservés.</span></p>
+                <p class="footer-credit">Développé avec ❤️ pour l'artisanat béninois</p>
+            </div>
+        </div>
+    </footer>
+
+    
+<!-- ========== MODAL RÉSERVATION ATELIER ========== -->
+    <div class="modal-overlay" id="reservationModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose" aria-label="Fermer">&times;</button>
+            <div class="modal-header">
+                <h3 data-i18n="modal.reservation">Réservation d'atelier</h3>
+            </div>
+            <div class="modal-body">
+                <p class="modal-info" id="modalAtelierInfo"></p>
+                <p class="modal-info" id="modalAtelierPrice"></p>
+                <p class="modal-note" data-i18n="modal.deposit">
+                    Un acompte de 30% est requis pour confirmer votre réservation.
+                </p>
+                <form id="reservationForm">
+                    <input type="hidden" id="resAtelier" name="atelier">
+                    <input type="hidden" id="resPrice" name="price">
+                    <div class="form-group">
+                        <label for="resName" data-i18n="modal.name">Nom complet *</label>
+                        <input type="text" id="resName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="resEmail" data-i18n="modal.email">Email *</label>
+                        <input type="email" id="resEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="resPhone" data-i18n="modal.phone">Téléphone *</label>
+                        <input type="tel" id="resPhone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="resDate" data-i18n="modal.date">Date souhaitée</label>
+                        <input type="date" id="resDate" name="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="resPayment" data-i18n="modal.payment">Mode de paiement</label>
+                        <select id="resPayment" name="payment">
+                            <option value="mtn">MTN Mobile Money</option>
+                            <option value="moov">Moov Money</option>
+                            <option value="celtiis">Celtiis</option>
+                            <option value="livraison">Paiement à la livraison</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-check"></i> <span data-i18n="modal.confirm">Confirmer la réservation</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MODAL COMMANDE ========== -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal">
+            <button class="modal-close" id="checkoutModalClose" aria-label="Fermer">&times;</button>
+            <div class="modal-header">
+                <h3 data-i18n="checkout.title">Finaliser la commande</h3>
+            </div>
+            <div class="modal-body">
+                <div class="checkout-summary" id="checkoutSummary"></div>
+                <div class="checkout-total">
+                    <strong data-i18n="checkout.total">Total :</strong>
+                    <span id="checkoutTotalPrice">0 FCFA</span>
+                </div>
+                <form id="checkoutForm">
+                    <div class="form-group">
+                        <label for="checkoutName" data-i18n="checkout.name">Nom complet *</label>
+                        <input type="text" id="checkoutName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkoutEmail" data-i18n="checkout.email">Email *</label>
+                        <input type="email" id="checkoutEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkoutPhone" data-i18n="checkout.phone">Téléphone *</label>
+                        <input type="tel" id="checkoutPhone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkoutAddress" data-i18n="checkout.address">Adresse de livraison *</label>
+                        <textarea id="checkoutAddress" name="address" rows="2" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkoutDelivery" data-i18n="checkout.delivery">Mode de livraison</label>
+                        <select id="checkoutDelivery" name="delivery">
+                            <option value="pickup">Retrait à la Cabane (Porto-Novo)</option>
+                            <option value="local">Livraison locale (Porto-Novo)</option>
+                            <option value="national">Livraison nationale (Bénin)</option>
+                            <option value="international">Livraison internationale</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkoutPayment" data-i18n="checkout.payment">Mode de paiement</label>
+                        <select id="checkoutPayment" name="payment">
+                            <option value="mtn">MTN Mobile Money</option>
+                            <option value="moov">Moov Money</option>
+                            <option value="celtiis">Celtiis</option>
+                            <option value="cod">Paiement à la livraison</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-lock"></i> <span data-i18n="checkout.placeorder">Passer la commande</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== NOTIFICATION TOAST ========== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ========== BOUTON RETOUR EN HAUT ========== -->
+    <button class="back-to-top" id="backToTop" aria-label="Retour en haut">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+    <script>
+    // ===== AVIS CLIENTS =====
+    const AVIS_API = 'https://cabane-des-arts-backend.onrender.com/api';
+
+    // Charger les avis validés
+    async function loadAvisPublic() {
+        const grid = document.getElementById('temoignagesGrid');
+        try {
+            const res = await fetch(AVIS_API + '/avis');
+            const avis = await res.json();
+
+            if (avis.length === 0) {
+                grid.innerHTML = '<div style="text-align:center;padding:40px;color:#8A7B6A;font-size:15px;grid-column:1/-1;">Soyez le premier à laisser un avis !</div>';
+                return;
+            }
+
+            grid.innerHTML = avis.map(a => {
+                const etoiles = '★'.repeat(a.note) + '☆'.repeat(5 - a.note);
+                const date = new Date(a.created_at).toLocaleDateString('fr-FR', {day:'2-digit', month:'long', year:'numeric'});
+                return '<div class="temoignage-card">' +
+                    '<div class="temoignage-stars" style="color:#C8922A;font-size:20px;margin-bottom:12px;">' + etoiles + '</div>' +
+                    '<p class="temoignage-text">"' + a.commentaire + '"</p>' +
+                    '<div class="temoignage-author">' +
+                    '<div class="author-avatar" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#B5561A,#C8922A);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;">' + a.nom.charAt(0).toUpperCase() + '</div>' +
+                    '<div><strong>' + a.nom + '</strong>' +
+                    (a.produit ? '<div style="font-size:12px;color:#8A7B6A;">' + a.produit + '</div>' : '') +
+                    '<div style="font-size:11px;color:#B0A090;">' + date + '</div></div>' +
+                    '</div>' +
+                    '</div>';
+            }).join('');
+        } catch(err) {
+            grid.innerHTML = '<div style="text-align:center;padding:40px;color:#8A7B6A;grid-column:1/-1;">Impossible de charger les avis.</div>';
+        }
+    }
+
+    // Étoiles interactives
+    document.querySelectorAll('.star').forEach(star => {
+        star.addEventListener('click', function() {
+            const val = parseInt(this.dataset.value);
+            document.getElementById('avisNote').value = val;
+            document.querySelectorAll('.star').forEach((s, i) => {
+                s.classList.toggle('active', i < val);
+            });
+        });
+        star.addEventListener('mouseover', function() {
+            const val = parseInt(this.dataset.value);
+            document.querySelectorAll('.star').forEach((s, i) => {
+                s.style.color = i < val ? '#C8922A' : '#E8DDD0';
+            });
+        });
+        star.addEventListener('mouseout', function() {
+            const note = parseInt(document.getElementById('avisNote').value);
+            document.querySelectorAll('.star').forEach((s, i) => {
+                s.style.color = i < note ? '#C8922A' : '#E8DDD0';
+            });
+        });
+    });
+
+    // Soumettre un avis
+    document.getElementById('avisForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const nom = document.getElementById('avisNom').value.trim();
+        const email = document.getElementById('avisEmail').value.trim();
+        const produit = document.getElementById('avisProduit').value.trim();
+        const note = parseInt(document.getElementById('avisNote').value);
+        const commentaire = document.getElementById('avisCommentaire').value.trim();
+
+        if (!nom || !email || !commentaire) {
+            showToast('Veuillez remplir tous les champs obligatoires.', 'error');
+            return;
+        }
+        if (note === 0) {
+            showToast('Veuillez sélectionner une note.', 'error');
+            return;
+        }
+
+        try {
+            const res = await fetch(AVIS_API + '/avis', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nom, email, produit, note, commentaire })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                showToast('✅ Merci ! Votre avis sera publié après validation.', 'success');
+                document.getElementById('avisForm').reset();
+                document.getElementById('avisNote').value = 0;
+                document.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
+            } else {
+                showToast(data.erreur || 'Erreur lors de la soumission.', 'error');
+            }
+        } catch(err) {
+            showToast('Impossible de joindre le serveur.', 'error');
+        }
+    });
+
+    // Charger les avis au démarrage
+    loadAvisPublic();
+    </script>
+
+
+    <!-- ===== BOUTON FLOTTANT RÉSEAUX SOCIAUX ===== -->
+    <div class="floating-social" id="floatingSocial">
+        <button class="float-main" id="floatMain" onclick="toggleSocial()" title="Nous contacter">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <div class="float-items" id="floatItems">
+            <a href="https://wa.me/22961750141?text=Bonjour%20Cabane%20des%20Arts%2C%20je%20vous%20contacte%20depuis%20votre%20site%20web." 
+               target="_blank" class="float-item whatsapp" title="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.facebook.com/CabaneDesArts" 
+               target="_blank" class="float-item facebook" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/cabane_des_arts" 
+               target="_blank" class="float-item instagram" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://vm.tiktok.com/ZS9FFyeX7g1RM-Fwqan/" 
+               target="_blank" class="float-item tiktok" title="TikTok">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UCnYrRoik0l54eAIrJpQTi5w" 
+               target="_blank" class="float-item youtube" title="YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+    </div>
+
+    <style>
+    .floating-social {
+        position: fixed;
+        bottom: 32px;
+        right: 28px;
+        z-index: 9998;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .float-main {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #B5561A, #C8922A);
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(181,86,26,0.4);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .float-main:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 28px rgba(181,86,26,0.5);
+    }
+
+    .float-main.open {
+        background: linear-gradient(135deg, #555, #333);
+        transform: rotate(45deg);
+    }
+
+    .float-items {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 10px;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.4s ease, opacity 0.3s ease;
+        opacity: 0;
+    }
+
+    .float-items.open {
+        max-height: 400px;
+        opacity: 1;
+    }
+
+    .float-item {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 18px;
+        text-decoration: none;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        position: relative;
+    }
+
+    .float-item:hover {
+        transform: scale(1.15);
+        box-shadow: 0 5px 18px rgba(0,0,0,0.3);
+    }
+
+    .float-item::before {
+        content: attr(title);
+        position: absolute;
+        right: 56px;
+        background: rgba(0,0,0,0.75);
+        color: white;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+    }
+
+    .float-item:hover::before {
+        opacity: 1;
+    }
+
+    .float-item.whatsapp  { background: #25D366; }
+    .float-item.facebook  { background: #1877F2; }
+    .float-item.instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .float-item.tiktok    { background: #010101; }
+    .float-item.youtube   { background: #FF0000; }
+    </style>
+
+    <script>
+    function toggleSocial() {
+        const btn = document.getElementById('floatMain');
+        const items = document.getElementById('floatItems');
+        btn.classList.toggle('open');
+        items.classList.toggle('open');
+    }
+
+    // Fermer si on clique ailleurs
+    document.addEventListener('click', function(e) {
+        const social = document.getElementById('floatingSocial');
+        if (!social.contains(e.target)) {
+            document.getElementById('floatMain').classList.remove('open');
+            document.getElementById('floatItems').classList.remove('open');
+        }
+    });
+    </script>
+
+
+    <!-- ===== BARRE DE PROGRESSION + SCROLL ANIMÉ ===== -->
+    <div id="progressBarContainer" style="position:fixed;top:0;left:0;width:100%;height:3px;z-index:99999;pointer-events:none;">
+        <div id="progressBar" style="height:100%;width:0%;background:linear-gradient(90deg,#B5561A,#C8922A);transition:width 0.1s ease;"></div>
+    </div>
+
+    <script>
+    // ===== BARRE DE PROGRESSION =====
+    window.addEventListener('scroll', function() {
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        document.getElementById('progressBar').style.width = pct + '%';
+    });
+
+    // ===== SCROLL FLUIDE + ANIMATION TITRE =====
+    document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            var href = this.getAttribute('href');
+            if (href === '#') return;
+            var target = document.querySelector(href);
+            if (!target) return;
+            e.preventDefault();
+
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            setTimeout(function() {
+                var title = target.querySelector('.section-title, h2, h1');
+                if (!title) return;
+                title.style.transition = 'color 0.3s ease, transform 0.3s ease';
+                title.style.color = '#B5561A';
+                title.style.transform = 'translateX(8px)';
+                setTimeout(function() {
+                    title.style.color = '';
+                    title.style.transform = '';
+                    setTimeout(function() {
+                        title.style.transition = '';
+                    }, 400);
+                }, 800);
+            }, 600);
+        });
+    });
+    </script>
+
+
+    <script>
+    // ===== AGENDA DYNAMIQUE =====
+    async function loadAgenda() {
+        const grid = document.getElementById('agendaGrid');
+        try {
+            const res = await fetch('https://cabane-des-arts-backend.onrender.com/api/evenements');
+            const evenements = await res.json();
+
+            if (evenements.length === 0) {
+                grid.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#8A7B6A;grid-column:1/-1;">' +
+                    '<div style="font-size:48px;margin-bottom:16px;">📅</div>' +
+                    '<p style="font-size:16px;">Aucun événement prévu pour le moment.</p>' +
+                    '<p style="font-size:14px;margin-top:8px;">Revenez bientôt !</p>' +
+                    '</div>';
+                return;
+            }
+
+            grid.innerHTML = evenements.map(ev => {
+                const date = new Date(ev.date_debut);
+                const jour = date.toLocaleDateString("fr-FR", { day: "2-digit" });
+                const mois = date.toLocaleDateString("fr-FR", { month: "short" }).toUpperCase();
+                const annee = date.getFullYear();
+                const prix = ev.prix > 0 ? Number(ev.prix).toLocaleString("fr-FR") + " FCFA" : "Gratuit";
+                const typeColors = {
+                    atelier: "#B5561A",
+                    exposition: "#1B3A6B",
+                    vente: "#2D7A4F",
+                    evenement: "#C8922A"
+                };
+                const color = typeColors[ev.type] || "#B5561A";
+
+                return '<div class="agenda-card" style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08);border:1px solid #E8DDD0;display:flex;flex-direction:column;">' +
+                    '<div style="background:' + color + ';padding:20px 24px;display:flex;align-items:center;gap:16px;">' +
+                    '<div style="text-align:center;color:white;">' +
+                    '<div style="font-size:36px;font-weight:700;line-height:1;">' + jour + '</div>' +
+                    '<div style="font-size:13px;letter-spacing:2px;">' + mois + ' ' + annee + '</div>' +
+                    '</div>' +
+                    '<div style="width:1px;height:50px;background:rgba(255,255,255,0.3);"></div>' +
+                    '<div>' +
+                    '<span style="background:rgba(255,255,255,0.2);color:white;padding:3px 10px;border-radius:20px;font-size:11px;text-transform:uppercase;letter-spacing:1px;">' + ev.type + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div style="padding:20px 24px;flex:1;">' +
+                    '<h3 style="font-family:Playfair Display,serif;font-size:18px;color:#1A1208;margin-bottom:10px;">' + ev.titre + '</h3>' +
+                    '<p style="font-size:14px;color:#8A7B6A;line-height:1.6;margin-bottom:16px;">' + ev.description + '</p>' +
+                    (ev.lieu ? '<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#8A7B6A;margin-bottom:8px;"><span>📍</span>' + ev.lieu + '</div>' : '') +
+                    '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:16px;border-top:1px solid #E8DDD0;">' +
+                    '<span style="font-weight:700;color:' + color + ';font-size:15px;">' + prix + '</span>' +
+                    (ev.prix > 0 ? '<button onclick="reserverEvenement(\'' + ev.titre.replace(/'/g, "\\'") + '\',' + ev.prix + ')" style="padding:8px 18px;background:' + color + ';color:white;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;">Réserver</button>' : '<span style="padding:8px 18px;background:#EAFAF1;color:#2D7A4F;border-radius:8px;font-size:13px;font-weight:600;">Entrée libre</span>') +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }).join('');
+
+        } catch(err) {
+            grid.innerHTML = '<div style="text-align:center;padding:40px;color:#8A7B6A;grid-column:1/-1;">Impossible de charger les événements.</div>';
+        }
+    }
+
+    // Style de la grille agenda
+    document.addEventListener("DOMContentLoaded", function() {
+        const grid = document.getElementById("agendaGrid");
+        if (grid) {
+            grid.style.display = "grid";
+            grid.style.gridTemplateColumns = "repeat(auto-fill, minmax(300px, 1fr))";
+            grid.style.gap = "24px";
+        }
+        loadAgenda();
+    });
+    </script>
+
+
+    <script>
+    function reserverEvenement(titre, prix) {
+        document.getElementById('resAtelier').value = titre;
+        document.getElementById('resPrice').value = prix;
+        document.getElementById('modalAtelierInfo').textContent = 'Événement : ' + titre;
+        document.getElementById('modalAtelierPrice').textContent = 'Prix : ' + Number(prix).toLocaleString('fr-FR') + ' FCFA';
+        document.getElementById('reservationModal').classList.add('active');
+    }
+    </script>
+
+</body>
+</html>
+</body>
+</html>
