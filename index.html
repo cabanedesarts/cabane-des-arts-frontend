@@ -342,61 +342,68 @@
         </div>
     </div>
 
-    <!-- ========== MODAL COMMANDE ========== -->
-    <div class="modal-overlay" id="checkoutModal">
-        <div class="modal">
-            <button class="modal-close" id="checkoutModalClose" aria-label="Fermer">&times;</button>
-            <div class="modal-header">
-                <h3 data-i18n="checkout.title">Finaliser la commande</h3>
+     <!-- ========== MODAL COMMANDE ========== -->
+<div class="modal-overlay" id="checkoutModal">
+    <div class="modal">
+        <button class="modal-close" id="checkoutModalClose" aria-label="Fermer">&times;</button>
+        <div class="modal-header">
+            <h3 data-i18n="checkout.title">Finaliser la commande</h3>
+        </div>
+        <div class="modal-body">
+            <div class="checkout-summary" id="checkoutSummary"></div>
+            <div class="checkout-total">
+                <strong data-i18n="checkout.total">Total :</strong>
+                <span id="checkoutTotalPrice">0 FCFA</span>
             </div>
-            <div class="modal-body">
-                <div class="checkout-summary" id="checkoutSummary"></div>
-                <div class="checkout-total">
-                    <strong data-i18n="checkout.total">Total :</strong>
-                    <span id="checkoutTotalPrice">0 FCFA</span>
+            
+            <!-- Formulaire avec paiement KkiaPay -->
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label for="checkoutName" data-i18n="checkout.name">Nom complet *</label>
+                    <input type="text" id="checkoutName" name="name" placeholder="Votre nom complet" required>
                 </div>
-                <form id="checkoutForm">
-                    <div class="form-group">
-                        <label for="checkoutName" data-i18n="checkout.name">Nom complet *</label>
-                        <input type="text" id="checkoutName" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="checkoutEmail" data-i18n="checkout.email">Email *</label>
-                        <input type="email" id="checkoutEmail" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="checkoutPhone" data-i18n="checkout.phone">Téléphone *</label>
-                        <input type="tel" id="checkoutPhone" name="phone" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="checkoutAddress" data-i18n="checkout.address">Adresse de livraison *</label>
-                        <textarea id="checkoutAddress" name="address" rows="2" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="checkoutDelivery" data-i18n="checkout.delivery">Mode de livraison</label>
-                        <select id="checkoutDelivery" name="delivery">
-                            <option value="pickup">Retrait à la Cabane (Porto-Novo)</option>
-                            <option value="local">Livraison locale (Porto-Novo)</option>
-                            <option value="national">Livraison nationale (Bénin)</option>
-                            <option value="international">Livraison internationale</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="checkoutPayment" data-i18n="checkout.payment">Mode de paiement</label>
-                        <select id="checkoutPayment" name="payment">
-                            <option value="mtn">MTN Mobile Money</option>
-                            <option value="moov">Moov Money</option>
-                            <option value="celtiis">Celtiis</option>
-                            <option value="cod">Paiement à la livraison</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-full">
-                        <i class="fas fa-lock"></i> <span data-i18n="checkout.placeorder">Passer la commande</span>
-                    </button>
-                </form>
-            </div>
+                <div class="form-group">
+                    <label for="checkoutEmail" data-i18n="checkout.email">Email *</label>
+                    <input type="email" id="checkoutEmail" name="email" placeholder="votre@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkoutPhone" data-i18n="checkout.phone">Téléphone Mobile Money *</label>
+                    <input type="tel" id="checkoutPhone" name="phone" placeholder="+229 90 00 00 01" required>
+                    <small style="color: var(--text-light); font-size: 12px;">
+                        <i class="fas fa-info-circle"></i> 
+                        Numéro MTN, Moov ou Celtiis pour le paiement
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="checkoutAddress" data-i18n="checkout.address">Adresse de livraison</label>
+                    <textarea id="checkoutAddress" name="address" rows="2" placeholder="Votre adresse complète (optionnel)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="checkoutDelivery" data-i18n="checkout.delivery">Mode de livraison</label>
+                    <select id="checkoutDelivery" name="delivery">
+                        <option value="pickup">📍 Retrait à la Cabane (Porto-Novo)</option>
+                        <option value="local">🚚 Livraison locale (Porto-Novo)</option>
+                        <option value="national">🚛 Livraison nationale (Bénin)</option>
+                        <option value="international">✈️ Livraison internationale</option>
+                    </select>
+                </div>
+                
+                <!-- Informations de paiement KkiaPay -->
+                <div style="background: var(--color-ocre-pale); padding: 12px 16px; border-radius: var(--border-radius); margin-bottom: 16px;">
+                    <p style="font-size: 13px; color: var(--color-ocre-dark); margin: 0; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-lock" style="color: var(--color-ocre-primary);"></i>
+                        <span>Paiement sécurisé via <strong>MTN MoMo, Moov Money ou Celtiis</strong></span>
+                    </p>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-full" id="checkoutSubmitBtn">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payer avec Mobile Money</span>
+                </button>
+            </form>
         </div>
     </div>
+</div>
 
     <!-- ========== NOTIFICATION TOAST ========== -->
     <div class="toast-container" id="toastContainer"></div>
@@ -783,7 +790,8 @@
         document.getElementById('reservationModal').classList.add('active');
     }
     </script>
-
+<!-- ===== SDK KKIAPAY ===== -->
+<script src="https://cdn.kkiapay.me/k.js"></script>
 </body>
 </html>
 </body>

@@ -1424,3 +1424,494 @@ function init() {
 
 // ===== DÉMARRAGE =====
 document.addEventListener('DOMContentLoaded', init);
+// ============================================
+// KKIAPAY - CONFIGURATION ET PAIEMENT
+// ============================================
+
+// ═══════════════════════════════════════════════════════
+// 1️⃣ CONFIGURATION (À modifier selon vos besoins)
+// ═══════════════════════════════════════════════════════
+
+const KKIAY_CONFIG = {
+    // 🔑 MODE : 'sandbox' pour tester, 'production' pour les vrais paiements
+    mode: 'sandbox',  // ← Changez en 'production' quand vous êtes prêt
+    
+    // 🔑 Vos clés API (à récupérer sur dashboard KkiaPay)
+    keys: {
+        sandbox: 'c9aca120697511f1b660498c06465ad7',   // Clé publique sandbox Cabane des Arts
+        production: 'live_pk_votre_cle_reelle'          // ← À remplacer par votre clé production
+    },
+    
+    // 💰 Commission appliquée
+    commission: 2.9, // 2.9%
+    
+    // 📱 Numéros de test (sandbox)
+    testPhones: {
+        mtn: '90000001',
+        moov: '90000002',
+        celtiis: '90000003',
+        pin: '0000'
+    },
+    
+    // 🏪 Informations boutique
+    shop: {
+        name: 'La Cabane des Arts',
+        description: 'Artisanat traditionnel du Bénin'
+    }
+};
+
+// ═══════════════════════════════════════════════════════
+// 2️⃣ FONCTION DE PAIEMENT PRINCIPALE
+// ═══════════════════════════════════════════════════════
+
+/**
+ * Ouvre la fenêtre de paiement KkiaPay
+ * @param {number} amount - Montant à payer en FCFA
+ * @param {string} phone - Numéro de téléphone du client
+ * @param {string} email - Email du client
+ * @param {string} name - Nom du client
+ * @param {string} description - Description de la commande
+ * @returns {Promise} - Promesse résolue avec la réponse de KkiaPay
+ */
+function openKkiapayPayment(amount, phone, email, name, description = '') {
+    return new Promise((resolve, reject) => {
+        // Vérifier que le SDK est chargé
+        if (typeof openKkiapayWidget === 'undefined') {
+            showToast('❌ Le service de paiement est temporairement indisponible.', 'error');
+            reject(new Error('KkiaPay SDK non chargé'));
+            return;
+        }
+        
+        // Vérifier que le montant est valide
+        if (amount <= 0) {
+            showToast('❌ Le montant doit être supérieur à 0 FCFA.', 'error');
+            reject(new Error('Montant invalide'));
+            return;
+        }
+        
+        // Récupérer la clé API selon le mode
+        const apiKey = KKIAY_CONFIG.mode === 'production' 
+            ? KKIAY_CONFIG.keys.production 
+            : KKIAY_CONFIG.keys.sandbox;
+        
+        // Vérifier que la clé est configurée
+        if (!apiKey || apiKey.includes('votre_cle')) {
+            showToast('⚠️ Configuration de paiement en cours. Veuillez réessayer plus tard.', 'error');
+            reject(new Error('Clé API non configurée'));
+            return;
+        }
+        
+        const isSandbox = KKIAY_CONFIG.mode === 'sandbox';
+        
+        console.log(`💳 Paiement KkiaPay - Mode: ${KKIAY_CONFIG.mode}`);
+        console.log(`💳 Montant: ${amount} FCFA`);
+        console.log(`📱 Téléphone: ${phone}`);
+
+        // Écouter le succès du paiement
+        function onSuccess(response) {
+            console.log('✅ Réponse KkiaPay:', response);
+            removeKkiapayListeners();
+            showToast('✅ Paiement réussi ! Merci pour votre commande.', 'success');
+            resolve(response);
+        }
+
+        // Écouter l'échec du paiement
+        function onFailed(error) {
+            console.log('❌ Échec KkiaPay:', error);
+            removeKkiapayListeners();
+            showToast('❌ Le paiement a échoué. Veuillez réessayer.', 'error');
+            reject(new Error('Paiement échoué'));
+        }
+
+        // Supprimer les écouteurs après usage
+        function removeKkiapayListeners() {
+            removeKkiapayListener('failed', onFailed);
+            removeKkiapayListener('success', onSuccess);
+        }
+
+        // Ajouter les écouteurs d'événements KkiaPay
+        addKkiapayListener('success', onSuccess);
+        addKkiapayListener('failed', onFailed);
+        
+        try {
+            // Ouvrir le widget KkiaPay (nouvelle API)
+            openKkiapayWidget({
+                amount: amount,
+                key: apiKey,
+                sandbox: isSandbox,
+                phone: phone,
+                email: email,
+                name: name,
+                data: description || `Commande ${name}`
+            });
+        } catch (error) {
+            console.error('❌ Erreur KkiaPay:', error);
+            removeKkiapayListeners();
+            showToast('❌ Une erreur est survenue lors du paiement.', 'error');
+            reject(error);
+        }
+    });
+}
+
+// ═══════════════════════════════════════════════════════
+// 3️⃣ INTÉGRATION AVEC LE PANIER
+// ═══════════════════════════════════════════════════════
+
+/**
+ * Traite le paiement du panier via KkiaPay
+ * @param {Object} orderData - Données de la commande
+ */
+async function processCartPayment(orderData) {
+    try {
+        // Calculer le total du panier
+        const total = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        
+        if (total <= 0) {
+            showToast('❌ Votre panier est vide.', 'error');
+            return false;
+        }
+        
+        // Vérifier que les coordonnées sont valides
+        if (!orderData.telephone || orderData.telephone.length < 8) {
+            showToast('❌ Veuillez entrer un numéro de téléphone valide.', 'error');
+            return false;
+        }
+        
+        // Vérifier que l'email est valide
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(orderData.email)) {
+            showToast('❌ Veuillez entrer une adresse email valide.', 'error');
+            return false;
+        }
+        
+        // Créer la description de la commande
+        const itemsDescription = state.cart
+            .map(item => `${item.name} x${item.quantity}`)
+            .join(', ');
+        const description = `${orderData.nom} - ${itemsDescription}`;
+        
+        // Ouvrir le paiement KkiaPay
+        const response = await openKkiapayPayment(
+            total,
+            orderData.telephone,
+            orderData.email,
+            orderData.nom,
+            description
+        );
+        
+        if (response && response.transactionId) {
+            // Paiement réussi - finaliser la commande
+            await finalizeOrderWithPayment(orderData, response);
+            return true;
+        }
+        
+        return false;
+        
+    } catch (error) {
+        console.error('❌ Erreur paiement:', error);
+        // L'erreur est déjà affichée par openKkiapayPayment
+        return false;
+    }
+}
+
+/**
+ * Finalise la commande après un paiement réussi
+ */
+async function finalizeOrderWithPayment(orderData, paymentResponse) {
+    try {
+        const articles = state.cart.map(item => ({
+            id: item.id,
+            titre: item.name,
+            prix: item.price,
+            quantite: item.quantity
+        }));
+        
+        const total = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        
+        const orderPayload = {
+            nom: orderData.nom,
+            email: orderData.email,
+            telephone: orderData.telephone,
+            adresse: orderData.adresse || '',
+            livraison: orderData.livraison || 'pickup',
+            paiement: 'kkiapay',
+            articles: articles,
+            total: total,
+            transactionId: paymentResponse.transactionId,
+            statut_paiement: 'payé'
+        };
+        
+        console.log('📦 Envoi de la commande:', orderPayload);
+        
+        const res = await fetch(`${API_URL}/commandes/paiement`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderPayload)
+        });
+        
+        const data = await res.json();
+        
+        if (res.ok) {
+            showToast('✅ Commande confirmée ! Vous recevrez un email de confirmation.', 'success');
+            
+            // Vider le panier
+            state.cart = [];
+            saveCart();
+            renderCart();
+            
+            // Fermer le modal de checkout
+            closeCheckoutModal();
+            
+            // Rediriger vers la page de confirmation ou d'accueil
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 3000);
+            
+        } else {
+            showToast('⚠️ Paiement réussi mais erreur lors de la finalisation. Contactez-nous.', 'error');
+            console.error('Erreur finalisation:', data);
+        }
+        
+    } catch (error) {
+        console.error('❌ Erreur finalisation:', error);
+        showToast('⚠️ Paiement réussi mais erreur de sauvegarde. Contactez-nous.', 'error');
+    }
+}
+
+// ═══════════════════════════════════════════════════════
+// 4️⃣ BOUTON DE TEST (mode sandbox uniquement)
+// ═══════════════════════════════════════════════════════
+
+/**
+ * Ajoute un bouton de test en mode sandbox
+ */
+function addKkiapayTestButton() {
+    if (KKIAY_CONFIG.mode !== 'sandbox') return;
+    
+    const testBtn = document.createElement('div');
+    testBtn.id = 'kkiapay-test-btn';
+    testBtn.style.cssText = `
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        z-index: 9999;
+        background: linear-gradient(135deg, #B5561A, #C8922A);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 18px;
+        cursor: pointer;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        box-shadow: 0 4px 20px rgba(181,86,26,0.4);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    `;
+    testBtn.innerHTML = `
+        <span>🧪</span>
+        <span>Test KkiaPay (Sandbox)</span>
+    `;
+    testBtn.title = 'Cliquez pour tester le paiement KkiaPay en mode sandbox';
+    
+    testBtn.onmouseover = () => {
+        testBtn.style.transform = 'scale(1.05)';
+        testBtn.style.boxShadow = '0 6px 28px rgba(181,86,26,0.5)';
+    };
+    testBtn.onmouseout = () => {
+        testBtn.style.transform = 'scale(1)';
+        testBtn.style.boxShadow = '0 4px 20px rgba(181,86,26,0.4)';
+    };
+    
+    testBtn.onclick = async () => {
+        const testAmount = 5000;
+        const testPhone = KKIAY_CONFIG.testPhones.mtn;
+        const testEmail = 'test@cabanedesarts.bj';
+        const testName = 'Client Test';
+        
+        const confirmTest = confirm(
+            `🧪 TEST KKIAPAY - MODE SANDBOX 🧪\n\n` +
+            `💰 Montant : ${formatPrice(testAmount)}\n` +
+            `📱 Téléphone : ${testPhone}\n` +
+            `🔑 Code PIN : 0000\n\n` +
+            `⚠️ Aucun argent réel ne sera débité.\n` +
+            `✅ Ce test est 100% gratuit.\n\n` +
+            `Voulez-vous continuer ?`
+        );
+        
+        if (!confirmTest) return;
+        
+        try {
+            const response = await openKkiapayPayment(
+                testAmount,
+                testPhone,
+                testEmail,
+                testName,
+                'Test de paiement Cabane des Arts'
+            );
+            
+            if (response && response.transactionId) {
+                alert(
+                    `✅ TEST RÉUSSI ! ✅\n\n` +
+                    `Transaction ID : ${response.transactionId}\n` +
+                    `Montant : ${formatPrice(testAmount)}\n` +
+                    `Mode : Sandbox\n\n` +
+                    `💡 Vous pouvez maintenant passer en production !`
+                );
+            }
+        } catch (error) {
+            if (error.message === 'Paiement annulé') {
+                console.log('Test annulé par l\'utilisateur');
+            } else {
+                alert(`❌ Erreur lors du test : ${error.message}`);
+            }
+        }
+    };
+    
+    document.body.appendChild(testBtn);
+    
+    // Ajouter un indicateur de mode
+    const indicator = document.createElement('div');
+    indicator.style.cssText = `
+        position: fixed;
+        bottom: 160px;
+        right: 20px;
+        z-index: 9998;
+        background: rgba(0,0,0,0.7);
+        color: #F9E79F;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 10px;
+        font-family: 'DM Sans', sans-serif;
+        font-weight: 600;
+        letter-spacing: 1px;
+    `;
+    indicator.textContent = '🧪 SANDBOX';
+    document.body.appendChild(indicator);
+}
+
+// ═══════════════════════════════════════════════════════
+// 5️⃣ MODIFICATION DU CHECKOUT (intégration avec le formulaire)
+// ═══════════════════════════════════════════════════════
+
+/**
+ * Gère la soumission du formulaire de checkout avec KkiaPay
+ */
+async function handleCheckoutWithKkiaPay(event) {
+    if (event) event.preventDefault();
+    
+    if (state.cart.length === 0) {
+        showToast('❌ Votre panier est vide.', 'error');
+        return;
+    }
+    
+    // Récupérer les données du formulaire
+    const nom = document.getElementById('checkoutName')?.value.trim();
+    const email = document.getElementById('checkoutEmail')?.value.trim();
+    const telephone = document.getElementById('checkoutPhone')?.value.trim();
+    const adresse = document.getElementById('checkoutAddress')?.value.trim();
+    const livraison = document.getElementById('checkoutDelivery')?.value;
+    
+    // Validation des champs
+    if (!nom || !email || !telephone) {
+        showToast('❌ Veuillez remplir tous les champs obligatoires.', 'error');
+        return;
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showToast('❌ Veuillez entrer une adresse email valide.', 'error');
+        return;
+    }
+    
+    // Afficher un message de chargement
+    const submitBtn = document.querySelector('#checkoutForm button[type="submit"]');
+    const originalText = submitBtn?.innerHTML || 'Payer';
+    if (submitBtn) {
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
+        submitBtn.disabled = true;
+    }
+    
+    try {
+        const orderData = {
+            nom,
+            email,
+            telephone,
+            adresse: adresse || '',
+            livraison: livraison || 'pickup'
+        };
+        
+        const result = await processCartPayment(orderData);
+        
+        if (result) {
+            // Succès - le panier est vidé et le modal fermé par processCartPayment
+        }
+        
+    } catch (error) {
+        console.error('❌ Erreur checkout:', error);
+        showToast('❌ Une erreur est survenue. Veuillez réessayer.', 'error');
+    } finally {
+        // Réactiver le bouton
+        if (submitBtn) {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    }
+}
+
+// ═══════════════════════════════════════════════════════
+// 6️⃣ INITIALISATION
+// ═══════════════════════════════════════════════════════
+
+function initKkiapay() {
+    console.log('💳 KkiaPay initialisé - Mode:', KKIAY_CONFIG.mode);
+    
+    if (KKIAY_CONFIG.mode === 'sandbox') {
+        console.log('🧪 Mode SANDBOX actif');
+        console.log('📞 Numéros de test:', KKIAY_CONFIG.testPhones);
+        console.log('🔑 PIN de test: 0000');
+        console.log('💡 Utilisez le bouton de test en bas à droite');
+        
+        // Ajouter le bouton de test en mode sandbox
+        setTimeout(addKkiapayTestButton, 2000);
+    } else {
+        console.log('🔒 Mode PRODUCTION actif - Les paiements sont réels');
+    }
+    
+    // Modifier le formulaire de checkout pour utiliser KkiaPay
+    const checkoutForm = document.getElementById('checkoutForm');
+    if (checkoutForm) {
+        // Remplacer l'ancien submit par notre gestionnaire
+        const newForm = checkoutForm.cloneNode(true);
+        checkoutForm.parentNode.replaceChild(newForm, checkoutForm);
+        
+        newForm.addEventListener('submit', handleCheckoutWithKkiaPay);
+        console.log('✅ Formulaire checkout lié à KkiaPay');
+    }
+}
+
+// Initialiser KkiaPay après le chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    // Attendre que le SDK KkiaPay soit chargé
+    if (typeof kkiapay !== 'undefined') {
+        initKkiapay();
+    } else {
+        // Attendre le chargement du SDK
+        const checkKkiapay = setInterval(() => {
+            if (typeof kkiapay !== 'undefined') {
+                clearInterval(checkKkiapay);
+                initKkiapay();
+            }
+        }, 500);
+        
+        // Timeout après 10 secondes
+        setTimeout(() => {
+            clearInterval(checkKkiapay);
+            if (typeof kkiapay === 'undefined') {
+                console.warn('⚠️ KkiaPay SDK non chargé après 10s');
+            }
+        }, 10000);
+    }
+});

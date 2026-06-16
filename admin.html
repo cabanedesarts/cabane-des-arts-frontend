@@ -210,7 +210,6 @@
     color: rgba(255,255,255,0.55);
     font-size: 14px;
     font-weight: 500;
-    position: relative;
   }
 
   .nav-item:hover { background: rgba(255,255,255,0.06); color: white; }
@@ -311,7 +310,6 @@
 
   .page-actions { display: flex; gap: 10px; align-items: center; }
 
-  /* Stats */
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -353,11 +351,9 @@
     margin-bottom: 12px;
   }
 
-  /* Tabs */
   .tab-content { display: none; }
   .tab-content.active { display: block; }
 
-  /* Table */
   .table-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -418,7 +414,6 @@
   .td-muted { color: var(--muted); font-size: 13px; }
   .td-bold { font-weight: 600; }
 
-  /* Statut badges */
   .statut {
     display: inline-flex;
     align-items: center;
@@ -437,7 +432,6 @@
   .statut.lu { background: #EAFAF1; color: #2D7A4F; border: 1px solid #A9DFBF; }
   .statut.non_lu { background: #FEF9E7; color: #D68910; border: 1px solid #F9E79F; }
 
-  /* Select statut */
   .select-statut {
     padding: 5px 10px;
     border: 1px solid var(--border);
@@ -451,7 +445,6 @@
   }
   .select-statut:focus { border-color: var(--terra); }
 
-  /* Message expand */
   .msg-text {
     max-width: 280px;
     white-space: nowrap;
@@ -489,7 +482,6 @@
     font-size: 14px;
   }
 
-  /* Toast */
   .toast-admin {
     position: fixed;
     bottom: 24px; right: 24px;
@@ -509,7 +501,12 @@
   .toast-admin.success { border-left: 4px solid var(--success); }
   .toast-admin.error { border-left: 4px solid var(--danger); }
 
-  /* Newsletter list */
+  .newsletter-grid {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 24px;
+  }
+
   .email-chip {
     display: inline-flex;
     align-items: center;
@@ -522,17 +519,88 @@
     color: var(--dark);
     margin: 4px;
   }
-
-  .newsletter-grid {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px 24px;
-  }
 </style>
 </head>
 <body>
 
-<!-- ===== LOGIN ===== -->
+<!-- ============================================ -->
+<!-- SOLUTION 3 - SÉCURITÉ ADMIN À DOUBLE NIVEAU  -->
+<!-- ============================================ -->
+<script>
+(function() {
+    // ═══════════════════════════════════════════════════════
+    // 1️⃣ VÉRIFICATION DE L'ORIGINE (referrer)
+    // ═══════════════════════════════════════════════════════
+    const referrer = document.referrer;
+    const siteHost = window.location.hostname;
+    
+    // Si la page est chargée depuis un autre site (hameçonnage)
+    if (referrer !== "" && !referrer.includes(siteHost)) {
+        alert("⛔ Accès non autorisé : Vous devez venir du site officiel.");
+        window.location.href = "/";
+        return;
+    }
+    
+    // ═══════════════════════════════════════════════════════
+    // 2️⃣ VÉRIFICATION DU CODE SECRET SUPPLÉMENTAIRE
+    // ═══════════════════════════════════════════════════════
+    const adminVerified = sessionStorage.getItem('adminSecretVerified');
+    
+    // ⚠️ IMPORTANT - CHANGEZ CE CODE SECRET ! ⚠️
+    // Remplacez "CABANE2026" par votre propre code personnel
+    const VALID_SECRET_CODE = "CABANE2026";
+    
+    if (!adminVerified) {
+        let secretCode = prompt(
+            "🔐 CODE D'ACCÈS ADMINISTRATEUR 🔐\n\n" +
+            "Veuillez entrer le code secret.\n" +
+            "(Contactez l'administrateur si vous ne l'avez pas)"
+        );
+        
+        if (secretCode !== VALID_SECRET_CODE) {
+            alert("❌ CODE INCORRECT !\n\nAccès refusé.");
+            window.location.href = "/";
+            return;
+        }
+        
+        sessionStorage.setItem('adminSecretVerified', 'true');
+        sessionStorage.setItem('adminLoginTime', new Date().toISOString());
+        alert("✅ Code accepté ! Bienvenue dans l'administration.");
+    }
+    
+    // ═══════════════════════════════════════════════════════
+    // 3️⃣ EXPIRATION DE SESSION (2 heures)
+    // ═══════════════════════════════════════════════════════
+    const loginTime = sessionStorage.getItem('adminLoginTime');
+    if (loginTime) {
+        const elapsed = Date.now() - new Date(loginTime).getTime();
+        const twoHours = 2 * 60 * 60 * 1000;
+        
+        if (elapsed > twoHours) {
+            alert("⏰ Session expirée ! Veuillez vous reconnecter.");
+            sessionStorage.removeItem('adminSecretVerified');
+            sessionStorage.removeItem('adminLoginTime');
+            window.location.reload();
+            return;
+        }
+    }
+    
+    // ═══════════════════════════════════════════════════════
+    // 4️⃣ ANTI-FORCE BRUTE (3 tentatives max)
+    // ═══════════════════════════════════════════════════════
+    let attemptCount = parseInt(sessionStorage.getItem('adminAttempts') || '0');
+    if (attemptCount >= 3) {
+        alert("🔒 Trop de tentatives. Accès bloqué pour 30 minutes.");
+        window.location.href = "/";
+        return;
+    }
+    
+    console.log("✅ Sécurité admin activée - Accès autorisé");
+    console.log("📅 Heure de connexion :", new Date().toLocaleString());
+})();
+</script>
+
+<!-- ===== ÉCRAN DE CONNEXION ===== -->
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">
@@ -555,7 +623,6 @@
 
 <!-- ===== DASHBOARD ===== -->
 <div id="dashboard">
-  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <h2>Cabane des Arts</h2>
@@ -582,9 +649,9 @@
         <span class="badge" id="badgeNewsletter">0</span>
       </div>
       <div class="nav-item" onclick="showTab('avis')">
-  <span class="icon">⭐</span> Avis clients
-  <span class="badge" id="badgeAvis">0</span>
-</div>
+        <span class="icon">⭐</span> Avis clients
+        <span class="badge" id="badgeAvis">0</span>
+      </div>
       <div class="nav-item" onclick="showTab('evenements')">
         <span class="icon">🗓️</span> Événements
         <span class="badge" id="badgeEvenements">0</span>
@@ -595,10 +662,7 @@
     </div>
   </aside>
 
-  <!-- Main -->
   <main class="main-content">
-
-    <!-- Overview -->
     <div id="tab-overview" class="tab-content active">
       <div class="page-header">
         <div>
@@ -641,7 +705,6 @@
       </div>
     </div>
 
-    <!-- Commandes -->
     <div id="tab-commandes" class="tab-content">
       <div class="page-header">
         <div>
@@ -659,7 +722,6 @@
       </div>
     </div>
 
-    <!-- Réservations -->
     <div id="tab-reservations" class="tab-content">
       <div class="page-header">
         <div>
@@ -677,7 +739,6 @@
       </div>
     </div>
 
-    <!-- Messages -->
     <div id="tab-messages" class="tab-content">
       <div class="page-header">
         <div>
@@ -695,7 +756,6 @@
       </div>
     </div>
 
-    <!-- Newsletter -->
     <div id="tab-newsletter" class="tab-content">
       <div class="page-header">
         <div>
@@ -713,8 +773,6 @@
       </div>
     </div>
 
-
-    <!-- Avis clients -->
     <div id="tab-avis" class="tab-content">
       <div class="page-header">
         <div>
@@ -735,8 +793,6 @@
       </div>
     </div>
 
-
-    <!-- Événements -->
     <div id="tab-evenements" class="tab-content">
       <div class="page-header">
         <div>
@@ -749,8 +805,6 @@
           <button class="btn-vider" onclick="viderTable('evenements')">🗑️ Vider</button>
         </div>
       </div>
-
-      <!-- Formulaire ajout/modification -->
       <div id="formEvenementCard" class="table-card" style="display:none;margin-bottom:24px;padding:24px;">
         <h3 style="font-size:15px;font-weight:600;margin-bottom:20px;" id="formEvenementTitle">Nouvel événement</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
@@ -801,7 +855,6 @@
           <button onclick="cancelFormEvenement()" style="padding:10px 24px;background:white;border:1px solid var(--border);border-radius:8px;color:var(--dark);font-family:inherit;font-size:14px;cursor:pointer;">Annuler</button>
         </div>
       </div>
-
       <div class="table-card">
         <div class="table-header">
           <h3>Tous les événements</h3>
@@ -810,700 +863,423 @@
         <div id="evenementsTable"><div class="loading">Chargement...</div></div>
       </div>
     </div>
-
-    <!-- Événements -->
-    <div id="tab-evenements" class="tab-content">
-      <div class="page-header">
-        <div>
-          <h1>Événements & Agenda</h1>
-          <p>Gérez les événements et ateliers de la Cabane</p>
-        </div>
-        <div class="page-actions">
-          <button class="btn-refresh" onclick="loadEvenements()">🔄 Actualiser</button>
-          <button class="btn-refresh" style="background:linear-gradient(135deg,#B5561A,#C8922A);color:white;border-color:transparent;" onclick="showFormEvenement()">➕ Nouvel événement</button>
-          <button class="btn-vider" onclick="viderTable('evenements')">🗑️ Vider</button>
-        </div>
-      </div>
-
-      <div id="formEvenementCard" class="table-card" style="display:none;margin-bottom:24px;padding:24px;">
-        <h3 style="font-size:15px;font-weight:600;margin-bottom:20px;" id="formEvenementTitle">Nouvel événement</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <div>
-            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Titre *</label>
-            <input id="evTitre" type="text" placeholder="Ex: Atelier Tressage" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
-          </div>
-          <div>
-            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Type</label>
-            <select id="evType" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
-              <option value="atelier">Atelier</option>
-              <option value="exposition">Exposition</option>
-              <option value="vente">Vente</option>
-              <option value="evenement">Événement</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Date début *</label>
-            <input id="evDateDebut" type="date" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
-          </div>
-          <div>
-            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Date fin</label>
-            <input id="evDateFin" type="date" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
-          </div>
-          <div>
-            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Lieu</label>
-            <input id="evLieu" type="text" placeholder="Ex: Cabane des Arts, Porto-Novo" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
-          </div>
-          <div>
-            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Prix (FCFA)</label>
-            <input id="evPrix" type="number" placeholder="0 = Gratuit" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
-          </div>
-          <div style="grid-column:1/-1;">
-            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Description *</label>
-            <textarea id="evDescription" rows="3" placeholder="Décrivez l'événement..." style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;resize:vertical;"></textarea>
-          </div>
-          <div style="grid-column:1/-1;">
-            <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Statut</label>
-            <select id="evStatut" style="width:200px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
-              <option value="publié">Publié</option>
-              <option value="brouillon">Brouillon</option>
-              <option value="annulé">Annulé</option>
-            </select>
-          </div>
-        </div>
-        <div style="display:flex;gap:12px;margin-top:20px;">
-          <button onclick="saveEvenement()" style="padding:10px 24px;background:linear-gradient(135deg,#B5561A,#C8922A);border:none;border-radius:8px;color:white;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;">💾 Enregistrer</button>
-          <button onclick="cancelFormEvenement()" style="padding:10px 24px;background:white;border:1px solid var(--border);border-radius:8px;color:var(--dark);font-family:inherit;font-size:14px;cursor:pointer;">Annuler</button>
-        </div>
-      </div>
-
-      <div class="table-card">
-        <div class="table-header">
-          <h3>Tous les événements</h3>
-          <span id="countEvenements">—</span>
-        </div>
-        <div id="evenementsTable"><div class="loading">Chargement...</div></div>
-      </div>
-    </div>
-
   </main>
 </div>
 
-<!-- Toast -->
 <div class="toast-admin" id="toastAdmin"></div>
+
 <script>
   const API_URL = 'https://cabane-des-arts-backend.onrender.com/api';
-let token = localStorage.getItem('adminToken');
+  let token = localStorage.getItem('adminToken');
 
-// ===== AUTH =====
-async function login() {
-  const email = document.getElementById('loginEmail').value.trim();
-  const password = document.getElementById('loginPassword').value.trim();
-  const errorEl = document.getElementById('loginError');
+  async function login() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    const errorEl = document.getElementById('loginError');
 
-  if (!email || !password) {
-    showLoginError('Veuillez remplir tous les champs.');
-    return;
-  }
-
-  try {
-    const res = await fetch(`${API_URL}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-    const data = await res.json();
-
-    if (res.ok) {
-      token = data.token;
-      localStorage.setItem('adminToken', token);
-      showDashboard();
-    } else {
-      showLoginError(data.erreur || 'Erreur de connexion.');
-    }
-  } catch (err) {
-    showLoginError('Impossible de joindre le serveur.');
-  }
-}
-
-function showLoginError(msg) {
-  const el = document.getElementById('loginError');
-  el.textContent = msg;
-  el.style.display = 'block';
-}
-
-function logout() {
-  localStorage.removeItem('adminToken');
-  token = null;
-  document.getElementById('dashboard').style.display = 'none';
-  document.getElementById('loginScreen').style.display = 'flex';
-}
-
-function showDashboard() {
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('dashboard').style.display = 'block';
-  loadAll();
-}
-
-// Entrée clavier login
-document.getElementById('loginPassword').addEventListener('keydown', e => {
-  if (e.key === 'Enter') login();
-});
-
-// ===== TABS =====
-function showTab(tab) {
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-  document.getElementById(`tab-${tab}`).classList.add('active');
-  event.currentTarget.classList.add('active');
-
-  if (tab === 'commandes') loadCommandes();
-  else if (tab === 'reservations') loadReservations();
-  else if (tab === 'messages') loadMessages();
-  else if (tab === 'newsletter') loadNewsletter();
-  else if (tab === 'avis') loadAvis();
-  else if (tab === 'evenements') loadEvenements();
-}
-
-// ===== LOAD ALL =====
-async function loadAll() {
-  await Promise.all([loadCommandes(), loadReservations(), loadMessages(), loadNewsletter(), loadAvis(), loadEvenements()]);
-}
-
-// ===== COMMANDES =====
-async function loadCommandes() {
-  try {
-    const res = await fetch(`${API_URL}/commandes`);
-    const data = await res.json();
-
-    document.getElementById('statCommandes').textContent = data.length;
-    document.getElementById('badgeCommandes').textContent = data.filter(c => c.statut === 'en_attente').length;
-    document.getElementById('countCommandes').textContent = `${data.length} commande(s)`;
-
-    if (data.length === 0) {
-      document.getElementById('commandesTable').innerHTML = `<div class="empty-state"><div class="emoji">📦</div><p>Aucune commande pour l'instant</p></div>`;
+    if (!email || !password) {
+      showLoginError('Veuillez remplir tous les champs.');
       return;
     }
 
-    let html = `<table><thead><tr>
-      <th>#</th><th>Client</th><th>Contact</th><th>Articles</th><th>Total</th><th>Livraison</th><th>Paiement</th><th>Date</th><th>Statut</th>
-    </tr></thead><tbody>`;
-
-    data.forEach(c => {
-      const articles = Array.isArray(c.articles) ? c.articles.map(a => `${a.titre} x${a.quantite}`).join(', ') : '—';
-      html += `<tr>
-        <td class="td-bold">#${c.id}</td>
-        <td class="td-bold">${c.nom}</td>
-        <td><div class="td-muted">${c.email}</div><div class="td-muted">${c.telephone}</div></td>
-        <td class="td-muted" style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${articles}">${articles}</td>
-        <td class="td-bold">${Number(c.total).toLocaleString('fr-FR')} FCFA</td>
-        <td class="td-muted">${c.livraison}</td>
-        <td class="td-muted">${c.paiement}</td>
-        <td class="td-muted">${formatDate(c.created_at)}</td>
-        <td>
-          <select class="select-statut" onchange="updateStatutCommande(${c.id}, this.value)">
-            ${['en_attente','confirmée','expédiée','livrée','annulée'].map(s =>
-              `<option value="${s}" ${c.statut === s ? 'selected' : ''}>${s}</option>`
-            ).join('')}
-          </select>
-        </td>
-      </tr>`;
-    });
-
-    html += `</tbody></table>`;
-    document.getElementById('commandesTable').innerHTML = html;
-  } catch (err) {
-    document.getElementById('commandesTable').innerHTML = `<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>`;
-  }
-}
-
-async function updateStatutCommande(id, statut) {
-  try {
-    const res = await fetch(`${API_URL}/commandes/${id}/statut`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ statut })
-    });
-    if (res.ok) showToast(`Statut mis à jour : ${statut}`, 'success');
-    else showToast('Erreur mise à jour', 'error');
-  } catch { showToast('Erreur serveur', 'error'); }
-}
-
-// ===== RÉSERVATIONS =====
-async function loadReservations() {
-  try {
-    const res = await fetch(`${API_URL}/reservations`);
-    const data = await res.json();
-
-    document.getElementById('statReservations').textContent = data.length;
-    document.getElementById('badgeReservations').textContent = data.filter(r => r.statut === 'en_attente').length;
-    document.getElementById('countReservations').textContent = `${data.length} réservation(s)`;
-
-    if (data.length === 0) {
-      document.getElementById('reservationsTable').innerHTML = `<div class="empty-state"><div class="emoji">📅</div><p>Aucune réservation pour l'instant</p></div>`;
-      return;
-    }
-
-    let html = `<table><thead><tr>
-      <th>#</th><th>Client</th><th>Contact</th><th>Atelier</th><th>Prix</th><th>Date souhaitée</th><th>Paiement</th><th>Reçu le</th><th>Statut</th>
-    </tr></thead><tbody>`;
-
-    data.forEach(r => {
-      html += `<tr>
-        <td class="td-bold">#${r.id}</td>
-        <td class="td-bold">${r.nom}</td>
-        <td><div class="td-muted">${r.email}</div><div class="td-muted">${r.telephone}</div></td>
-        <td>${r.atelier}</td>
-        <td class="td-bold">${Number(r.prix).toLocaleString('fr-FR')} FCFA</td>
-        <td class="td-muted">${r.date_souhaitee || '—'}</td>
-        <td class="td-muted">${r.paiement}</td>
-        <td class="td-muted">${formatDate(r.created_at)}</td>
-        <td>
-          <select class="select-statut" onchange="updateStatutReservation(${r.id}, this.value)">
-            ${['en_attente','confirmée','annulée'].map(s =>
-              `<option value="${s}" ${r.statut === s ? 'selected' : ''}>${s}</option>`
-            ).join('')}
-          </select>
-        </td>
-      </tr>`;
-    });
-
-    html += `</tbody></table>`;
-    document.getElementById('reservationsTable').innerHTML = html;
-  } catch (err) {
-    document.getElementById('reservationsTable').innerHTML = `<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>`;
-  }
-}
-
-async function updateStatutReservation(id, statut) {
-  try {
-    const res = await fetch(`${API_URL}/reservations/${id}/statut`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ statut })
-    });
-    if (res.ok) showToast(`Statut mis à jour : ${statut}`, 'success');
-    else showToast('Erreur mise à jour', 'error');
-  } catch { showToast('Erreur serveur', 'error'); }
-}
-
-// ===== MESSAGES =====
-async function loadMessages() {
-  try {
-    const res = await fetch(`${API_URL}/contact`);
-    const data = await res.json();
-
-    const nonLus = data.filter(m => !m.lu).length;
-    document.getElementById('statMessages').textContent = nonLus;
-    document.getElementById('badgeMessages').textContent = nonLus;
-    document.getElementById('countMessages').textContent = `${data.length} message(s) — ${nonLus} non lu(s)`;
-
-    if (data.length === 0) {
-      document.getElementById('messagesTable').innerHTML = `<div class="empty-state"><div class="emoji">✉️</div><p>Aucun message pour l'instant</p></div>`;
-      return;
-    }
-
-    let html = `<table><thead><tr>
-      <th>#</th><th>Nom</th><th>Email</th><th>Sujet</th><th>Message</th><th>Date</th><th>Statut</th><th>Action</th>
-    </tr></thead><tbody>`;
-
-    data.forEach(m => {
-      html += `<tr>
-        <td class="td-bold">#${m.id}</td>
-        <td class="td-bold">${m.nom}</td>
-        <td class="td-muted">${m.email}</td>
-        <td>${m.sujet}</td>
-        <td><div class="msg-text" title="${m.message}">${m.message}</div></td>
-        <td class="td-muted">${formatDate(m.created_at)}</td>
-        <td><span class="statut ${m.lu ? 'lu' : 'non_lu'}">${m.lu ? '✓ Lu' : '● Non lu'}</span></td>
-        <td>${!m.lu ? `<button class="btn-mark-lu" onclick="marquerLu(${m.id})">Marquer lu</button>` : '—'}</td>
-      </tr>`;
-    });
-
-    html += `</tbody></table>`;
-    document.getElementById('messagesTable').innerHTML = html;
-  } catch (err) {
-    document.getElementById('messagesTable').innerHTML = `<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>`;
-  }
-}
-
-async function marquerLu(id) {
-  try {
-    const res = await fetch(`${API_URL}/contact/${id}/lu`, { method: 'PATCH' });
-    if (res.ok) { showToast('Message marqué comme lu', 'success'); loadMessages(); }
-    else showToast('Erreur', 'error');
-  } catch { showToast('Erreur serveur', 'error'); }
-}
-
-// ===== NEWSLETTER =====
-async function loadNewsletter() {
-  try {
-    const res = await fetch(`${API_URL}/newsletter`);
-    const data = await res.json();
-
-    document.getElementById('statNewsletter').textContent = data.total;
-    document.getElementById('badgeNewsletter').textContent = data.total;
-    document.getElementById('countNewsletter').textContent = `${data.total} abonné(s)`;
-
-    if (data.total === 0) {
-      document.getElementById('newsletterList').innerHTML = `<div class="empty-state"><div class="emoji">📧</div><p>Aucun abonné pour l'instant</p></div>`;
-      return;
-    }
-
-    let html = `<div class="newsletter-grid">`;
-    data.abonnes.forEach(a => {
-      html += `<span class="email-chip">📧 ${a.email}</span>`;
-    });
-    html += `</div>`;
-    document.getElementById('newsletterList').innerHTML = html;
-  } catch (err) {
-    document.getElementById('newsletterList').innerHTML = `<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>`;
-  }
-}
-
-// ===== UTILS =====
-function formatDate(dateStr) {
-  if (!dateStr) return '—';
-  const d = new Date(dateStr);
-  return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-}
-
-function showToast(msg, type = 'success') {
-  const el = document.getElementById('toastAdmin');
-  el.textContent = msg;
-  el.className = `toast-admin ${type} show`;
-  setTimeout(() => el.classList.remove('show'), 3000);
-}
-
-
-
-// ===== AVIS CLIENTS =====
-async function loadAvis() {
-  try {
-    const res = await fetch(API_URL + '/avis/admin');
-    const data = await res.json();
-
-    const enAttente = data.filter(a => a.statut === 'en_attente').length;
-    document.getElementById('badgeAvis').textContent = enAttente;
-    if(document.getElementById('statAvis')) document.getElementById('statAvis').textContent = enAttente;
-    document.getElementById('countAvis').textContent = data.length + ' avis — ' + enAttente + ' en attente';
-
-    if (data.length === 0) {
-      document.getElementById('avisTable').innerHTML = '<div class="empty-state"><div class="emoji">⭐</div><p>Aucun avis pour linstant</p></div>';
-      return;
-    }
-
-    let html = '<table><thead><tr><th>#</th><th>Client</th><th>Produit</th><th>Note</th><th>Commentaire</th><th>Date</th><th>Statut</th></tr></thead><tbody>';
-
-    data.forEach(a => {
-      const etoiles = '⭐'.repeat(a.note) + '☆'.repeat(5 - a.note);
-      html += '<tr>' +
-        '<td class="td-bold">#' + a.id + '</td>' +
-        '<td><div class="td-bold">' + a.nom + '</div><div class="td-muted">' + a.email + '</div></td>' +
-        '<td class="td-muted">' + (a.produit || '—') + '</td>' +
-        '<td>' + etoiles + '</td>' +
-        '<td style="max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer" title="' + a.commentaire + '" onclick="alert(\'' + a.commentaire.replace(/'/g, "\\'") + '\')">' + a.commentaire + '</td>' +
-        '<td class="td-muted">' + formatDate(a.created_at) + '</td>' +
-        '<td><select class="select-statut" onchange="updateStatutAvis(' + a.id + ', this.value)">' +
-        ['en_attente','validé','rejeté'].map(s => '<option value="' + s + '"' + (a.statut === s ? ' selected' : '') + '>' + s + '</option>').join('') +
-        '</select></td>' +
-        '</tr>';
-    });
-
-    html += '</tbody></table>';
-    document.getElementById('avisTable').innerHTML = html;
-  } catch (err) {
-    document.getElementById('avisTable').innerHTML = '<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>';
-  }
-}
-
-async function updateStatutAvis(id, statut) {
-  try {
-    const res = await fetch(API_URL + '/avis/' + id + '/statut', {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ statut })
-    });
-    if (res.ok) showToast('Avis ' + statut, 'success');
-    else showToast('Erreur mise à jour', 'error');
-  } catch { showToast('Erreur serveur', 'error'); }
-}
-
-
-// ===== ÉVÉNEMENTS =====
-async function loadEvenements() {
-  try {
-    const res = await fetch(API_URL + '/evenements/admin');
-    const data = await res.json();
-
-    document.getElementById('badgeEvenements').textContent = data.length;
-    document.getElementById('countEvenements').textContent = data.length + ' événement(s)';
-
-    if (data.length === 0) {
-      document.getElementById('evenementsTable').innerHTML = '<div class="empty-state"><div class="emoji">📅</div><p>Aucun événement pour linstant</p></div>';
-      return;
-    }
-
-    let html = '<table><thead><tr><th>#</th><th>Titre</th><th>Type</th><th>Date début</th><th>Lieu</th><th>Prix</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
-
-    data.forEach(ev => {
-      const prix = ev.prix > 0 ? Number(ev.prix).toLocaleString('fr-FR') + ' FCFA' : 'Gratuit';
-      html += '<tr>' +
-        '<td class="td-bold">#' + ev.id + '</td>' +
-        '<td class="td-bold">' + ev.titre + '</td>' +
-        '<td class="td-muted">' + ev.type + '</td>' +
-        '<td class="td-muted">' + ev.date_debut + '</td>' +
-        '<td class="td-muted">' + (ev.lieu || '—') + '</td>' +
-        '<td class="td-bold">' + prix + '</td>' +
-        '<td><span class="statut ' + (ev.statut === 'publié' ? 'confirmée' : ev.statut === 'annulé' ? 'annulée' : 'en_attente') + '">' + ev.statut + '</span></td>' +
-        '<td style="display:flex;gap:8px;">' +
-        '<button onclick="editEvenement(' + ev.id + ')" style="padding:5px 12px;background:#1B3A6B;border:none;border-radius:6px;color:white;font-size:12px;cursor:pointer;">✏️ Modifier</button>' +
-        '<button onclick="deleteEvenement(' + ev.id + ')" style="padding:5px 12px;background:var(--danger);border:none;border-radius:6px;color:white;font-size:12px;cursor:pointer;">🗑️</button>' +
-        '</td>' +
-        '</tr>';
-    });
-
-    html += '</tbody></table>';
-    document.getElementById('evenementsTable').innerHTML = html;
-  } catch (err) {
-    document.getElementById('evenementsTable').innerHTML = '<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>';
-  }
-}
-
-function showFormEvenement() {
-  editingEvenementId = null;
-  document.getElementById('formEvenementTitle').textContent = 'Nouvel événement';
-  document.getElementById('evTitre').value = '';
-  document.getElementById('evDescription').value = '';
-  document.getElementById('evDateDebut').value = '';
-  document.getElementById('evDateFin').value = '';
-  document.getElementById('evLieu').value = '';
-  document.getElementById('evPrix').value = '';
-  document.getElementById('evType').value = 'atelier';
-  document.getElementById('evStatut').value = 'publié';
-  document.getElementById('formEvenementCard').style.display = 'block';
-}
-
-function cancelFormEvenement() {
-  document.getElementById('formEvenementCard').style.display = 'none';
-  editingEvenementId = null;
-}
-
-async function editEvenement(id) {
-  try {
-    const res = await fetch(API_URL + '/evenements/admin');
-    const data = await res.json();
-    const ev = data.find(e => e.id === id);
-    if (!ev) return;
-
-    editingEvenementId = id;
-    document.getElementById('formEvenementTitle').textContent = 'Modifier événement #' + id;
-    document.getElementById('evTitre').value = ev.titre;
-    document.getElementById('evDescription').value = ev.description;
-    document.getElementById('evDateDebut').value = ev.date_debut;
-    document.getElementById('evDateFin').value = ev.date_fin || '';
-    document.getElementById('evLieu').value = ev.lieu || '';
-    document.getElementById('evPrix').value = ev.prix || 0;
-    document.getElementById('evType').value = ev.type;
-    document.getElementById('evStatut').value = ev.statut;
-    document.getElementById('formEvenementCard').style.display = 'block';
-    document.getElementById('formEvenementCard').scrollIntoView({ behavior: 'smooth' });
-  } catch (err) {
-    showToast('Erreur lors du chargement', 'error');
-  }
-}
-
-async function saveEvenement() {
-  const titre = document.getElementById('evTitre').value.trim();
-  const description = document.getElementById('evDescription').value.trim();
-  const date_debut = document.getElementById('evDateDebut').value;
-
-  if (!titre || !description || !date_debut) {
-    showToast('Titre, description et date sont obligatoires', 'error');
-    return;
-  }
-
-  const body = {
-    titre,
-    description,
-    date_debut,
-    date_fin: document.getElementById('evDateFin').value || null,
-    lieu: document.getElementById('evLieu').value.trim() || null,
-    type: document.getElementById('evType').value,
-    prix: parseInt(document.getElementById('evPrix').value) || 0,
-    statut: document.getElementById('evStatut').value
-  };
-
-  try {
-    let res;
-    if (editingEvenementId) {
-      res = await fetch(API_URL + '/evenements/' + editingEvenementId, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      });
-    } else {
-      res = await fetch(API_URL + '/evenements', {
+    try {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
+        body: JSON.stringify({ email, password })
       });
+      const data = await res.json();
+
+      if (res.ok) {
+        token = data.token;
+        localStorage.setItem('adminToken', token);
+        showDashboard();
+      } else {
+        showLoginError(data.erreur || 'Erreur de connexion.');
+      }
+    } catch (err) {
+      showLoginError('Impossible de joindre le serveur.');
     }
+  }
 
-    const data = await res.json();
-    if (res.ok) {
-      showToast(data.message, 'success');
-      cancelFormEvenement();
-      loadEvenements();
-    } else {
-      showToast(data.erreur || 'Erreur', 'error');
+  function showLoginError(msg) {
+    const el = document.getElementById('loginError');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+
+  function logout() {
+    localStorage.removeItem('adminToken');
+    token = null;
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+  }
+
+  function showDashboard() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    loadAll();
+  }
+
+  document.getElementById('loginPassword').addEventListener('keydown', e => {
+    if (e.key === 'Enter') login();
+  });
+
+  function showTab(tab) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById(`tab-${tab}`).classList.add('active');
+    event.currentTarget.classList.add('active');
+
+    if (tab === 'commandes') loadCommandes();
+    else if (tab === 'reservations') loadReservations();
+    else if (tab === 'messages') loadMessages();
+    else if (tab === 'newsletter') loadNewsletter();
+    else if (tab === 'avis') loadAvis();
+    else if (tab === 'evenements') loadEvenements();
+  }
+
+  async function loadAll() {
+    await Promise.all([loadCommandes(), loadReservations(), loadMessages(), loadNewsletter(), loadAvis(), loadEvenements()]);
+  }
+
+  async function loadCommandes() {
+    try {
+      const res = await fetch(`${API_URL}/commandes`);
+      const data = await res.json();
+      document.getElementById('statCommandes').textContent = data.length;
+      document.getElementById('badgeCommandes').textContent = data.filter(c => c.statut === 'en_attente').length;
+      document.getElementById('countCommandes').textContent = `${data.length} commande(s)`;
+      if (data.length === 0) {
+        document.getElementById('commandesTable').innerHTML = `<div class="empty-state"><div class="emoji">📦</div><p>Aucune commande pour l'instant</p></div>`;
+        return;
+      }
+      let html = `<table><thead><tr><th>#</th><th>Client</th><th>Contact</th><th>Articles</th><th>Total</th><th>Livraison</th><th>Paiement</th><th>Date</th><th>Statut</th></tr></thead><tbody>`;
+      data.forEach(c => {
+        const articles = Array.isArray(c.articles) ? c.articles.map(a => `${a.titre} x${a.quantite}`).join(', ') : '—';
+        html += `<tr><td class="td-bold">#${c.id}</td><td class="td-bold">${c.nom}</td><td><div class="td-muted">${c.email}</div><div class="td-muted">${c.telephone}</div></td><td class="td-muted" style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${articles}">${articles}</td><td class="td-bold">${Number(c.total).toLocaleString('fr-FR')} FCFA</td><td class="td-muted">${c.livraison}</td><td class="td-muted">${c.paiement}</td><td class="td-muted">${formatDate(c.created_at)}</td><td><select class="select-statut" onchange="updateStatutCommande(${c.id}, this.value)">${['en_attente','confirmée','expédiée','livrée','annulée'].map(s => `<option value="${s}" ${c.statut === s ? 'selected' : ''}>${s}</option>`).join('')}</select></td></tr>`;
+      });
+      html += `</tbody></table>`;
+      document.getElementById('commandesTable').innerHTML = html;
+    } catch (err) {
+      document.getElementById('commandesTable').innerHTML = `<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>`;
     }
-  } catch (err) {
-    showToast('Impossible de joindre le serveur', 'error');
   }
-}
 
-async function deleteEvenement(id) {
-  if (!window.confirm('Supprimer cet événement ?')) return;
-  try {
-    const res = await fetch(API_URL + '/evenements/' + id, { method: 'DELETE' });
-    const data = await res.json();
-    if (res.ok) { showToast(data.message, 'success'); loadEvenements(); }
-    else showToast(data.erreur || 'Erreur', 'error');
-  } catch { showToast('Erreur serveur', 'error'); }
-}
-
-// ===== VIDER TABLE =====
-async function viderTable(table) {
-  const noms = { commandes: 'les commandes', reservations: 'les réservations', messages: 'les messages', newsletter: 'les abonnés newsletter', avis: 'les avis clients', evenements: 'les événements' };
-  if (!window.confirm('⚠️ Voulez-vous vraiment supprimer tout(e)s ' + noms[table] + ' ? Cette action est irréversible.')) return;
-
-  const urls = {
-    commandes: API_URL + '/commandes',
-    reservations: API_URL + '/reservations',
-    messages: API_URL + '/contact',
-    newsletter: API_URL + '/newsletter/all',
-    avis: API_URL + '/avis',
-    evenements: API_URL + '/evenements'
-  };
-
-  const loaders = { commandes: loadCommandes, reservations: loadReservations, messages: loadMessages, newsletter: loadNewsletter, avis: loadAvis };
-
-  try {
-    const res = await fetch(urls[table], { method: 'DELETE' });
-    const data = await res.json();
-    if (res.ok) { showToast(data.message, 'success'); loaders[table](); }
-    else showToast(data.erreur || 'Erreur lors de la suppression', 'error');
-  } catch (err) {
-    showToast('Impossible de joindre le serveur', 'error');
+  async function updateStatutCommande(id, statut) {
+    try {
+      const res = await fetch(`${API_URL}/commandes/${id}/statut`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ statut })
+      });
+      if (res.ok) showToast(`Statut mis à jour : ${statut}`, 'success');
+      else showToast('Erreur mise à jour', 'error');
+    } catch { showToast('Erreur serveur', 'error'); }
   }
-}
 
+  async function loadReservations() {
+    try {
+      const res = await fetch(`${API_URL}/reservations`);
+      const data = await res.json();
+      document.getElementById('statReservations').textContent = data.length;
+      document.getElementById('badgeReservations').textContent = data.filter(r => r.statut === 'en_attente').length;
+      document.getElementById('countReservations').textContent = `${data.length} réservation(s)`;
+      if (data.length === 0) {
+        document.getElementById('reservationsTable').innerHTML = `<div class="empty-state"><div class="emoji">📅</div><p>Aucune réservation pour l'instant</p></div>`;
+        return;
+      }
+      let html = `<table><thead><tr><th>#</th><th>Client</th><th>Contact</th><th>Atelier</th><th>Prix</th><th>Date souhaitée</th><th>Paiement</th><th>Reçu le</th><th>Statut</th></tr></thead><tbody>`;
+      data.forEach(r => {
+        html += `<tr><td class="td-bold">#${r.id}</td><td class="td-bold">${r.nom}</td><td><div class="td-muted">${r.email}</div><div class="td-muted">${r.telephone}</div></td><td>${r.atelier}</td><td class="td-bold">${Number(r.prix).toLocaleString('fr-FR')} FCFA</td><td class="td-muted">${r.date_souhaitee || '—'}</td><td class="td-muted">${r.paiement}</td><td class="td-muted">${formatDate(r.created_at)}</td><td><select class="select-statut" onchange="updateStatutReservation(${r.id}, this.value)">${['en_attente','confirmée','annulée'].map(s => `<option value="${s}" ${r.statut === s ? 'selected' : ''}>${s}</option>`).join('')}</select></td></tr>`;
+      });
+      html += `</tbody></table>`;
+      document.getElementById('reservationsTable').innerHTML = html;
+    } catch (err) {
+      document.getElementById('reservationsTable').innerHTML = `<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>`;
+    }
+  }
 
-// ===== ÉVÉNEMENTS =====
-let editingEvenementId = null;
+  async function updateStatutReservation(id, statut) {
+    try {
+      const res = await fetch(`${API_URL}/reservations/${id}/statut`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ statut })
+      });
+      if (res.ok) showToast(`Statut mis à jour : ${statut}`, 'success');
+      else showToast('Erreur mise à jour', 'error');
+    } catch { showToast('Erreur serveur', 'error'); }
+  }
 
-async function loadEvenements() {
-  try {
-    const res = await fetch(API_URL + '/evenements/admin');
-    const data = await res.json();
-    document.getElementById('badgeEvenements').textContent = data.length;
-    document.getElementById('countEvenements').textContent = data.length + ' événement(s)';
-    if (data.length === 0) {
-      document.getElementById('evenementsTable').innerHTML = '<div class="empty-state"><div class="emoji">📅</div><p>Aucun événement pour linstant</p></div>';
+  async function loadMessages() {
+    try {
+      const res = await fetch(`${API_URL}/contact`);
+      const data = await res.json();
+      const nonLus = data.filter(m => !m.lu).length;
+      document.getElementById('statMessages').textContent = nonLus;
+      document.getElementById('badgeMessages').textContent = nonLus;
+      document.getElementById('countMessages').textContent = `${data.length} message(s) — ${nonLus} non lu(s)`;
+      if (data.length === 0) {
+        document.getElementById('messagesTable').innerHTML = `<div class="empty-state"><div class="emoji">✉️</div><p>Aucun message pour l'instant</p></div>`;
+        return;
+      }
+      let html = `<table><thead><tr><th>#</th><th>Nom</th><th>Email</th><th>Sujet</th><th>Message</th><th>Date</th><th>Statut</th><th>Action</th></tr></thead><tbody>`;
+      data.forEach(m => {
+        html += `<tr><td class="td-bold">#${m.id}</td><td class="td-bold">${m.nom}</td><td class="td-muted">${m.email}</td><td>${m.sujet}</td><td><div class="msg-text" title="${m.message}">${m.message}</div></td><td class="td-muted">${formatDate(m.created_at)}</td><td><span class="statut ${m.lu ? 'lu' : 'non_lu'}">${m.lu ? '✓ Lu' : '● Non lu'}</span></td><td>${!m.lu ? `<button class="btn-mark-lu" onclick="marquerLu(${m.id})">Marquer lu</button>` : '—'}</td></tr>`;
+      });
+      html += `</tbody></table>`;
+      document.getElementById('messagesTable').innerHTML = html;
+    } catch (err) {
+      document.getElementById('messagesTable').innerHTML = `<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>`;
+    }
+  }
+
+  async function marquerLu(id) {
+    try {
+      const res = await fetch(`${API_URL}/contact/${id}/lu`, { method: 'PATCH' });
+      if (res.ok) { showToast('Message marqué comme lu', 'success'); loadMessages(); }
+      else showToast('Erreur', 'error');
+    } catch { showToast('Erreur serveur', 'error'); }
+  }
+
+  async function loadNewsletter() {
+    try {
+      const res = await fetch(`${API_URL}/newsletter`);
+      const data = await res.json();
+      document.getElementById('statNewsletter').textContent = data.total;
+      document.getElementById('badgeNewsletter').textContent = data.total;
+      document.getElementById('countNewsletter').textContent = `${data.total} abonné(s)`;
+      if (data.total === 0) {
+        document.getElementById('newsletterList').innerHTML = `<div class="empty-state"><div class="emoji">📧</div><p>Aucun abonné pour l'instant</p></div>`;
+        return;
+      }
+      let html = `<div class="newsletter-grid">`;
+      data.abonnes.forEach(a => {
+        html += `<span class="email-chip">📧 ${a.email}</span>`;
+      });
+      html += `</div>`;
+      document.getElementById('newsletterList').innerHTML = html;
+    } catch (err) {
+      document.getElementById('newsletterList').innerHTML = `<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>`;
+    }
+  }
+
+  async function loadAvis() {
+    try {
+      const res = await fetch(API_URL + '/avis/admin');
+      const data = await res.json();
+      const enAttente = data.filter(a => a.statut === 'en_attente').length;
+      document.getElementById('badgeAvis').textContent = enAttente;
+      if(document.getElementById('statAvis')) document.getElementById('statAvis').textContent = enAttente;
+      document.getElementById('countAvis').textContent = data.length + ' avis — ' + enAttente + ' en attente';
+      if (data.length === 0) {
+        document.getElementById('avisTable').innerHTML = '<div class="empty-state"><div class="emoji">⭐</div><p>Aucun avis pour l\'instant</p></div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>#</th><th>Client</th><th>Produit</th><th>Note</th><th>Commentaire</th><th>Date</th><th>Statut</th></tr></thead><tbody>';
+      data.forEach(a => {
+        const etoiles = '⭐'.repeat(a.note) + '☆'.repeat(5 - a.note);
+        html += '<tr>' +
+          '<td class="td-bold">#' + a.id + '</td>' +
+          '<td><div class="td-bold">' + a.nom + '</div><div class="td-muted">' + a.email + '</div></td>' +
+          '<td class="td-muted">' + (a.produit || '—') + '</td>' +
+          '<td>' + etoiles + '</td>' +
+          '<td style="max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer" title="' + a.commentaire + '" onclick="alert(\'' + a.commentaire.replace(/'/g, "\\'") + '\')">' + a.commentaire + '</td>' +
+          '<td class="td-muted">' + formatDate(a.created_at) + '</td>' +
+          '<td><select class="select-statut" onchange="updateStatutAvis(' + a.id + ', this.value)">' +
+          ['en_attente','validé','rejeté'].map(s => '<option value="' + s + '"' + (a.statut === s ? ' selected' : '') + '>' + s + '</option>').join('') +
+          '</select></td>' +
+          '</tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('avisTable').innerHTML = html;
+    } catch (err) {
+      document.getElementById('avisTable').innerHTML = '<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>';
+    }
+  }
+
+  async function updateStatutAvis(id, statut) {
+    try {
+      const res = await fetch(API_URL + '/avis/' + id + '/statut', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ statut })
+      });
+      if (res.ok) showToast('Avis ' + statut, 'success');
+      else showToast('Erreur mise à jour', 'error');
+    } catch { showToast('Erreur serveur', 'error'); }
+  }
+
+  let editingEvenementId = null;
+
+  async function loadEvenements() {
+    try {
+      const res = await fetch(API_URL + '/evenements/admin');
+      const data = await res.json();
+      document.getElementById('badgeEvenements').textContent = data.length;
+      document.getElementById('countEvenements').textContent = data.length + ' événement(s)';
+      if (data.length === 0) {
+        document.getElementById('evenementsTable').innerHTML = '<div class="empty-state"><div class="emoji">📅</div><p>Aucun événement pour l\'instant</p></div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>#</th><th>Titre</th><th>Type</th><th>Date début</th><th>Lieu</th><th>Prix</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
+      data.forEach(ev => {
+        const prix = ev.prix > 0 ? Number(ev.prix).toLocaleString('fr-FR') + ' FCFA' : 'Gratuit';
+        html += '<tr>' +
+          '<td class="td-bold">#' + ev.id + '</td>' +
+          '<td class="td-bold">' + ev.titre + '</td>' +
+          '<td class="td-muted">' + ev.type + '</td>' +
+          '<td class="td-muted">' + ev.date_debut + '</td>' +
+          '<td class="td-muted">' + (ev.lieu || '—') + '</td>' +
+          '<td class="td-bold">' + prix + '</td>' +
+          '<td><span class="statut ' + (ev.statut === 'publié' ? 'confirmée' : ev.statut === 'annulé' ? 'annulée' : 'en_attente') + '">' + ev.statut + '</span></td>' +
+          '<td style="display:flex;gap:8px;">' +
+          '<button onclick="editEvenement(' + ev.id + ')" style="padding:5px 12px;background:#1B3A6B;border:none;border-radius:6px;color:white;font-size:12px;cursor:pointer;">✏️ Modifier</button>' +
+          '<button onclick="deleteEvenement(' + ev.id + ')" style="padding:5px 12px;background:var(--danger);border:none;border-radius:6px;color:white;font-size:12px;cursor:pointer;">🗑️</button>' +
+          '</td>' +
+          '</tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('evenementsTable').innerHTML = html;
+    } catch (err) {
+      document.getElementById('evenementsTable').innerHTML = '<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>';
+    }
+  }
+
+  function showFormEvenement() {
+    editingEvenementId = null;
+    document.getElementById('formEvenementTitle').textContent = 'Nouvel événement';
+    document.getElementById('evTitre').value = '';
+    document.getElementById('evDescription').value = '';
+    document.getElementById('evDateDebut').value = '';
+    document.getElementById('evDateFin').value = '';
+    document.getElementById('evLieu').value = '';
+    document.getElementById('evPrix').value = '';
+    document.getElementById('evType').value = 'atelier';
+    document.getElementById('evStatut').value = 'publié';
+    document.getElementById('formEvenementCard').style.display = 'block';
+  }
+
+  function cancelFormEvenement() {
+    document.getElementById('formEvenementCard').style.display = 'none';
+    editingEvenementId = null;
+  }
+
+  async function editEvenement(id) {
+    try {
+      const res = await fetch(API_URL + '/evenements/admin');
+      const data = await res.json();
+      const ev = data.find(e => e.id === id);
+      if (!ev) return;
+      editingEvenementId = id;
+      document.getElementById('formEvenementTitle').textContent = 'Modifier événement #' + id;
+      document.getElementById('evTitre').value = ev.titre;
+      document.getElementById('evDescription').value = ev.description;
+      document.getElementById('evDateDebut').value = ev.date_debut;
+      document.getElementById('evDateFin').value = ev.date_fin || '';
+      document.getElementById('evLieu').value = ev.lieu || '';
+      document.getElementById('evPrix').value = ev.prix || 0;
+      document.getElementById('evType').value = ev.type;
+      document.getElementById('evStatut').value = ev.statut;
+      document.getElementById('formEvenementCard').style.display = 'block';
+      document.getElementById('formEvenementCard').scrollIntoView({ behavior: 'smooth' });
+    } catch (err) {
+      showToast('Erreur lors du chargement', 'error');
+    }
+  }
+
+  async function saveEvenement() {
+    const titre = document.getElementById('evTitre').value.trim();
+    const description = document.getElementById('evDescription').value.trim();
+    const date_debut = document.getElementById('evDateDebut').value;
+    if (!titre || !description || !date_debut) {
+      showToast('Titre, description et date sont obligatoires', 'error');
       return;
     }
-    let html = '<table><thead><tr><th>#</th><th>Titre</th><th>Type</th><th>Date début</th><th>Lieu</th><th>Prix</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
-    data.forEach(ev => {
-      const prix = ev.prix > 0 ? Number(ev.prix).toLocaleString('fr-FR') + ' FCFA' : 'Gratuit';
-      html += '<tr>' +
-        '<td class="td-bold">#' + ev.id + '</td>' +
-        '<td class="td-bold">' + ev.titre + '</td>' +
-        '<td class="td-muted">' + ev.type + '</td>' +
-        '<td class="td-muted">' + ev.date_debut + '</td>' +
-        '<td class="td-muted">' + (ev.lieu || '—') + '</td>' +
-        '<td class="td-bold">' + prix + '</td>' +
-        '<td><span class="statut ' + (ev.statut === 'publié' ? 'confirmée' : ev.statut === 'annulé' ? 'annulée' : 'en_attente') + '">' + ev.statut + '</span></td>' +
-        '<td style="display:flex;gap:8px;">' +
-        '<button onclick="editEvenement(' + ev.id + ')" style="padding:5px 12px;background:#1B3A6B;border:none;border-radius:6px;color:white;font-size:12px;cursor:pointer;">✏️</button>' +
-        '<button onclick="deleteEvenement(' + ev.id + ')" style="padding:5px 12px;background:var(--danger);border:none;border-radius:6px;color:white;font-size:12px;cursor:pointer;">🗑️</button>' +
-        '</td></tr>';
-    });
-    html += '</tbody></table>';
-    document.getElementById('evenementsTable').innerHTML = html;
-  } catch (err) {
-    document.getElementById('evenementsTable').innerHTML = '<div class="empty-state"><div class="emoji">❌</div><p>Erreur de chargement</p></div>';
+    const body = {
+      titre, description, date_debut,
+      date_fin: document.getElementById('evDateFin').value || null,
+      lieu: document.getElementById('evLieu').value.trim() || null,
+      type: document.getElementById('evType').value,
+      prix: parseInt(document.getElementById('evPrix').value) || 0,
+      statut: document.getElementById('evStatut').value
+    };
+    try {
+      let res;
+      if (editingEvenementId) {
+        res = await fetch(API_URL + '/evenements/' + editingEvenementId, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+      } else {
+        res = await fetch(API_URL + '/evenements', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+      }
+      const data = await res.json();
+      if (res.ok) {
+        showToast(data.message, 'success');
+        cancelFormEvenement();
+        loadEvenements();
+      } else {
+        showToast(data.erreur || 'Erreur', 'error');
+      }
+    } catch (err) {
+      showToast('Impossible de joindre le serveur', 'error');
+    }
   }
-}
 
-function showFormEvenement() {
-  editingEvenementId = null;
-  document.getElementById('formEvenementTitle').textContent = 'Nouvel événement';
-  ['evTitre','evDescription','evLieu','evPrix'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('evDateDebut').value = '';
-  document.getElementById('evDateFin').value = '';
-  document.getElementById('evType').value = 'atelier';
-  document.getElementById('evStatut').value = 'publié';
-  document.getElementById('formEvenementCard').style.display = 'block';
-}
+  async function deleteEvenement(id) {
+    if (!confirm('Supprimer cet événement ?')) return;
+    try {
+      const res = await fetch(API_URL + '/evenements/' + id, { method: 'DELETE' });
+      const data = await res.json();
+      if (res.ok) { showToast(data.message, 'success'); loadEvenements(); }
+      else showToast(data.erreur || 'Erreur', 'error');
+    } catch { showToast('Erreur serveur', 'error'); }
+  }
 
-function cancelFormEvenement() {
-  document.getElementById('formEvenementCard').style.display = 'none';
-  editingEvenementId = null;
-}
+  async function viderTable(table) {
+    const noms = { commandes: 'les commandes', reservations: 'les réservations', messages: 'les messages', newsletter: 'les abonnés newsletter', avis: 'les avis clients', evenements: 'les événements' };
+    if (!confirm('⚠️ Voulez-vous vraiment supprimer tout(e)s ' + noms[table] + ' ? Cette action est irréversible.')) return;
+    const urls = {
+      commandes: API_URL + '/commandes',
+      reservations: API_URL + '/reservations',
+      messages: API_URL + '/contact',
+      newsletter: API_URL + '/newsletter/all',
+      avis: API_URL + '/avis',
+      evenements: API_URL + '/evenements'
+    };
+    const loaders = { commandes: loadCommandes, reservations: loadReservations, messages: loadMessages, newsletter: loadNewsletter, avis: loadAvis, evenements: loadEvenements };
+    try {
+      const res = await fetch(urls[table], { method: 'DELETE' });
+      const data = await res.json();
+      if (res.ok) { showToast(data.message, 'success'); if (loaders[table]) loaders[table](); }
+      else showToast(data.erreur || 'Erreur lors de la suppression', 'error');
+    } catch (err) {
+      showToast('Impossible de joindre le serveur', 'error');
+    }
+  }
 
-async function editEvenement(id) {
-  const res = await fetch(API_URL + '/evenements/admin');
-  const data = await res.json();
-  const ev = data.find(e => e.id === id);
-  if (!ev) return;
-  editingEvenementId = id;
-  document.getElementById('formEvenementTitle').textContent = 'Modifier événement #' + id;
-  document.getElementById('evTitre').value = ev.titre;
-  document.getElementById('evDescription').value = ev.description;
-  document.getElementById('evDateDebut').value = ev.date_debut;
-  document.getElementById('evDateFin').value = ev.date_fin || '';
-  document.getElementById('evLieu').value = ev.lieu || '';
-  document.getElementById('evPrix').value = ev.prix || 0;
-  document.getElementById('evType').value = ev.type;
-  document.getElementById('evStatut').value = ev.statut;
-  document.getElementById('formEvenementCard').style.display = 'block';
-  document.getElementById('formEvenementCard').scrollIntoView({ behavior: 'smooth' });
-}
+  function formatDate(dateStr) {
+    if (!dateStr) return '—';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
 
-async function saveEvenement() {
-  const titre = document.getElementById('evTitre').value.trim();
-  const description = document.getElementById('evDescription').value.trim();
-  const date_debut = document.getElementById('evDateDebut').value;
-  if (!titre || !description || !date_debut) { showToast('Titre, description et date sont obligatoires', 'error'); return; }
-  const body = { titre, description, date_debut,
-    date_fin: document.getElementById('evDateFin').value || null,
-    lieu: document.getElementById('evLieu').value.trim() || null,
-    type: document.getElementById('evType').value,
-    prix: parseInt(document.getElementById('evPrix').value) || 0,
-    statut: document.getElementById('evStatut').value
-  };
-  try {
-    const url = editingEvenementId ? API_URL + '/evenements/' + editingEvenementId : API_URL + '/evenements';
-    const method = editingEvenementId ? 'PUT' : 'POST';
-    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-    const data = await res.json();
-    if (res.ok) { showToast(data.message, 'success'); cancelFormEvenement(); loadEvenements(); }
-    else showToast(data.erreur || 'Erreur', 'error');
-  } catch { showToast('Impossible de joindre le serveur', 'error'); }
-}
+  function showToast(msg, type = 'success') {
+    const el = document.getElementById('toastAdmin');
+    el.textContent = msg;
+    el.className = `toast-admin ${type} show`;
+    setTimeout(() => el.classList.remove('show'), 3000);
+  }
 
-async function deleteEvenement(id) {
-  if (!window.confirm('Supprimer cet événement ?')) return;
-  try {
-    const res = await fetch(API_URL + '/evenements/' + id, { method: 'DELETE' });
-    const data = await res.json();
-    if (res.ok) { showToast(data.message, 'success'); loadEvenements(); }
-    else showToast(data.erreur || 'Erreur', 'error');
-  } catch { showToast('Erreur serveur', 'error'); }
-}
-
-// ===== INIT =====
-if (token) showDashboard();
+  if (token) showDashboard();
 </script>
+
 </body>
 </html>
