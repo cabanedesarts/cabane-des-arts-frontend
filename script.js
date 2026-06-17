@@ -35,9 +35,9 @@ const products = [
         id: 1,
         category: 'textile',
         categoryKey: 'categories.textile',
-        title: { fr: 'Tissu Bogolan Traditionnel', en: 'Traditional Bogolan Fabric' },
-        description: { fr: 'Tissu artisanal teint à l\'indigo avec motifs traditionnels', en: 'Handcrafted indigo-dyed fabric with traditional patterns' },
-        price: 15000,
+        title: { fr: 'Ensemble Indigo Côtier', en: 'Coastal Indigo Ensemble' },
+        description: { fr: 'Tenue ample en lin teinté à l\'indigo, ornée de motifs tie-dye traditionnels.', en: 'Loose-fitting linen outfit dyed in indigo, with traditional tie-dye patterns.' },
+        price: 22000,
         image: null,
     },
     {
@@ -111,6 +111,239 @@ const products = [
         description: { fr: 'Boucles d\'oreilles inspirées des ornements royaux', en: 'Earrings inspired by royal ornaments' },
         price: 9000,
         image: null,
+    },
+];
+
+// ===== DONNÉES DE LA GALERIE (créations réelles, sans prix ni panier) =====
+const galerieItems = [
+    // ----- TEXTILE -----
+    {
+        id: 'g1',
+        category: 'textile',
+        categoryKey: 'categories.textile',
+        title: { fr: 'Ensemble Indigo Côtier', en: 'Coastal Indigo Ensemble' },
+        description: {
+            fr: 'Laissez-vous porter par la douceur du lin et la profondeur de l\'indigo. Cette tenue ample et fluide, ornée de motifs tie-dye traditionnels, incarne l\'élégance décontractée de la femme africaine moderne.',
+            en: 'Let yourself be carried by the softness of linen and the depth of indigo. This flowing, loose-fitting outfit with traditional tie-dye patterns embodies relaxed elegance.'
+        },
+        image: 'images/galerie/textile-1-ensemble-indigo-cotier.jpeg',
+    },
+    {
+        id: 'g2',
+        category: 'textile',
+        categoryKey: 'categories.textile',
+        title: { fr: 'Bomber Wax Soleil Rouge', en: 'Red Sun Wax Bomber' },
+        description: {
+            fr: 'Affirmez votre style avec ce bomber en wax aux cercles solaires rouge et jaune. Une pièce forte, taillée pour ceux qui portent leur culture avec fierté.',
+            en: 'Make a statement with this wax bomber featuring red and yellow sun-circle patterns. A bold piece for those who wear their culture with pride.'
+        },
+        image: 'images/galerie/textile-2-bomber-wax-soleil-rouge.jpeg',
+    },
+    {
+        id: 'g3',
+        category: 'textile',
+        categoryKey: 'categories.textile',
+        title: { fr: 'Pareo & Haut Shibori Océan', en: 'Ocean Shibori Top & Wrap' },
+        description: {
+            fr: 'Un duo plage irrésistible — haut et pareo en tissu shibori indigo aux motifs floraux délavés à la main. Chaque pièce est unique, comme vous.',
+            en: 'An irresistible beach duo — top and wrap in indigo shibori fabric with hand-faded floral patterns. Each piece is unique.'
+        },
+        image: 'images/galerie/textile-3-pareo-haut-shibori.jpeg',
+    },
+    {
+        id: 'g4',
+        category: 'textile',
+        categoryKey: 'categories.textile',
+        title: { fr: 'Bomber Patchwork — Édition Porto-Novo', en: 'Patchwork Bomber — Porto-Novo Edition' },
+        description: {
+            fr: 'Une œuvre d\'art à porter. Ce bomber assemble des fragments de wax du monde entier en un seul vêtement collector, cousu à la main dans notre atelier de Porto-Novo.',
+            en: 'A wearable work of art. This bomber assembles wax fragments from around the world into a single collector\'s garment, hand-sewn in our Porto-Novo workshop.'
+        },
+        image: 'images/galerie/textile-4-bomber-patchwork.jpeg',
+    },
+    {
+        id: 'g5',
+        category: 'textile',
+        categoryKey: 'categories.textile',
+        title: { fr: 'Robe Indigo Rayée', en: 'Striped Indigo Dress' },
+        description: {
+            fr: 'Simplicité et caractère. Cette robe courte en tissu indigo à rayures blanches associe confort et identité culturelle.',
+            en: 'Simplicity and character. This short indigo dress with white stripes combines comfort with cultural identity.'
+        },
+        image: 'images/galerie/textile-5-robe-indigo-rayee.jpeg',
+    },
+    {
+        id: 'g6',
+        category: 'textile',
+        categoryKey: 'categories.textile',
+        title: { fr: 'Duo Wax Orange & Bleu Marine', en: 'Orange & Navy Wax Duo' },
+        description: {
+            fr: 'Pour elle, une robe bustier asymétrique aux motifs explosifs. Pour lui, un ensemble short et t-shirt coordonné. Le wax comme langage d\'amour.',
+            en: 'For her, an asymmetric bustier dress with vibrant patterns. For him, a coordinated shorts and t-shirt set. Wax as a love language.'
+        },
+        image: 'images/galerie/textile-6-duo-wax-orange-bleu.jpeg',
+    },
+    {
+        id: 'g7',
+        category: 'textile',
+        categoryKey: 'categories.textile',
+        title: { fr: 'Collection Indigo Coucher de Soleil', en: 'Sunset Indigo Collection' },
+        description: {
+            fr: 'Lui en ensemble boubou à carreaux indigo, elle en robe shibori aux grands cercles blancs. Deux silhouettes, une même âme.',
+            en: 'Him in an indigo plaid boubou set, her in a shibori dress with large white circles. Two silhouettes, one shared soul.'
+        },
+        image: 'images/galerie/textile-7-collection-indigo-coucher-soleil.jpeg',
+    },
+
+    // ----- TRESSAGE -----
+    {
+        id: 'g8',
+        category: 'tressage',
+        categoryKey: 'categories.tressage',
+        title: { fr: 'Chapeau Bohème Shibori & Dentelle', en: 'Bohemian Shibori & Lace Hat' },
+        description: {
+            fr: 'L\'alliance du tressage artisanal et du tissu shibori indigo, sublimée par une touche de dentelle ivoire. Pour la femme qui ose.',
+            en: 'The union of artisanal weaving and indigo shibori fabric, enhanced with a touch of ivory lace. For the woman who dares.'
+        },
+        image: 'images/galerie/tressage-1-chapeau-boheme-shibori-dentelle.jpeg',
+    },
+    {
+        id: 'g9',
+        category: 'tressage',
+        categoryKey: 'categories.tressage',
+        title: { fr: 'Set Chapeau & Sac Rayures Marines', en: 'Striped Hat & Bag Set' },
+        description: {
+            fr: 'L\'harmonie parfaite entre le naturel et le marin. Ce duo chapeau-sac tressé en fibres naturelles aux rayures bleu, beige et blanc crème s\'invite aussi bien en ville qu\'à la plage.',
+            en: 'A perfect harmony between natural and nautical. This woven hat-and-bag duo in blue, beige and cream stripes fits both city and beach.'
+        },
+        image: 'images/galerie/tressage-2-set-chapeau-sac-rayures.jpeg',
+    },
+    {
+        id: 'g10',
+        category: 'tressage',
+        categoryKey: 'categories.tressage',
+        title: { fr: 'Chapeau Canotier Shibori Bleu Roi', en: 'Royal Blue Shibori Boater Hat' },
+        description: {
+            fr: 'Élégance revisitée à l\'africaine. Ce canotier en paille naturelle est ceint d\'un ruban shibori bleu roi noué en nœud papillon.',
+            en: 'Elegance reimagined the African way. This natural straw boater is wrapped in a royal blue shibori ribbon tied in a bow.'
+        },
+        image: 'images/galerie/tressage-3-chapeau-canotier-shibori-bleu.jpeg',
+    },
+    {
+        id: 'g11',
+        category: 'tressage',
+        categoryKey: 'categories.tressage',
+        title: { fr: 'Set Raphia & Indigo — Lumière Dorée', en: 'Raffia & Indigo Set — Golden Light' },
+        description: {
+            fr: 'Ce duo chapeau-sac en raphia tressé naturel avec nœud indigo incarne l\'artisanat béninois dans ce qu\'il a de plus pur. Un cadeau idéal.',
+            en: 'This natural woven raffia hat-and-bag duo with an indigo bow embodies Beninese craftsmanship at its purest. An ideal gift.'
+        },
+        image: 'images/galerie/tressage-4-set-raphia-indigo-lumiere-doree.jpeg',
+    },
+
+    // ----- ACCESSOIRES -----
+    {
+        id: 'g12',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Tote Bag Bogolan Nuit', en: 'Night Bogolan Tote Bag' },
+        description: {
+            fr: 'Fond noir profond, motifs shibori et bogolan en blanc cassé — ce tote bag raconte une histoire. Spacieux, robuste, et résolument africain.',
+            en: 'Deep black background with shibori and bogolan patterns in off-white — this tote bag tells a story. Spacious, sturdy, and distinctly African.'
+        },
+        image: 'images/galerie/accessoires-1-tote-bag-bogolan-nuit.jpeg',
+    },
+    {
+        id: 'g13',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Set Kente Or & Bleu', en: 'Gold & Blue Kente Set' },
+        description: {
+            fr: 'La richesse du tissu kente dans un ensemble coordonné trois pièces : besace triangulaire, éventail circulaire et trousse zippée.',
+            en: 'The richness of kente fabric in a coordinated three-piece set: triangular bag, round fan and zipped pouch.'
+        },
+        image: 'images/galerie/accessoires-2-set-kente-or-bleu.jpeg',
+    },
+    {
+        id: 'g14',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Tote Bag Indigo Shibori + Éventail', en: 'Indigo Shibori Tote Bag + Fan' },
+        description: {
+            fr: 'Le bleu profond du shibori rencontre la précision du bogolan dans ce tote bag structuré, accompagné de son éventail circulaire assorti.',
+            en: 'Deep shibori blue meets bogolan precision in this structured tote bag, paired with a matching circular fan.'
+        },
+        image: 'images/galerie/accessoires-3-tote-bag-indigo-eventail.jpeg',
+    },
+    {
+        id: 'g15',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Set Sac & Sandales Shibori Indigo', en: 'Indigo Shibori Bag & Sandals Set' },
+        description: {
+            fr: 'Un duo coucher de soleil. Sac à main rigide en tissu raphia indigo avec fermoir doré, associé aux sandales frangées aux motifs tie-dye circulaires.',
+            en: 'A sunset duo. A structured indigo raffia handbag with a gold clasp, paired with fringed sandals featuring circular tie-dye patterns.'
+        },
+        image: 'images/galerie/accessoires-4-set-sac-sandales-shibori.jpeg',
+    },
+    {
+        id: 'g16',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Sac Bandoulière Indigo', en: 'Indigo Shoulder Bag' },
+        description: {
+            fr: 'Taillé dans un tissu raphia indigo shibori, ce sac bandoulière à rabat avec fermoir twist argenté allie élégance structurée et âme artisanale.',
+            en: 'Crafted from indigo shibori raffia fabric, this flap shoulder bag with a silver twist clasp blends structured elegance with artisanal soul.'
+        },
+        image: 'images/galerie/accessoires-5-sac-bandouliere-indigo.jpeg',
+    },
+    {
+        id: 'g17',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Set Kente Soleil', en: 'Sunshine Kente Set' },
+        description: {
+            fr: 'Tonalités chaudes de jaune moutarde, blanc et bleu — ce set trois pièces en tissu kente rayé illumine votre quotidien.',
+            en: 'Warm tones of mustard yellow, white and blue — this three-piece striped kente set brightens your everyday look.'
+        },
+        image: 'images/galerie/accessoires-6-set-kente-soleil.jpeg',
+    },
+    {
+        id: 'g18',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Tote Bag & Sandales Indigo Frangées', en: 'Indigo Tote & Fringed Sandals' },
+        description: {
+            fr: 'L\'indigo structuré du tote bag en raphia rencontre les sandales à double bride frangée aux motifs shibori. Sobriété et caractère réunis.',
+            en: 'Structured indigo raffia tote meets double-strap fringed sandals with shibori patterns. Sobriety and character combined.'
+        },
+        image: 'images/galerie/accessoires-7-tote-sandales-indigo-frangees.jpeg',
+    },
+
+    // ----- TAPISSERIE -----
+    {
+        id: 'g19',
+        category: 'tapisserie',
+        categoryKey: 'categories.tapisserie',
+        title: { fr: 'Éventails Circulaires Wax', en: 'Circular Wax Fans' },
+        description: {
+            fr: 'Deux éventails d\'exception : l\'un en wax rouge et blanc aux motifs abstraits, l\'autre en kente multicolore aux géométries vives. Objets d\'art autant qu\'accessoires.',
+            en: 'Two exceptional fans: one in red and white wax with abstract patterns, the other in multicolored kente with vivid geometry. As much art as accessory.'
+        },
+        image: 'images/galerie/tapisserie-1-eventails-circulaires-wax.jpeg',
+    },
+
+    // ----- PARURES -----
+    {
+        id: 'g20',
+        category: 'parures',
+        categoryKey: 'categories.parures',
+        title: { fr: 'Parure Blanche & Indigo — Grâce du Bord de Mer', en: 'White & Indigo Set — Seaside Grace' },
+        description: {
+            fr: 'Turban blanc, collier de perles bicolores, bracelets ivoire, sandales shibori et sac indigo structuré — chaque détail est une pièce de la parure complète.',
+            en: 'White turban, two-tone beaded necklace, ivory bracelets, shibori sandals and a structured indigo bag — every detail forms part of the complete set.'
+        },
+        image: 'images/galerie/parures-1-parure-blanche-indigo.jpeg',
     },
 ];
 
@@ -512,6 +745,34 @@ function createProductCard(product) {
     return card;
 }
 
+// Carte Galerie : présente la création (sans prix ni panier)
+function createGalerieCard(item) {
+    const lang = state.currentLanguage;
+    const card = document.createElement('div');
+    card.className = 'galerie-card';
+    card.setAttribute('data-category', item.category);
+    card.setAttribute('data-id', item.id);
+
+    card.innerHTML = `
+        <div class="card-image">
+            ${item.image
+                ? `<img src="${item.image}" alt="${escapeHTML(item.title[lang])}" loading="lazy">`
+                : `<div class="card-placeholder"><i class="fas fa-image"></i></div>`
+            }
+            <div class="card-overlay">
+                <a href="#" class="overlay-btn">${t('card.details')}</a>
+            </div>
+        </div>
+        <div class="card-content">
+            <span class="card-category">${t(item.categoryKey)}</span>
+            <h3>${escapeHTML(item.title[lang])}</h3>
+            <p>${escapeHTML(item.description[lang])}</p>
+        </div>
+    `;
+
+    return card;
+}
+
 function createAtelierCard(atelier) {
     const lang = state.currentLanguage;
     const card = document.createElement('div');
@@ -596,15 +857,18 @@ function renderGalerie() {
     if (!grid) return;
     
     grid.innerHTML = '';
-    const filteredProducts = state.activeFilter === 'all' 
-        ? products 
-        : products.filter(p => p.category === state.activeFilter);
+    const filteredItems = state.activeFilter === 'all' 
+        ? galerieItems 
+        : galerieItems.filter(p => p.category === state.activeFilter);
     
-    filteredProducts.forEach(product => {
-        grid.appendChild(createProductCard(product));
+    if (filteredItems.length === 0) {
+        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; color:#8A7B6A; padding:40px;">Aucune création dans cette catégorie pour le moment.</p>';
+        return;
+    }
+    
+    filteredItems.forEach(item => {
+        grid.appendChild(createGalerieCard(item));
     });
-    
-    attachCartEvents();
 }
 
 function renderAteliers() {
