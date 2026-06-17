@@ -345,6 +345,89 @@ const galerieItems = [
         },
         image: 'images/galerie/parures-1-parure-blanche-indigo.jpeg',
     },
+
+    // ----- TEXTILE (suite) -----
+    {
+        id: 'g21',
+        category: 'textile',
+        categoryKey: 'categories.textile',
+        title: { fr: 'Bomber Wax Tribal Rouge & Or', en: 'Red & Gold Tribal Wax Bomber' },
+        description: {
+            fr: 'Un duo de motifs saisissant : cercles XO entrelacés dorés sur fond noir d\'un côté, rayures verticales rouge et jaune zébrées de l\'autre. Ce bomber bicolore affirme une identité graphique forte.',
+            en: 'A striking pair of patterns: interlocking gold XO circles on black on one side, zebra-streaked red and yellow stripes on the other. A bold two-tone bomber with a strong graphic identity.'
+        },
+        image: 'images/galerie/textile-8-bomber-wax-tribal-rouge-or.jpeg',
+    },
+    {
+        id: 'g22',
+        category: 'textile',
+        categoryKey: 'categories.textile',
+        title: { fr: 'Maillot Shibori Indigo', en: 'Indigo Shibori Swimsuit' },
+        description: {
+            fr: 'Maillot de bain une pièce en tissu shibori indigo, mêlant pois délicats et cercles tie-dye. Élégant et couvrant, il s\'accorde naturellement avec le chapeau et le sac tressé pour un look plage complet.',
+            en: 'One-piece swimsuit in indigo shibori fabric, blending delicate dots with tie-dye circles. Elegant and flattering, it pairs naturally with the woven hat and bag for a complete beach look.'
+        },
+        image: 'images/galerie/textile-9-maillot-shibori-indigo.jpeg',
+    },
+
+    // ----- TRESSAGE (suite) -----
+    {
+        id: 'g23',
+        category: 'tressage',
+        categoryKey: 'categories.tressage',
+        title: { fr: 'Robe Marinière & Set Tressé Indigo', en: 'Striped Dress & Indigo Woven Set' },
+        description: {
+            fr: 'Robe rayée bleu marine et blanc, portée avec un chapeau à ruban shibori noué et un sac tressé assorti. Un look complet qui marie la rigueur de la marinière à la douceur artisanale du tressage béninois.',
+            en: 'Navy and white striped dress paired with a shibori-ribboned hat and a matching woven bag. A complete look blending nautical stripes with the softness of Beninese artisanal weaving.'
+        },
+        image: 'images/galerie/tressage-5-robe-mariniere-set-tresse-indigo.jpeg',
+    },
+
+    // ----- ACCESSOIRES (suite) -----
+    {
+        id: 'g24',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Set Complet Kente Soleil — Sac, Pochette, Trousse & Bandoulière', en: 'Complete Sunshine Kente Set — Bag, Pouch, Case & Strap' },
+        description: {
+            fr: 'L\'ensemble ultime en tissu kente jaune moutarde et bleu : sac à main à poignée, pochette zippée, trousse et bandoulière détachable — tous coordonnés, tous indispensables.',
+            en: 'The ultimate set in mustard yellow and blue kente fabric: handle bag, zipped pouch, case and detachable strap — all coordinated, all essential.'
+        },
+        image: 'images/galerie/accessoires-8-set-complet-kente-soleil.jpeg',
+    },
+    {
+        id: 'g25',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Tote Bag Lin Indigo & Coins Shibori', en: 'Indigo Linen Tote with Shibori Corners' },
+        description: {
+            fr: 'Sobriété et raffinement : ce tote bag en lin indigo tissé serré est rehaussé de coins en tissu shibori délavé à la main. Une pièce intemporelle.',
+            en: 'Understated and refined: this tightly woven indigo linen tote is enhanced with hand-faded shibori fabric corners. A timeless piece.'
+        },
+        image: 'images/galerie/accessoires-9-tote-bag-lin-indigo-coins-shibori.jpeg',
+    },
+    {
+        id: 'g26',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Set Chapeau & Sac Paille Dorée — Ruban Shibori & Dentelle', en: 'Golden Straw Hat & Bag Set — Shibori Ribbon & Lace' },
+        description: {
+            fr: 'La paille dorée rencontre le raffinement : ce duo chapeau-sac est ceint d\'un ruban shibori indigo agrémenté de dentelle ivoire. Une pièce romantique pour sublimer chaque sortie d\'été.',
+            en: 'Golden straw meets refinement: this hat-and-bag duo is wrapped in an indigo shibori ribbon accented with ivory lace. A romantic piece for every summer outing.'
+        },
+        image: 'images/galerie/accessoires-10-set-chapeau-sac-paille-doree.jpeg',
+    },
+    {
+        id: 'g27',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Set Sac & Chapeau Rayures Marines — Lumière du Soir', en: 'Navy Striped Bag & Hat Set — Evening Light' },
+        description: {
+            fr: 'Capturé au coucher du soleil, ce duo tressé aux rayures bleu marine, beige et crème, agrémenté d\'un nœud shibori, incarne l\'élégance décontractée du bord de mer.',
+            en: 'Captured at sunset, this woven duo in navy, beige and cream stripes, finished with a shibori bow, embodies relaxed seaside elegance.'
+        },
+        image: 'images/galerie/accessoires-11-set-sac-chapeau-rayures-marines.jpeg',
+    },
 ];
 
 const ateliers = [
