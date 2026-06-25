@@ -91,6 +91,42 @@ body.dark-mode {
     --border-color: #444;
     --button-bg: #e0b85c;
     --button-text: #1a1a1a;
+
+    /* Redéfinition du "système B" pour cohérence en mode sombre */
+    --color-black: #f0f0f0;
+    --color-dark: #2d2d2d;
+    --color-gray-dark: #cfcfcf;
+    --color-gray: #b8b8b8;
+    --color-gray-light: #8a8a8a;
+    --color-cream: #2d2d2d;
+    --color-cream-dark: #353535;
+    --color-white: #1a1a1a;
+
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #252525;
+    --bg-dark: #111111;
+    --bg-pattern: #2d2d2d;
+
+    --text-primary: #f0f0f0;
+    --text-secondary: #cfcfcf;
+    --text-light: #b8b8b8;
+
+    --color-ocre-pale: #4a3a22;
+}
+
+/* Ajustements ponctuels nécessaires en mode sombre */
+body.dark-mode .tag {
+    color: var(--color-ocre-light);
+}
+
+body.dark-mode .btn-outline {
+    color: var(--text-color);
+    border-color: var(--text-color);
+}
+
+body.dark-mode .btn-outline:hover {
+    background: var(--text-color);
+    color: var(--bg-color);
 }
 
 /* ===== RESET & BASE ===== */
@@ -234,8 +270,8 @@ img {
 
 /* Top Bar */
 .top-bar {
-    background: var(--color-dark);
-    color: var(--color-white);
+    background: #1A1A1A;
+    color: #FFFFFF;
     font-size: 13px;
     height: var(--topbar-height);
     display: flex;
@@ -258,7 +294,7 @@ img {
 }
 
 .top-bar-item {
-    color: var(--color-cream);
+    color: #FAF5EB;
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -274,7 +310,7 @@ img {
 }
 
 .top-bar-separator {
-    color: var(--color-gray);
+    color: #767676;
     margin: 0 2px;
 }
 
@@ -285,7 +321,7 @@ img {
 }
 
 .top-bar .social-link {
-    color: var(--color-cream);
+    color: #FAF5EB;
     width: 28px;
     height: 28px;
     display: flex;
@@ -313,7 +349,7 @@ img {
 .lang-btn {
     background: none;
     border: none;
-    color: var(--color-cream);
+    color: #FAF5EB;
     cursor: pointer;
     font-size: 12px;
     font-weight: 600;
@@ -448,7 +484,7 @@ img {
     top: 2px;
     right: 0;
     background: var(--color-red-vibrant);
-    color: var(--color-white);
+    color: #FFFFFF;
     font-size: 10px;
     font-weight: 700;
     width: 18px;
@@ -523,7 +559,7 @@ img {
     position: relative;
     z-index: 1;
     text-align: center;
-    color: var(--color-white);
+    color: #FFFFFF;
     max-width: 800px;
     margin: 0 auto;
     padding: 60px 0;
@@ -568,7 +604,7 @@ img {
     font-family: var(--font-heading);
     font-size: clamp(40px, 8vw, 72px);
     font-weight: 700;
-    color: var(--color-white);
+    color: #FFFFFF;
     margin-bottom: 12px;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
@@ -700,13 +736,14 @@ img {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
+    align-items: stretch;
 }
 
 .col-left {
     width: 50%;
-    height: 600px;
     overflow: hidden;
     position: relative;
+    min-height: 600px;
 }
 
 .col-left img {
@@ -714,6 +751,9 @@ img {
     height: 100%;
     object-fit: cover;
     display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .col-right {
@@ -1036,7 +1076,7 @@ img {
     top: 16px;
     right: 16px;
     background: var(--color-red-vibrant);
-    color: var(--color-white);
+    color: #FFFFFF;
     padding: 6px 14px;
     border-radius: var(--border-radius-full);
     font-size: 12px;
@@ -1345,7 +1385,7 @@ img {
 }
 
 .newsletter-text h3 {
-    color: var(--color-white);
+    color: #FFFFFF;
     font-size: 24px;
     margin-bottom: 8px;
 }
@@ -1362,7 +1402,7 @@ img {
 .input-group {
     display: flex;
     gap: 8px;
-    background: var(--color-white);
+    background: #FFFFFF;
     padding: 6px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
@@ -1538,8 +1578,8 @@ img {
    ============================================ */
 
 .footer {
-    background: var(--bg-dark);
-    color: var(--color-cream);
+    background: #1A1A1A;
+    color: #FAF5EB;
     padding: 60px 0 0;
 }
 
@@ -1555,7 +1595,7 @@ img {
     font-family: var(--font-heading);
     font-size: 22px;
     font-weight: 700;
-    color: var(--color-white);
+    color: #FFFFFF;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -1577,7 +1617,7 @@ img {
 
 .footer-col h4 {
     font-size: 16px;
-    color: var(--color-white);
+    color: #FFFFFF;
     margin-bottom: 20px;
     position: relative;
     padding-bottom: 12px;

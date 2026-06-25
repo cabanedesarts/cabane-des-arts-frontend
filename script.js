@@ -428,6 +428,98 @@ const galerieItems = [
         },
         image: 'images/galerie/accessoires-11-set-sac-chapeau-rayures-marines.jpeg',
     },
+
+    // ----- PARURES (suite) -----
+    {
+        id: 'g28',
+        category: 'parures',
+        categoryKey: 'categories.parures',
+        title: { fr: 'Duo Touareg Indigo & Argent', en: 'Indigo & Silver Touareg Duo' },
+        description: {
+            fr: 'Un couple en tenue traditionnelle indigo à motifs tartan, sublimé par une parure d\'argent saisissante : chapeaux canotiers à ruban brodé, colliers superposés, bracelets manchettes massifs et canne à pommeau d\'argent. Chaque bijou raconte l\'héritage de l\'orfèvrerie sahélienne.',
+            en: 'A couple in traditional indigo tartan dress, elevated by striking silver jewelry: embroidered-band boater hats, layered necklaces, bold cuff bracelets and a silver-topped cane. Each piece tells the story of Sahelian silversmithing heritage.'
+        },
+        image: 'images/galerie/parures-2-duo-touareg-indigo-argent.jpeg',
+    },
+    {
+        id: 'g29',
+        category: 'parures',
+        categoryKey: 'categories.parures',
+        title: { fr: 'Fratrie en Wax & Shibori — Cérémonie Royale', en: 'Siblings in Wax & Shibori — Royal Ceremony' },
+        description: {
+            fr: 'Quatre enfants en tenue cérémonielle : pagnes shibori indigo aux motifs circulaires, hauts wax rayés rouge, jaune et noir, couronnes brodées et cannes royales. Colliers de perles blanches, oranges et ambrées superposés sur chaque enfant. Une parure complète qui célèbre les rites de passage et l\'héritage royal béninois dès le plus jeune âge.',
+            en: 'Four children in ceremonial dress: indigo shibori wraps with circular patterns, red, yellow and black striped wax tops, embroidered crowns and royal canes. Layered white, orange and amber bead necklaces on each child. A complete set celebrating Beninese royal heritage and rites of passage from a young age.'
+        },
+        image: 'images/galerie/parures-3-fratrie-wax-shibori-ceremonie.jpeg',
+    },
+    {
+        id: 'g30',
+        category: 'parures',
+        categoryKey: 'categories.parures',
+        title: { fr: 'Parure Royale Akwamu — Argent & Wax', en: 'Akwamu Royal Set — Silver & Wax' },
+        description: {
+            fr: 'Coiffe enroulée aux couleurs vives ornée de pampons fluo, multiples colliers en chaînes argentées à pampilles et perles, larges bracelets manchettes en argent et sceptre cérémoniel. Portée sur un pagne wax aux armoiries royales, cette parure incarne le prestige et l\'autorité traditionnelle.',
+            en: 'A vividly wrapped headpiece with neon tassels, layered silver chain necklaces with charms and beads, wide silver cuff bracelets and a ceremonial scepter. Worn over a wax wrap with royal emblems, this set embodies traditional prestige and authority.'
+        },
+        image: 'images/galerie/parures-4-parure-royale-akwamu-argent.jpeg',
+    },
+    {
+        id: 'g31',
+        category: 'parures',
+        categoryKey: 'categories.parures',
+        title: { fr: 'Parure Corail & Argent', en: 'Coral & Silver Set' },
+        description: {
+            fr: 'Couronne royale brodée, longs colliers de perles de corail rouge et blanches superposées, bracelets manchettes en argent massif et canne cérémonielle. Portée sur une robe bandeau à motifs géométriques gris et jaune, cette parure marie sobriété vestimentaire et richesse ornementale.',
+            en: 'An embroidered royal crown, long layered red coral and white bead necklaces, solid silver cuff bracelets and a ceremonial cane. Worn over a grey and yellow geometric bandeau dress, this set blends understated clothing with ornamental richness.'
+        },
+        image: 'images/galerie/parures-5-parure-corail-argent.jpeg',
+    },
+    {
+        id: 'g32',
+        category: 'parures',
+        categoryKey: 'categories.parures',
+        title: { fr: 'Parure Kente Corail', en: 'Coral Kente Set' },
+        description: {
+            fr: 'Turban kente assorti à perles dorées, longs sautoirs de perles de corail et blanches en plusieurs rangs, bracelets coordonnés. L\'ensemble accompagne une tenue kente vive aux motifs triangulaires multicolores, pour une allure de princesse africaine intemporelle.',
+            en: 'A matching kente turban with gold beads, long multi-strand coral and white bead necklaces, coordinated bracelets. The set pairs with a vivid kente outfit in multicolored triangular patterns, for a timeless African princess look.'
+        },
+        image: 'images/galerie/parures-6-parure-kente-corail.jpeg',
+    },
+
+    // ----- ACCESSOIRES (suite) -----
+    {
+        id: 'g33',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Set Chapeau & Sandales Mosaïque', en: 'Mosaic Hat & Sandals Set' },
+        description: {
+            fr: 'Chapeau en paille tressée à large bord, ceint d\'un ruban indigo, assorti à des sandales tressées au motif mosaïque coloré (turquoise, corail, lilas). Un duo estival qui marie le naturel de la paille à l\'éclat du tissu imprimé.',
+            en: 'A wide-brimmed woven straw hat with an indigo band, matched with woven sandals featuring a colorful mosaic pattern (turquoise, coral, lilac). A summer duo blending natural straw with vibrant printed fabric.'
+        },
+        image: 'images/galerie/accessoires-12-set-chapeau-sandales-mosaique.jpeg',
+    },
+    {
+        id: 'g34',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Sandales Bois & Wax Bogolan', en: 'Wooden Sandals with Bogolan Wax' },
+        description: {
+            fr: 'Sandales à semelle en bois naturel et brides en tissu wax bogolan noir, orange et blanc, fermées par une boucle métallique dorée. Une pièce artisanale robuste qui marie le confort du bois à l\'éclat du wax.',
+            en: 'Sandals with a natural wood sole and black, orange and white bogolan wax straps, closed with a gold metal buckle. A sturdy artisanal piece blending the comfort of wood with the brightness of wax fabric.'
+        },
+        image: 'images/galerie/accessoires-13-sandales-bois-bogolan-orange.jpeg',
+    },
+    {
+        id: 'g35',
+        category: 'accessoires',
+        categoryKey: 'categories.accessoires',
+        title: { fr: 'Sandales Plates Wax Tricolore', en: 'Flat Tricolor Wax Sandals' },
+        description: {
+            fr: 'Sandales plates noires à brides en tissu wax tissé aux couleurs panafricaines — rouge, jaune et vert. Confortables et colorées, elles s\'imposent comme l\'accessoire idéal pour twister une tenue du quotidien.',
+            en: 'Flat black sandals with woven wax straps in Pan-African colors — red, yellow and green. Comfortable and colorful, the ideal accessory to twist up an everyday outfit.'
+        },
+        image: 'images/galerie/accessoires-14-sandales-plates-tricolores.jpeg',
+    },
 ];
 
 const ateliers = [
@@ -1792,11 +1884,11 @@ const KKIAY_CONFIG = {
     // 💰 Commission appliquée
     commission: 2.9, // 2.9%
     
-    // 📱 Numéros de test (sandbox)
+    // 📱 Numéros de test (sandbox) - numéros officiels KkiaPay
     testPhones: {
-        mtn: '90000001',
-        moov: '90000002',
-        celtiis: '90000003',
+        mtn: '61000000',      // MTN Bénin - succès immédiat
+        moov: '68000000',     // Moov Bénin - succès immédiat
+        celtiis: '61000000',  // Celtiis non listé par KkiaPay, on retombe sur MTN succès immédiat
         pin: '0000'
     },
     
@@ -2241,13 +2333,13 @@ function initKkiapay() {
 
 // Initialiser KkiaPay après le chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
-    // Attendre que le SDK KkiaPay soit chargé
-    if (typeof kkiapay !== 'undefined') {
+    // Le SDK KkiaPay actuel expose window.openKkiapayWidget (pas window.kkiapay)
+    if (typeof openKkiapayWidget !== 'undefined') {
         initKkiapay();
     } else {
         // Attendre le chargement du SDK
         const checkKkiapay = setInterval(() => {
-            if (typeof kkiapay !== 'undefined') {
+            if (typeof openKkiapayWidget !== 'undefined') {
                 clearInterval(checkKkiapay);
                 initKkiapay();
             }
@@ -2256,7 +2348,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Timeout après 10 secondes
         setTimeout(() => {
             clearInterval(checkKkiapay);
-            if (typeof kkiapay === 'undefined') {
+            if (typeof openKkiapayWidget === 'undefined') {
                 console.warn('⚠️ KkiaPay SDK non chargé après 10s');
             }
         }, 10000);
