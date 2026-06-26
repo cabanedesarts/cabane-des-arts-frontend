@@ -2213,6 +2213,7 @@ function addKkiapayTestButton() {
     
     // Ajouter un indicateur de mode
     const indicator = document.createElement('div');
+    indicator.id = 'kkiapay-sandbox-indicator';
     indicator.style.cssText = `
         position: fixed;
         bottom: 160px;
