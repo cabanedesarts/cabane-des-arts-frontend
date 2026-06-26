@@ -142,9 +142,15 @@
     
 <!-- ========== SECTION HÉRO ========== -->
     <section id="accueil" class="hero">
-        <div class="hero-bg">
-            <div class="hero-overlay"></div>
+        <div class="hero-slider">
+            <div class="hero-slide active" style="background-image: url('image7.jpg')"></div>
+            <div class="hero-slide" style="background-image: url('tapisserie-1-eventails-circulaires-wax.jpg')"></div>
+            <div class="hero-slide" style="background-image: url('image6.jpg')"></div>
+            <div class="hero-slide" style="background-image: url('image5.jpg')"></div>
+            <div class="hero-slide" style="background-image: url('image-3.jpg')"></div>
+            <div class="hero-slide" style="background-image: url('image-1.jpg')"></div>
         </div>
+        <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-badge">
@@ -158,15 +164,15 @@
                     et aux arts inspirés des cultures locales du Bénin
                 </p>
                 <div class="hero-buttons">
-                    <a href="#boutique" class="btn btn-primary">
+                    <a href="boutique.html" class="btn btn-primary">
                         <i class="fas fa-shopping-bag"></i>
                         <span data-i18n="hero.shop">Découvrir nos créations</span>
                     </a>
-                    <a href="#galerie" class="btn btn-outline">
+                    <a href="galerie.html" class="btn btn-outline">
                         <i class="fas fa-palette"></i>
                         <span data-i18n="hero.ateliers">Voir les ateliers</span>
                     </a>
-                    <a href="#contact" class="btn btn-outline">
+                    <a href="contact.html" class="btn btn-outline">
                         <i class="fas fa-envelope"></i>
                         <span data-i18n="hero.contact">Nous contacter</span>
                     </a>
@@ -187,11 +193,7 @@
                 </div>
             </div>
         </div>
-        <div class="wave-divider">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
-                <path fill="var(--bg-primary)" d="M0,64L120,74.7C240,85,480,107,720,96C960,85,1200,43,1320,21.3L1440,0L1440,120L1320,120C1200,120,960,120,720,120C480,120,240,120,120,120L0,120Z"></path>
-            </svg>
-        </div>
+
     </section>
 
     <!-- ========== SECTION MISSION ========== -->
@@ -792,7 +794,18 @@
     </script>
 <!-- ===== SDK KKIAPAY ===== -->
 <script src="https://cdn.kkiapay.me/k.js"></script>
-</body>
-</html>
+
+<!-- ===== SLIDER HERO ===== -->
+<script>
+(function() {
+    const slides = document.querySelectorAll('.hero-slide');
+    let current = 0;
+    setInterval(function() {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+    }, 5000);
+})();
+</script>
 </body>
 </html>

@@ -536,28 +536,45 @@ img {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, var(--color-dark), #1a1a2e);
     overflow: hidden;
     padding-top: var(--header-height);
 }
 
-.hero-bg {
+/* ===== SLIDER HERO ===== */
+.hero-slider {
     position: absolute;
     inset: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23C4943B22" width="50" height="50" x="0" y="0"/><rect fill="%23C4943B11" width="50" height="50" x="50" y="50"/></svg>');
-    background-size: 100px 100px;
-    opacity: 0.3;
+    z-index: 0;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.hero-slide.active {
+    opacity: 1;
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, rgba(196, 148, 59, 0.15), transparent 70%);
+    background: linear-gradient(
+        135deg,
+        rgba(26, 18, 8, 0.72) 0%,
+        rgba(196, 148, 59, 0.25) 50%,
+        rgba(26, 18, 8, 0.65) 100%
+    );
+    z-index: 1;
 }
 
 .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     text-align: center;
     color: #FFFFFF;
     max-width: 800px;
@@ -651,20 +668,6 @@ img {
 .feature-item i {
     color: var(--color-ocre-primary);
     font-size: 16px;
-}
-
-/* Wave Divider */
-.wave-divider {
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    line-height: 0;
-}
-
-.wave-divider svg {
-    width: 100%;
-    height: auto;
 }
 
 /* ============================================
@@ -2254,4 +2257,28 @@ img {
         width: 40px;
         height: 40px;
     }
+}
+/* ===== MOTIF ARTISANAL EN ARRIÈRE-PLAN (façon WhatsApp) =====
+   Placé en toute fin de fichier exprès : certaines règles de section
+   plus haut utilisent le raccourci "background" qui réinitialise
+   background-image. En étant après, à spécificité égale, ce bloc gagne. */
+body,
+.histoire-section,
+.contact-section,
+.agenda-section,
+.boutique-section,
+.galerie-section {
+    background-image: url('motif-artisanal-clair.svg');
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-size: 180px;
+}
+
+body.dark-mode,
+body.dark-mode .histoire-section,
+body.dark-mode .contact-section,
+body.dark-mode .agenda-section,
+body.dark-mode .boutique-section,
+body.dark-mode .galerie-section {
+    background-image: url('motif-artisanal-sombre.svg');
 }
