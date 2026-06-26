@@ -533,7 +533,8 @@ img {
 
 .hero {
     position: relative;
-    min-height: 100vh;
+    min-height: 100vh;       /* fallback navigateurs anciens */
+    min-height: 100svh;      /* fix barre d'adresse mobile */
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -551,7 +552,7 @@ img {
     position: absolute;
     inset: 0;
     background-size: cover;
-    background-position: center;
+    background-position: center top;  /* garde le sujet visible sur mobile portrait */
     opacity: 0;
     transition: opacity 1.5s ease-in-out;
 }
@@ -2245,6 +2246,10 @@ img {
         flex-direction: column;
         align-items: center;
         gap: 12px;
+    }
+
+    .hero-content {
+        padding: 24px 0;   /* réduit le padding vertical sur mobile */
     }
 }
 
