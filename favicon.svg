@@ -1,0 +1,13 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="15" fill="#2D1810"/>
+  <!-- anse du panier -->
+  <path d="M22 28 Q32 12 42 28" fill="none" stroke="#B5561A" stroke-width="3" stroke-linecap="round"/>
+  <!-- corps du panier (trapèze) -->
+  <path d="M15 28 L49 28 L43 50 Q32 54 21 50 Z" fill="#B5561A"/>
+  <!-- lignes de tressage (discrètes, hors zone de la lettre) -->
+  <path d="M17.3 33 L46.7 33" stroke="#7a3a10" stroke-width="1.4" opacity="0.6"/>
+  <!-- rebord -->
+  <rect x="14" y="26" width="36" height="3.5" rx="1.5" fill="#D9772E"/>
+  <!-- C -->
+  <text x="32" y="47" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="800" fill="#FFFFFF" text-anchor="middle">C</text>
+</svg>

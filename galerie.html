@@ -7,8 +7,21 @@
     <meta name="keywords" content="artisanat Bénin, Porto-Novo, art africain, textile, tressage, accessoires traditionnels">
     <meta name="author" content="Cabane des Arts">
     <meta name="theme-color" content="#C4943B">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Cabane des Arts">
+    <meta property="og:title" content="Galerie & Cours | Cabane des Arts">
+    <meta property="og:description" content="Textile, tressage, accessoires, tapisserie, parures : explorez nos disciplines artistiques et découvrez les ateliers proposés à Cabane des Arts.">
+    <meta property="og:image" content="https://cabane-des-arts.netlify.app/logo.jpg">
+    <meta property="og:url" content="https://cabane-des-arts.netlify.app/galerie">
     
     <title>Galerie & Cours | Cabane des Arts</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
@@ -70,10 +83,13 @@
                     
                     <ul class="nav-menu" id="navMenu">
                         <li class="nav-item">
-                            <a href="index.html" class="nav-link active" data-i18n="nav.home">Accueil</a>
+                            <a href="index.html" class="nav-link" data-i18n="nav.home">Accueil</a>
                         </li>
                         <li class="nav-item">
                             <a href="histoire.html" class="nav-link" data-i18n="nav.story">Notre Histoire</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="decouverte.html" class="nav-link" data-i18n="nav.discovery">Découverte</a>
                         </li>
                         <li class="nav-item">
                             <a href="galerie.html" class="nav-link active" data-i18n="nav.gallery">Galerie & Cours</a>
@@ -94,7 +110,6 @@
                             <i class="fas fa-shopping-bag"></i>
                             <span class="cart-count" id="cartCount">0</span>
                         </button>
-                        <!-- BOUTON MODE SOMBRE -->
                         <button id="theme-toggle" class="theme-toggle">
                             🌙 Mode Sombre
                         </button>
@@ -172,6 +187,74 @@
     </section>
 
     <!-- ========== SECTION ATELIERS ========== -->
+    <!-- ========== SECTION FORMATION CQM (Métiers d'Accessoires) ========== -->
+    <section class="formation-cqm-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Formation certifiante · En partenariat avec Dimitri's Art</span>
+                <h2 class="section-title">Devenez Professionnel des Métiers d'Accessoires</h2>
+                <div class="section-divider">
+                    <span class="divider-line"></span>
+                    <i class="fas fa-certificate"></i>
+                    <span class="divider-line"></span>
+                </div>
+                <p class="section-description highlight-text">
+                    La Cabane des Arts est la première structure à accompagner des candidats aux examens du
+                    Certificat de Qualification aux Métiers (CQM) en métiers d'accessoires dans l'Ouémé-Plateau.
+                </p>
+            </div>
+
+            <div class="mission-cards formation-audience-cards">
+                <div class="mission-card">
+                    <div class="card-icon"><i class="fas fa-book-open"></i></div>
+                    <h3>Autodidactes</h3>
+                    <p>Vous avez appris seul(e) sur TikTok, YouTube ou à la maison.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="card-icon"><i class="fas fa-user-pen"></i></div>
+                    <h3>Personnes déjà initiées</h3>
+                    <p>Vous savez déjà faire mais vous voulez devenir professionnel(le).</p>
+                </div>
+                <div class="mission-card">
+                    <div class="card-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3>Passionnés</h3>
+                    <p>Vous voulez vivre de votre savoir-faire et créer votre activité.</p>
+                </div>
+            </div>
+
+            <div class="formation-programme">
+                <div class="formation-programme-text">
+                    <h3><i class="fas fa-list-check"></i> Au programme</h3>
+                    <ul class="formation-programme-list">
+                        <li><i class="fas fa-check"></i> Création d'accessoires de mode</li>
+                        <li><i class="fas fa-check"></i> Travail des matières locales (raphia, cuir, indigo, noix de coco...)</li>
+                        <li><i class="fas fa-check"></i> Design et innovation</li>
+                        <li><i class="fas fa-check"></i> Techniques artisanales modernes</li>
+                        <li><i class="fas fa-check"></i> Développement de projets créatifs</li>
+                        <li><i class="fas fa-check"></i> Initiation à l'entrepreneuriat</li>
+                    </ul>
+                </div>
+                <div class="formation-cta-box">
+                    <p class="formation-cta-tagline">Ne restez pas au niveau « Essai »...</p>
+                    <p class="formation-cta-highlight">Passez au niveau Professionnel !</p>
+                    <span class="formation-cta-badge"><i class="fas fa-hourglass-half"></i> Places limitées</span>
+                    <div class="formation-cta-contact">
+                        <a href="tel:+22961750141"><i class="fas fa-phone"></i> 01 61 75 01 41</a>
+                        <a href="tel:+2290154540684"><i class="fas fa-phone"></i> 01 54 54 06 84</a>
+                    </div>
+                    <a href="contact.html" class="btn btn-primary btn-full">
+                        <i class="fas fa-paper-plane"></i> Infos & Inscriptions
+                    </a>
+                </div>
+            </div>
+
+            <p class="formation-partners">
+                Avec le soutien de l'AFD (Agence Française de Développement), l'OIF (Organisation Internationale
+                de la Francophonie), la Fondation Fokal et l'UNESCO.
+            </p>
+        </div>
+    </section>
+
     <section class="ateliers-section">
         <div class="container">
             <div class="section-header">
@@ -214,6 +297,7 @@
                     <ul>
                         <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
                         <li><a href="histoire.html" data-i18n="nav.story">Notre Histoire</a></li>
+                        <li><a href="decouverte.html" data-i18n="nav.discovery">Découverte</a></li>
                         <li><a href="galerie.html" data-i18n="nav.gallery">Galerie & Cours</a></li>
                         <li><a href="boutique.html" data-i18n="nav.shop">Boutique</a></li>
                         <li><a href="agenda.html" data-i18n="nav.events">Agenda</a></li>
@@ -246,10 +330,31 @@
             
             <div class="footer-bottom">
                 <p>&copy; 2026 La Cabane des Arts - Porto-Novo, Bénin. <span data-i18n="footer.rights">Tous droits réservés.</span></p>
+                <p class="footer-legal-links">
+                    <a href="mentions-legales.html">Mentions légales</a>
+                    <span class="footer-legal-sep">·</span>
+                    <a href="cgv.html">CGV</a>
+                    <span class="footer-legal-sep">·</span>
+                    <a href="politique-confidentialite.html">Politique de confidentialité</a>
+                </p>
                 <p class="footer-credit">Développé avec ❤️ pour l'artisanat béninois</p>
             </div>
         </div>
     </footer>
+
+    <!-- ========== BANNIÈRE COOKIES ========== -->
+    <div class="cookie-banner" id="cookie-banner">
+        <div class="cookie-banner-content">
+            <p>
+                Ce site utilise des cookies et des technologies similaires (stockage local) pour faire fonctionner le panier d'achat, retenir vos préférences (langue, mode sombre) et mesurer la fréquentation. Vous pouvez accepter ou refuser les cookies non essentiels.
+                <a href="politique-confidentialite.html">En savoir plus</a>
+            </p>
+            <div class="cookie-banner-actions">
+                <button id="cookie-decline" class="btn btn-outline">Refuser</button>
+                <button id="cookie-accept" class="btn btn-primary">Accepter</button>
+            </div>
+        </div>
+    </div>
 
     
 <!-- ========== MODAL RÉSERVATION ATELIER ========== -->
@@ -315,7 +420,6 @@
                 <span id="checkoutTotalPrice">0 FCFA</span>
             </div>
             
-            <!-- Formulaire avec paiement KkiaPay -->
             <form id="checkoutForm">
                 <div class="form-group">
                     <label for="checkoutName" data-i18n="checkout.name">Nom complet *</label>
@@ -347,7 +451,6 @@
                     </select>
                 </div>
                 
-                <!-- Informations de paiement KkiaPay -->
                 <div style="background: var(--color-ocre-pale); padding: 12px 16px; border-radius: var(--border-radius); margin-bottom: 16px;">
                     <p style="font-size: 13px; color: var(--color-ocre-dark); margin: 0; display: flex; align-items: center; gap: 8px;">
                         <i class="fas fa-lock" style="color: var(--color-ocre-primary);"></i>
@@ -363,6 +466,41 @@
         </div>
     </div>
 </div>
+
+    <!-- ========== MODALE DE DÉTAIL (histoire de la discipline) ========== -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal detail-modal">
+            <button class="modal-close" id="detailModalClose" aria-label="Fermer">&times;</button>
+            <div class="detail-modal-image" id="detailImage"></div>
+            <div class="detail-modal-body">
+                <span class="detail-category" id="detailCategory"></span>
+                <h3 class="detail-title" id="detailTitle"></h3>
+                <p class="detail-description" id="detailDescription"></p>
+
+                <div class="detail-price-row" id="detailPriceRow">
+                    <span class="detail-price" id="detailPrice"></span>
+                </div>
+
+                <button class="btn btn-primary btn-full detail-add-to-cart" id="detailAddToCart">
+                    <i class="fas fa-cart-plus"></i> <span data-i18n="cart.title">Ajouter au panier</span>
+                </button>
+
+                <div class="detail-story" id="detailStorySection">
+                    <h4><i class="fas fa-feather"></i> <span id="detailStoryTitle"></span></h4>
+                    <p id="detailStoryText"></p>
+                </div>
+
+                <div class="detail-note" id="detailNoteSection">
+                    <h5><i class="fas fa-quote-left"></i> Note de l'artisan</h5>
+                    <p id="detailNoteText"></p>
+                </div>
+
+                <a href="boutique.html" class="btn btn-outline btn-full detail-shop-link">
+                    <i class="fas fa-shopping-bag"></i> Découvrir nos créations en boutique
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- ========== NOTIFICATION TOAST ========== -->
     <div class="toast-container" id="toastContainer"></div>
@@ -474,7 +612,6 @@
     // Charger les avis au démarrage
     loadAvisPublic();
     </script>
-
 
     <!-- ===== BOUTON FLOTTANT RÉSEAUX SOCIAUX ===== -->
     <div class="floating-social" id="floatingSocial">
@@ -623,21 +760,7 @@
     });
     </script>
 
-
-    <!-- ===== BARRE DE PROGRESSION + SCROLL ANIMÉ ===== -->
-    <div id="progressBarContainer" style="position:fixed;top:0;left:0;width:100%;height:3px;z-index:99999;pointer-events:none;">
-        <div id="progressBar" style="height:100%;width:0%;background:linear-gradient(90deg,#B5561A,#C8922A);transition:width 0.1s ease;"></div>
-    </div>
-
     <script>
-    // ===== BARRE DE PROGRESSION =====
-    window.addEventListener('scroll', function() {
-        var scrollTop = window.scrollY || document.documentElement.scrollTop;
-        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        document.getElementById('progressBar').style.width = pct + '%';
-    });
-
     // ===== SCROLL FLUIDE + ANIMATION TITRE =====
     document.querySelectorAll('a[href^="#"]').forEach(function(link) {
         link.addEventListener('click', function(e) {
@@ -666,7 +789,6 @@
         });
     });
     </script>
-
 
     <script>
     // ===== AGENDA DYNAMIQUE =====
@@ -739,7 +861,6 @@
     });
     </script>
 
-
     <script>
     function reserverEvenement(titre, prix) {
         document.getElementById('resAtelier').value = titre;
@@ -750,8 +871,5 @@
     }
     </script>
 <!-- ===== SDK KKIAPAY ===== -->
-<script src="https://cdn.kkiapay.me/k.js"></script>
-</body>
-</html>
 </body>
 </html>

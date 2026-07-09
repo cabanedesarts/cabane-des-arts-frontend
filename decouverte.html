@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cabane des Arts - Espace de création, formation et transmission dédié à l'artisanat et aux arts inspirés des cultures locales du Bénin">
-    <meta name="keywords" content="artisanat Bénin, Porto-Novo, art africain, textile, tressage, accessoires traditionnels">
+    <meta name="description" content="Cabane des Arts - Découvrez les matières premières utilisées dans nos créations artisanales : indigo, raphia, wax, perles, bogolan et cauris.">
+    <meta name="keywords" content="matières premières, artisanat Bénin, indigo, raphia, wax, perles, bogolan, cauris, Porto-Novo">
     <meta name="author" content="Cabane des Arts">
     <meta name="theme-color" content="#C4943B">
 
@@ -12,12 +12,12 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:site_name" content="Cabane des Arts">
-    <meta property="og:title" content="Contact | Cabane des Arts">
-    <meta property="og:description" content="Contactez Cabane des Arts à Porto-Novo, Adjina, Bénin. Par téléphone, email ou via notre formulaire en ligne.">
+    <meta property="og:title" content="Découverte - Matières premières | Cabane des Arts">
+    <meta property="og:description" content="Plongez au cœur de l'artisanat béninois. Découvrez les matières premières qui donnent vie à nos créations : indigo, raphia, wax, perles, bogolan et cauris.">
     <meta property="og:image" content="https://cabane-des-arts.netlify.app/logo.jpg">
-    <meta property="og:url" content="https://cabane-des-arts.netlify.app/contact">
+    <meta property="og:url" content="https://cabane-des-arts.netlify.app/decouverte">
     
-    <title>Contact | Cabane des Arts</title>
+    <title>Découverte | Cabane des Arts</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -31,6 +31,432 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* ===== STYLES SPÉCIFIQUES À LA PAGE DÉCOUVERTE ===== */
+        
+        /* Hero Découverte avec diaporama */
+        .decouverte-hero {
+            position: relative;
+            min-height: 95vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 140px 0 80px;
+        }
+        
+        .decouverte-hero .hero-slider {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        
+        .decouverte-hero .hero-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        
+        .decouverte-hero .hero-slide.active {
+            opacity: 1;
+        }
+        
+        .decouverte-hero .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(26, 18, 8, 0.78) 0%,
+                rgba(196, 148, 59, 0.30) 50%,
+                rgba(26, 18, 8, 0.78) 100%
+            );
+            z-index: 1;
+        }
+        
+        .decouverte-hero .decouverte-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #FFFFFF;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .decouverte-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 6vw, 56px);
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 16px;
+        }
+        
+        .decouverte-hero h1 span {
+            color: var(--color-ocre-light, #D4A94F);
+        }
+        
+        .decouverte-hero p {
+            font-size: clamp(16px, 2vw, 20px);
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.8;
+        }
+        
+        .decouverte-hero .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(196, 148, 59, 0.2);
+            border: 1px solid rgba(196, 148, 59, 0.4);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            color: var(--color-ocre-light);
+        }
+        
+        .decouverte-hero .hero-badge i {
+            color: var(--color-ocre-primary);
+        }
+        
+        /* ===== STYLES POUR LES PLACEHOLDERS DU DIAPORAMA ===== */
+        .decouverte-hero .slide-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .decouverte-hero .slide-placeholder i {
+            font-size: 64px;
+            color: #D4A94F;
+            margin-bottom: 12px;
+        }
+        
+        .decouverte-hero .slide-placeholder .slide-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-top: 8px;
+        }
+        
+        .decouverte-hero .slide-placeholder .slide-subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 4px;
+        }
+        
+        .decouverte-hero .slide-label {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.5);
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #FFFFFF;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Indicateurs du diaporama */
+        .hero-slider-indicators {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .hero-slider-indicators .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .hero-slider-indicators .dot.active {
+            background: var(--color-ocre-primary, #C4943B);
+            border-color: #FFFFFF;
+            transform: scale(1.2);
+        }
+        
+        .hero-slider-indicators .dot:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Grille des matières premières */
+        .matieres-section {
+            padding: 80px 0;
+            background: var(--bg-secondary, #FAF5EB);
+        }
+        
+        .matieres-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 32px;
+        }
+        
+        .matiere-card {
+            background: var(--bg-color, #FFFFFF);
+            border-radius: var(--border-radius-lg, 20px);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm, 0 2px 8px rgba(0,0,0,0.08));
+            transition: all var(--transition, 0.3s ease);
+            border: 1px solid transparent;
+        }
+        
+        .matiere-card:hover {
+            box-shadow: var(--shadow-lg, 0 8px 32px rgba(0,0,0,0.16));
+            transform: translateY(-5px);
+            border-color: var(--color-ocre-pale, #F5E6C8);
+        }
+        
+        .matiere-image {
+            position: relative;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            background: var(--bg-secondary, #FAF5EB);
+        }
+        
+        .matiere-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-slow, 0.5s ease);
+        }
+        
+        .matiere-card:hover .matiere-image img {
+            transform: scale(1.05);
+        }
+        
+        .matiere-image .placeholder-icon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--color-ocre-pale, #F5E6C8), var(--color-cream-dark, #F0E8D5));
+            font-size: 48px;
+            color: var(--color-ocre-primary, #C4943B);
+            opacity: 0.5;
+        }
+        
+        .matiere-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--color-ocre-primary, #C4943B);
+            color: #FFFFFF;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .matiere-content {
+            padding: 24px 28px 28px;
+        }
+        
+        .matiere-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            color: var(--text-color, #1A1A1A);
+            margin-bottom: 8px;
+        }
+        
+        .matiere-content .matiere-origine {
+            font-size: 13px;
+            color: var(--color-ocre-primary, #C4943B);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .matiere-content .matiere-origine i {
+            font-size: 14px;
+        }
+        
+        .matiere-content p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary, #4A4A4A);
+            margin-bottom: 16px;
+        }
+        
+        .matiere-content .matiere-utilisations {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .matiere-content .matiere-utilisations .usage-tag {
+            background: var(--color-ocre-pale, #F5E6C8);
+            color: var(--color-ocre-dark, #A67B2E);
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.25s ease;
+        }
+
+        .matiere-content .matiere-utilisations .usage-tag:hover,
+        .matiere-content .matiere-utilisations .usage-tag:focus-visible {
+            background: var(--color-ocre-primary, #C4943B);
+            color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(196, 148, 59, 0.35);
+        }
+
+        /* Modale histoire d'un usage : un peu plus large pour le texte long */
+        .modal.modal-story {
+            max-width: 640px;
+        }
+
+        .modal.modal-story .modal-header h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--color-ocre-dark, #A67B2E);
+        }
+        
+        /* Section engagement */
+        .engagement-section {
+            padding: 80px 0;
+            background: var(--bg-primary, #FFFBF5);
+        }
+        
+        .engagement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        
+        .engagement-card {
+            text-align: center;
+            padding: 32px 24px;
+            background: var(--bg-color, #FFFFFF);
+            border-radius: var(--border-radius-lg, 20px);
+            box-shadow: var(--shadow-sm, 0 2px 8px rgba(0,0,0,0.08));
+            transition: all var(--transition, 0.3s ease);
+            border: 1px solid transparent;
+        }
+        
+        .engagement-card:hover {
+            box-shadow: var(--shadow-md, 0 4px 16px rgba(0,0,0,0.12));
+            transform: translateY(-3px);
+            border-color: var(--color-ocre-pale, #F5E6C8);
+        }
+        
+        .engagement-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--color-ocre-pale, #F5E6C8), var(--color-cream-dark, #F0E8D5));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 28px;
+            color: var(--color-ocre-primary, #C4943B);
+        }
+        
+        .engagement-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: var(--text-color, #1A1A1A);
+            margin-bottom: 8px;
+        }
+        
+        .engagement-card p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary, #4A4A4A);
+        }
+        
+        /* ===== MODE SOMBRE ===== */
+        body.dark-mode .decouverte-hero {
+            background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 50%, #0A0A0A 100%);
+        }
+        
+        body.dark-mode .matiere-card {
+            background: var(--bg-color, #1A1A1A);
+            border-color: var(--border-color, #444);
+        }
+        
+        body.dark-mode .engagement-card {
+            background: var(--bg-color, #1A1A1A);
+            border-color: var(--border-color, #444);
+        }
+        
+        body.dark-mode .matiere-content .matiere-utilisations .usage-tag {
+            background: #3A3A3A;
+            color: var(--color-ocre-light, #D4A94F);
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .decouverte-hero {
+                min-height: 75vh;
+                padding: 120px 0 60px;
+            }
+            
+            .matieres-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .engagement-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .decouverte-hero .slide-placeholder i {
+                font-size: 40px;
+            }
+            
+            .decouverte-hero .slide-placeholder .slide-title {
+                font-size: 22px;
+            }
+            
+            .decouverte-hero .slide-placeholder .slide-subtitle {
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .engagement-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .matiere-content {
+                padding: 20px;
+            }
+            
+            .hero-slider-indicators .dot {
+                width: 8px;
+                height: 8px;
+            }
+        }
+    </style>
 </head>
 <body>
 <!-- ========== HEADER ========== -->
@@ -89,7 +515,7 @@
                             <a href="histoire.html" class="nav-link" data-i18n="nav.story">Notre Histoire</a>
                         </li>
                         <li class="nav-item">
-                            <a href="decouverte.html" class="nav-link" data-i18n="nav.discovery">Découverte</a>
+                            <a href="decouverte.html" class="nav-link active" data-i18n="nav.discovery">Découverte</a>
                         </li>
                         <li class="nav-item">
                             <a href="galerie.html" class="nav-link" data-i18n="nav.gallery">Galerie & Cours</a>
@@ -101,7 +527,7 @@
                             <a href="agenda.html" class="nav-link" data-i18n="nav.events">Agenda</a>
                         </li>
                         <li class="nav-item">
-                            <a href="contact.html" class="nav-link active" data-i18n="nav.contact">Contact</a>
+                            <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
                         </li>
                     </ul>
                     
@@ -155,117 +581,113 @@
     </div>
 
     
-<!-- ========== SECTION CONTACT ========== -->
-    <section id="contact" class="contact-section">
+<!-- ========== HERO DÉCOUVERTE AVEC DIAPORAMA ========== -->
+    <section class="decouverte-hero">
+        <!-- Diaporama en arrière-plan -->
+        <div class="hero-slider">
+            <!-- 1. INDIGO - avec image -->
+            <div class="hero-slide active" style="background-image: url('images/matieres/indigo.jpg');">
+                <div class="slide-label">Indigo</div>
+            </div>
+            <!-- 2. RAPHIA - avec image -->
+            <div class="hero-slide" style="background-image: url('images/matieres/raphia.jpg');">
+                <div class="slide-label">Raphia</div>
+            </div>
+            <!-- 3. WAX - avec image -->
+            <div class="hero-slide" style="background-image: url('images/matieres/wax.jpg');">
+                <div class="slide-label">Wax</div>
+            </div>
+            <!-- 4. PERLES - avec image -->
+            <div class="hero-slide" style="background-image: url('images/matieres/perles.jpg');">
+                <div class="slide-label">Perles</div>
+            </div>
+            <!-- 5. BOGOLAN - avec image -->
+            <div class="hero-slide" style="background-image: url('images/matieres/bogolan.jpg');">
+                <div class="slide-label">Bogolan</div>
+            </div>
+            <!-- 6. CAURIS - avec image -->
+            <div class="hero-slide" style="background-image: url('images/matieres/cauris.jpg');">
+                <div class="slide-label">Cauris</div>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="container decouverte-hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-seedling"></i>
+                <span data-i18n="decouverte.badge">À la découverte de nos matières</span>
+            </div>
+            <h1>
+                <span data-i18n="decouverte.title1">L'âme de nos</span><br>
+                <span data-i18n="decouverte.title2">créations</span>
+            </h1>
+            <p data-i18n="decouverte.hero_desc">
+                Plongez au cœur de l'artisanat béninois. Découvrez les matières premières qui donnent vie à nos créations, 
+                leurs origines, leurs histoires et les savoir-faire qui les transforment en œuvres uniques.
+            </p>
+        </div>
+    </section>
+    
+
+    
+    <!-- ========== MATIÈRES PREMIÈRES ========== -->
+    <section class="matieres-section" id="matieres">
         <div class="container">
             <div class="section-header">
-                <span class="section-subtitle" data-i18n="contact.subtitle">Contactez-nous</span>
-                <h2 class="section-title" data-i18n="contact.title">Contact & Localisation</h2>
+                <span class="section-subtitle" data-i18n="decouverte.matieres_subtitle">Nos matières premières</span>
+                <h2 class="section-title" data-i18n="decouverte.matieres_title">Au cœur de la création</h2>
                 <div class="section-divider">
                     <span class="divider-line"></span>
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-leaf"></i>
+                    <span class="divider-line"></span>
+                </div>
+                <p class="section-description" data-i18n="decouverte.matieres_desc">
+                    Découvrez les matériaux nobles que nos artisans transforment avec passion
+                </p>
+            </div>
+            
+            <div class="matieres-grid" id="matieresGrid">
+                <!-- Les cartes seront générées par JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== SECTION ENGAGEMENT ========== -->
+    <section class="engagement-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle" data-i18n="decouverte.engagement_subtitle">Nos engagements</span>
+                <h2 class="section-title" data-i18n="decouverte.engagement_title">Un artisanat responsable</h2>
+                <div class="section-divider">
+                    <span class="divider-line"></span>
+                    <i class="fas fa-handshake"></i>
                     <span class="divider-line"></span>
                 </div>
             </div>
             
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <div class="info-card">
-                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
-                        <div class="info-details">
-                            <h4 data-i18n="contact.address">Adresse</h4>
-                            <p>Porto-Novo, Adjina<br>Rue de l'Inspection<br>Bénin</p>
-                        </div>
-                    </div>
-                    
-                    <div class="info-card">
-                        <div class="info-icon"><i class="fas fa-phone"></i></div>
-                        <div class="info-details">
-                            <h4 data-i18n="contact.phone">Téléphone</h4>
-                            <p><a href="tel:+22961750141">+229 01 61 75 01 41</a></p>
-                            <p><a href="tel:+2290154540684">+229 01 54 54 06 84</a></p>
-                        </div>
-                    </div>
-                    
-                    <div class="info-card">
-                        <div class="info-icon"><i class="fas fa-envelope"></i></div>
-                        <div class="info-details">
-                            <h4 data-i18n="contact.email">Email</h4>
-                            <p><a href="mailto:cabanedesarts61@gmail.com">cabanedesarts61@gmail.com</a></p>
-                        </div>
-                    </div>
-                    
-                    <div class="info-card">
-                        <div class="info-icon"><i class="fas fa-share-alt"></i></div>
-                        <div class="info-details">
-                            <h4 data-i18n="contact.social">Réseaux sociaux</h4>
-                            <div class="social-links-large">
-                                <a href="https://www.facebook.com/CabaneDesArts" target="_blank" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                                <a href="https://www.instagram.com/cabane_des_arts" target="_blank" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                                <a href="https://www.youtube.com/channel/UCnYrRoik0l54eAIrJpQTi5w" target="_blank" class="social-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                                <a href="https://wa.me/22961750141?text=Bonjour%20Cabane%20des%20Arts" target="_blank" class="social-btn" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                            </div>
-                        </div>
-                    </div>
+            <div class="engagement-grid">
+                <div class="engagement-card">
+                    <div class="engagement-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3 data-i18n="decouverte.engagement1_title">Commerce équitable</h3>
+                    <p data-i18n="decouverte.engagement1_desc">Nous travaillons directement avec les artisans, en leur garantissant une rémunération juste et des conditions de travail dignes.</p>
                 </div>
                 
-                <div class="contact-form-wrapper">
-                    <h3 data-i18n="contact.form.title">Envoyez-nous un message</h3>
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="contactName" data-i18n="contact.form.name">Nom complet *</label>
-                                <input type="text" id="contactName" name="name" required placeholder="Votre nom">
-                            </div>
-                            <div class="form-group">
-                                <label for="contactEmail" data-i18n="contact.form.email">Email *</label>
-                                <input type="email" id="contactEmail" name="email" required placeholder="votre@email.com">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="contactPhone" data-i18n="contact.form.phone">Téléphone</label>
-                            <input type="tel" id="contactPhone" name="phone" placeholder="+229 XXXXXXXX">
-                        </div>
-                        <div class="form-group">
-                            <label for="contactSubject" data-i18n="contact.form.subject">Sujet *</label>
-                            <select id="contactSubject" name="subject" required>
-                                <option value="" data-i18n="contact.form.select">Sélectionnez un sujet</option>
-                                <option value="achat" data-i18n="contact.form.buy">Achat d'œuvre</option>
-                                <option value="atelier" data-i18n="contact.form.workshop">Inscription atelier</option>
-                                <option value="partenariat" data-i18n="contact.form.partnership">Partenariat</option>
-                                <option value="info" data-i18n="contact.form.info">Demande d'information</option>
-                                <option value="autre" data-i18n="contact.form.other">Autre</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="contactMessage" data-i18n="contact.form.message">Message *</label>
-                            <textarea id="contactMessage" name="message" rows="5" required placeholder="Votre message..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full">
-                            <i class="fas fa-paper-plane"></i>
-                            <span data-i18n="contact.form.send">Envoyer le message</span>
-                        </button>
-                    </form>
+                <div class="engagement-card">
+                    <div class="engagement-icon"><i class="fas fa-recycle"></i></div>
+                    <h3 data-i18n="decouverte.engagement2_title">Durabilité</h3>
+                    <p data-i18n="decouverte.engagement2_desc">Nous privilégions des matières naturelles, renouvelables et locales, pour minimiser notre impact sur l'environnement.</p>
                 </div>
-            </div>
-
-            <div class="contact-map-wrapper">
-                <h3 class="contact-map-title"><i class="fas fa-map-marked-alt"></i> Nous trouver sur la carte</h3>
-                <div class="contact-map-frame">
-                    <iframe
-                        src="https://www.google.com/maps?cid=2052869850901155723&output=embed"
-                        width="100%"
-                        height="350"
-                        style="border:0;"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        title="Localisation de La Cabane des Arts, Porto-Novo">
-                    </iframe>
+                
+                <div class="engagement-card">
+                    <div class="engagement-icon"><i class="fas fa-hand-sparkles"></i></div>
+                    <h3 data-i18n="decouverte.engagement3_title">Savoir-faire ancestral</h3>
+                    <p data-i18n="decouverte.engagement3_desc">Nous perpétuons et valorisons des techniques artisanales transmises de génération en génération.</p>
                 </div>
-                <a href="https://maps.app.goo.gl/WeU5Bqdxe86GDHfV8" target="_blank" rel="noopener" class="btn btn-outline contact-map-link">
-                    <i class="fas fa-location-arrow"></i> Itinéraire sur Google Maps
-                </a>
+                
+                <div class="engagement-card">
+                    <div class="engagement-icon"><i class="fas fa-users"></i></div>
+                    <h3 data-i18n="decouverte.engagement4_title">Impact social</h3>
+                    <p data-i18n="decouverte.engagement4_desc">Chaque achat contribue à la formation de nouveaux artisans et au développement économique local.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -400,66 +822,18 @@
         </div>
     </div>
 
-  <!-- ========== MODAL COMMANDE ========== -->
-<div class="modal-overlay" id="checkoutModal">
-    <div class="modal">
-        <button class="modal-close" id="checkoutModalClose" aria-label="Fermer">&times;</button>
-        <div class="modal-header">
-            <h3 data-i18n="checkout.title">Finaliser la commande</h3>
-        </div>
-        <div class="modal-body">
-            <div class="checkout-summary" id="checkoutSummary"></div>
-            <div class="checkout-total">
-                <strong data-i18n="checkout.total">Total :</strong>
-                <span id="checkoutTotalPrice">0 FCFA</span>
+    <!-- ========== MODAL HISTOIRE D'UN USAGE ========== -->
+    <div class="modal-overlay" id="usageStoryModal">
+        <div class="modal modal-story">
+            <button class="modal-close" id="usageStoryModalClose" aria-label="Fermer">&times;</button>
+            <div class="modal-header">
+                <h3 id="usageStoryTitle"></h3>
             </div>
-            
-            <form id="checkoutForm">
-                <div class="form-group">
-                    <label for="checkoutName" data-i18n="checkout.name">Nom complet *</label>
-                    <input type="text" id="checkoutName" name="name" placeholder="Votre nom complet" required>
-                </div>
-                <div class="form-group">
-                    <label for="checkoutEmail" data-i18n="checkout.email">Email *</label>
-                    <input type="email" id="checkoutEmail" name="email" placeholder="votre@email.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="checkoutPhone" data-i18n="checkout.phone">Téléphone Mobile Money *</label>
-                    <input type="tel" id="checkoutPhone" name="phone" placeholder="+229 90 00 00 01" required>
-                    <small style="color: var(--text-light); font-size: 12px;">
-                        <i class="fas fa-info-circle"></i> 
-                        Numéro MTN, Moov ou Celtiis pour le paiement
-                    </small>
-                </div>
-                <div class="form-group">
-                    <label for="checkoutAddress" data-i18n="checkout.address">Adresse de livraison</label>
-                    <textarea id="checkoutAddress" name="address" rows="2" placeholder="Votre adresse complète (optionnel)"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="checkoutDelivery" data-i18n="checkout.delivery">Mode de livraison</label>
-                    <select id="checkoutDelivery" name="delivery">
-                        <option value="pickup">📍 Retrait à la Cabane (Porto-Novo)</option>
-                        <option value="local">🚚 Livraison locale (Porto-Novo)</option>
-                        <option value="national">🚛 Livraison nationale (Bénin)</option>
-                        <option value="international">✈️ Livraison internationale</option>
-                    </select>
-                </div>
-                
-                <div style="background: var(--color-ocre-pale); padding: 12px 16px; border-radius: var(--border-radius); margin-bottom: 16px;">
-                    <p style="font-size: 13px; color: var(--color-ocre-dark); margin: 0; display: flex; align-items: center; gap: 8px;">
-                        <i class="fas fa-lock" style="color: var(--color-ocre-primary);"></i>
-                        <span>Paiement sécurisé via <strong>MTN MoMo, Moov Money ou Celtiis</strong></span>
-                    </p>
-                </div>
-                
-                <button type="submit" class="btn btn-primary btn-full" id="checkoutSubmitBtn">
-                    <i class="fas fa-credit-card"></i>
-                    <span>Payer avec Mobile Money</span>
-                </button>
-            </form>
+            <div class="modal-body">
+                <p id="usageStoryText" style="line-height: 1.8; color: var(--text-color);"></p>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- ========== NOTIFICATION TOAST ========== -->
     <div class="toast-container" id="toastContainer"></div>
@@ -479,6 +853,7 @@
     // Charger les avis validés
     async function loadAvisPublic() {
         const grid = document.getElementById('temoignagesGrid');
+        if (!grid) return; // Cette page n'a pas de section témoignages
         try {
             const res = await fetch(AVIS_API + '/avis');
             const avis = await res.json();
@@ -531,7 +906,8 @@
     });
 
     // Soumettre un avis
-    document.getElementById('avisForm').addEventListener('submit', async function(e) {
+    const avisFormEl = document.getElementById('avisForm');
+    if (avisFormEl) avisFormEl.addEventListener('submit', async function(e) {
         e.preventDefault();
         const nom = document.getElementById('avisNom').value.trim();
         const email = document.getElementById('avisEmail').value.trim();
@@ -572,153 +948,6 @@
     loadAvisPublic();
     </script>
 
-    <!-- ===== BOUTON FLOTTANT RÉSEAUX SOCIAUX ===== -->
-    <div class="floating-social" id="floatingSocial">
-        <button class="float-main" id="floatMain" onclick="toggleSocial()" title="Nous contacter">
-            <i class="fas fa-share-alt"></i>
-        </button>
-        <div class="float-items" id="floatItems">
-            <a href="https://wa.me/22961750141?text=Bonjour%20Cabane%20des%20Arts%2C%20je%20vous%20contacte%20depuis%20votre%20site%20web." 
-               target="_blank" class="float-item whatsapp" title="WhatsApp">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-            <a href="https://www.facebook.com/CabaneDesArts" 
-               target="_blank" class="float-item facebook" title="Facebook">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="https://www.instagram.com/cabane_des_arts" 
-               target="_blank" class="float-item instagram" title="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://vm.tiktok.com/ZS9FFyeX7g1RM-Fwqan/" 
-               target="_blank" class="float-item tiktok" title="TikTok">
-                <i class="fab fa-tiktok"></i>
-            </a>
-            <a href="https://www.youtube.com/channel/UCnYrRoik0l54eAIrJpQTi5w" 
-               target="_blank" class="float-item youtube" title="YouTube">
-                <i class="fab fa-youtube"></i>
-            </a>
-        </div>
-    </div>
-
-    <style>
-    .floating-social {
-        position: fixed;
-        bottom: 32px;
-        right: 28px;
-        z-index: 9998;
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .float-main {
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #B5561A, #C8922A);
-        border: none;
-        color: white;
-        font-size: 20px;
-        cursor: pointer;
-        box-shadow: 0 4px 20px rgba(181,86,26,0.4);
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .float-main:hover {
-        transform: scale(1.1);
-        box-shadow: 0 6px 28px rgba(181,86,26,0.5);
-    }
-
-    .float-main.open {
-        background: linear-gradient(135deg, #555, #333);
-        transform: rotate(45deg);
-    }
-
-    .float-items {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-        gap: 10px;
-        overflow: hidden;
-        max-height: 0;
-        transition: max-height 0.4s ease, opacity 0.3s ease;
-        opacity: 0;
-    }
-
-    .float-items.open {
-        max-height: 400px;
-        opacity: 1;
-    }
-
-    .float-item {
-        width: 46px;
-        height: 46px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 18px;
-        text-decoration: none;
-        box-shadow: 0 3px 12px rgba(0,0,0,0.2);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        position: relative;
-    }
-
-    .float-item:hover {
-        transform: scale(1.15);
-        box-shadow: 0 5px 18px rgba(0,0,0,0.3);
-    }
-
-    .float-item::before {
-        content: attr(title);
-        position: absolute;
-        right: 56px;
-        background: rgba(0,0,0,0.75);
-        color: white;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 12px;
-        white-space: nowrap;
-        opacity: 0;
-        transition: opacity 0.2s;
-        pointer-events: none;
-    }
-
-    .float-item:hover::before {
-        opacity: 1;
-    }
-
-    .float-item.whatsapp  { background: #25D366; }
-    .float-item.facebook  { background: #1877F2; }
-    .float-item.instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-    .float-item.tiktok    { background: #010101; }
-    .float-item.youtube   { background: #FF0000; }
-    </style>
-
-    <script>
-    function toggleSocial() {
-        const btn = document.getElementById('floatMain');
-        const items = document.getElementById('floatItems');
-        btn.classList.toggle('open');
-        items.classList.toggle('open');
-    }
-
-    // Fermer si on clique ailleurs
-    document.addEventListener('click', function(e) {
-        const social = document.getElementById('floatingSocial');
-        if (!social.contains(e.target)) {
-            document.getElementById('floatMain').classList.remove('open');
-            document.getElementById('floatItems').classList.remove('open');
-        }
-    });
-    </script>
-
     <script>
     // ===== SCROLL FLUIDE + ANIMATION TITRE =====
     document.querySelectorAll('a[href^="#"]').forEach(function(link) {
@@ -753,6 +982,7 @@
     // ===== AGENDA DYNAMIQUE =====
     async function loadAgenda() {
         const grid = document.getElementById('agendaGrid');
+        if (!grid) return; // Cette page n'a pas de grille agenda, on ne fait rien
         try {
             const res = await fetch('https://cabane-des-arts-backend.onrender.com/api/evenements');
             const evenements = await res.json();
@@ -829,6 +1059,71 @@
         document.getElementById('reservationModal').classList.add('active');
     }
     </script>
+
+    <!-- ===== DIAPORAMA HERO DÉCOUVERTE ===== -->
+    <script>
+    (function() {
+        const slides = document.querySelectorAll('.decouverte-hero .hero-slide');
+        const dotsContainer = document.createElement('div');
+        dotsContainer.className = 'hero-slider-indicators';
+        
+        // Créer les indicateurs
+        slides.forEach((slide, index) => {
+            const dot = document.createElement('span');
+            dot.className = 'dot' + (index === 0 ? ' active' : '');
+            dot.dataset.index = index;
+            dot.addEventListener('click', function() {
+                goToSlide(index);
+            });
+            dotsContainer.appendChild(dot);
+        });
+        
+        // Ajouter les indicateurs
+        const heroSection = document.querySelector('.decouverte-hero');
+        heroSection.appendChild(dotsContainer);
+        
+        let current = 0;
+        let interval;
+        
+        function goToSlide(index) {
+            slides.forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.hero-slider-indicators .dot').forEach(d => d.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            document.querySelectorAll('.hero-slider-indicators .dot')[index].classList.add('active');
+            current = index;
+        }
+        
+        function nextSlide() {
+            const next = (current + 1) % slides.length;
+            goToSlide(next);
+        }
+        
+        // Démarrer le diaporama
+        function startSlideshow() {
+            if (interval) clearInterval(interval);
+            interval = setInterval(nextSlide, 5000);
+        }
+        
+        // Pause sur hover
+        const heroContent = document.querySelector('.decouverte-hero .decouverte-hero-content');
+        if (heroContent) {
+            heroContent.addEventListener('mouseenter', function() {
+                if (interval) clearInterval(interval);
+            });
+            heroContent.addEventListener('mouseleave', function() {
+                startSlideshow();
+            });
+        }
+        
+        // Démarrer
+        startSlideshow();
+        
+        // Exposer la fonction pour les indicateurs
+        window.goToSlide = goToSlide;
+    })();
+    </script>
+
 <!-- ===== SDK KKIAPAY ===== -->
 </body>
 </html>

@@ -7,8 +7,21 @@
     <meta name="keywords" content="artisanat Bénin, Porto-Novo, art africain, textile, tressage, accessoires traditionnels">
     <meta name="author" content="Cabane des Arts">
     <meta name="theme-color" content="#C4943B">
+
+    <!-- Open Graph (partage WhatsApp / Facebook / etc.) -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Cabane des Arts">
+    <meta property="og:title" content="Notre Histoire | Cabane des Arts">
+    <meta property="og:description" content="Découvrez l'histoire de Cabane des Arts : un lieu de solidarité et d'autonomisation à Porto-Novo, au service de la formation et de l'artisanat béninois.">
+    <meta property="og:image" content="https://cabane-des-arts.netlify.app/logo.jpg">
+    <meta property="og:url" content="https://cabane-des-arts.netlify.app/histoire">
     
     <title>Notre Histoire | Cabane des Arts</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
@@ -70,10 +83,13 @@
                     
                     <ul class="nav-menu" id="navMenu">
                         <li class="nav-item">
-                            <a href="index.html" class="nav-link active" data-i18n="nav.home">Accueil</a>
+                            <a href="index.html" class="nav-link" data-i18n="nav.home">Accueil</a>
                         </li>
                         <li class="nav-item">
                             <a href="histoire.html" class="nav-link active" data-i18n="nav.story">Notre Histoire</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="decouverte.html" class="nav-link" data-i18n="nav.discovery">Découverte</a>
                         </li>
                         <li class="nav-item">
                             <a href="galerie.html" class="nav-link" data-i18n="nav.gallery">Galerie & Cours</a>
@@ -145,7 +161,12 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-subtitle" data-i18n="histoire.subtitle">Notre Histoire</span>
-                <h2 class="section-title" data-i18n="histoire.title">Découvrez La Cabane des Arts</h2>
+                <h2 class="section-title" style="font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; margin-bottom: 16px;">
+                    <span style="color: var(--text-color, #1A1A1A);">Découvrez</span>
+                    <span style="color: #8B6B3D;">Cabane</span>
+                    <span style="color: #1B3A6B;">des</span>
+                    <span style="color: #1B3A6B;">Arts</span>
+                </h2>
                 <div class="section-divider">
                     <span class="divider-line"></span>
                     <i class="fas fa-paint-brush"></i>
@@ -194,7 +215,7 @@
                         <span class="tag">✨ <span data-i18n="tags.ornements">Ornements</span></span>
                     </div>
                     
-                    <a href="#galerie" class="btn btn-primary">
+                    <a href="galerie.html" class="btn btn-primary">
                         <i class="fas fa-images"></i>
                         <span data-i18n="histoire.discover">Découvrir nos créations</span>
                     </a>
@@ -224,6 +245,7 @@
                     <ul>
                         <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
                         <li><a href="histoire.html" data-i18n="nav.story">Notre Histoire</a></li>
+                        <li><a href="decouverte.html" data-i18n="nav.discovery">Découverte</a></li>
                         <li><a href="galerie.html" data-i18n="nav.gallery">Galerie & Cours</a></li>
                         <li><a href="boutique.html" data-i18n="nav.shop">Boutique</a></li>
                         <li><a href="agenda.html" data-i18n="nav.events">Agenda</a></li>
@@ -256,10 +278,31 @@
             
             <div class="footer-bottom">
                 <p>&copy; 2026 La Cabane des Arts - Porto-Novo, Bénin. <span data-i18n="footer.rights">Tous droits réservés.</span></p>
+                <p class="footer-legal-links">
+                    <a href="mentions-legales.html">Mentions légales</a>
+                    <span class="footer-legal-sep">·</span>
+                    <a href="cgv.html">CGV</a>
+                    <span class="footer-legal-sep">·</span>
+                    <a href="politique-confidentialite.html">Politique de confidentialité</a>
+                </p>
                 <p class="footer-credit">Développé avec ❤️ pour l'artisanat béninois</p>
             </div>
         </div>
     </footer>
+
+    <!-- ========== BANNIÈRE COOKIES ========== -->
+    <div class="cookie-banner" id="cookie-banner">
+        <div class="cookie-banner-content">
+            <p>
+                Ce site utilise des cookies et des technologies similaires (stockage local) pour faire fonctionner le panier d'achat, retenir vos préférences (langue, mode sombre) et mesurer la fréquentation. Vous pouvez accepter ou refuser les cookies non essentiels.
+                <a href="politique-confidentialite.html">En savoir plus</a>
+            </p>
+            <div class="cookie-banner-actions">
+                <button id="cookie-decline" class="btn btn-outline">Refuser</button>
+                <button id="cookie-accept" class="btn btn-primary">Accepter</button>
+            </div>
+        </div>
+    </div>
 
     
 <!-- ========== MODAL RÉSERVATION ATELIER ========== -->
@@ -325,7 +368,6 @@
                 <span id="checkoutTotalPrice">0 FCFA</span>
             </div>
             
-            <!-- Formulaire avec paiement KkiaPay -->
             <form id="checkoutForm">
                 <div class="form-group">
                     <label for="checkoutName" data-i18n="checkout.name">Nom complet *</label>
@@ -357,7 +399,6 @@
                     </select>
                 </div>
                 
-                <!-- Informations de paiement KkiaPay -->
                 <div style="background: var(--color-ocre-pale); padding: 12px 16px; border-radius: var(--border-radius); margin-bottom: 16px;">
                     <p style="font-size: 13px; color: var(--color-ocre-dark); margin: 0; display: flex; align-items: center; gap: 8px;">
                         <i class="fas fa-lock" style="color: var(--color-ocre-primary);"></i>
@@ -484,7 +525,6 @@
     // Charger les avis au démarrage
     loadAvisPublic();
     </script>
-
 
     <!-- ===== BOUTON FLOTTANT RÉSEAUX SOCIAUX ===== -->
     <div class="floating-social" id="floatingSocial">
@@ -633,21 +673,7 @@
     });
     </script>
 
-
-    <!-- ===== BARRE DE PROGRESSION + SCROLL ANIMÉ ===== -->
-    <div id="progressBarContainer" style="position:fixed;top:0;left:0;width:100%;height:3px;z-index:99999;pointer-events:none;">
-        <div id="progressBar" style="height:100%;width:0%;background:linear-gradient(90deg,#B5561A,#C8922A);transition:width 0.1s ease;"></div>
-    </div>
-
     <script>
-    // ===== BARRE DE PROGRESSION =====
-    window.addEventListener('scroll', function() {
-        var scrollTop = window.scrollY || document.documentElement.scrollTop;
-        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        document.getElementById('progressBar').style.width = pct + '%';
-    });
-
     // ===== SCROLL FLUIDE + ANIMATION TITRE =====
     document.querySelectorAll('a[href^="#"]').forEach(function(link) {
         link.addEventListener('click', function(e) {
@@ -676,7 +702,6 @@
         });
     });
     </script>
-
 
     <script>
     // ===== AGENDA DYNAMIQUE =====
@@ -749,7 +774,6 @@
     });
     </script>
 
-
     <script>
     function reserverEvenement(titre, prix) {
         document.getElementById('resAtelier').value = titre;
@@ -760,8 +784,5 @@
     }
     </script>
 <!-- ===== SDK KKIAPAY ===== -->
-<script src="https://cdn.kkiapay.me/k.js"></script>
-</body>
-</html>
 </body>
 </html>

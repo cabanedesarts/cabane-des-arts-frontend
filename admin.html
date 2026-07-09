@@ -523,83 +523,6 @@
 </head>
 <body>
 
-<!-- ============================================ -->
-<!-- SOLUTION 3 - SÉCURITÉ ADMIN À DOUBLE NIVEAU  -->
-<!-- ============================================ -->
-<script>
-(function() {
-    // ═══════════════════════════════════════════════════════
-    // 1️⃣ VÉRIFICATION DE L'ORIGINE (referrer)
-    // ═══════════════════════════════════════════════════════
-    const referrer = document.referrer;
-    const siteHost = window.location.hostname;
-    
-    // Si la page est chargée depuis un autre site (hameçonnage)
-    if (referrer !== "" && !referrer.includes(siteHost)) {
-        alert("⛔ Accès non autorisé : Vous devez venir du site officiel.");
-        window.location.href = "/";
-        return;
-    }
-    
-    // ═══════════════════════════════════════════════════════
-    // 2️⃣ VÉRIFICATION DU CODE SECRET SUPPLÉMENTAIRE
-    // ═══════════════════════════════════════════════════════
-    const adminVerified = sessionStorage.getItem('adminSecretVerified');
-    
-    // ⚠️ IMPORTANT - CHANGEZ CE CODE SECRET ! ⚠️
-    // Remplacez "CABANE2026" par votre propre code personnel
-    const VALID_SECRET_CODE = "CABANE2026";
-    
-    if (!adminVerified) {
-        let secretCode = prompt(
-            "🔐 CODE D'ACCÈS ADMINISTRATEUR 🔐\n\n" +
-            "Veuillez entrer le code secret.\n" +
-            "(Contactez l'administrateur si vous ne l'avez pas)"
-        );
-        
-        if (secretCode !== VALID_SECRET_CODE) {
-            alert("❌ CODE INCORRECT !\n\nAccès refusé.");
-            window.location.href = "/";
-            return;
-        }
-        
-        sessionStorage.setItem('adminSecretVerified', 'true');
-        sessionStorage.setItem('adminLoginTime', new Date().toISOString());
-        alert("✅ Code accepté ! Bienvenue dans l'administration.");
-    }
-    
-    // ═══════════════════════════════════════════════════════
-    // 3️⃣ EXPIRATION DE SESSION (2 heures)
-    // ═══════════════════════════════════════════════════════
-    const loginTime = sessionStorage.getItem('adminLoginTime');
-    if (loginTime) {
-        const elapsed = Date.now() - new Date(loginTime).getTime();
-        const twoHours = 2 * 60 * 60 * 1000;
-        
-        if (elapsed > twoHours) {
-            alert("⏰ Session expirée ! Veuillez vous reconnecter.");
-            sessionStorage.removeItem('adminSecretVerified');
-            sessionStorage.removeItem('adminLoginTime');
-            window.location.reload();
-            return;
-        }
-    }
-    
-    // ═══════════════════════════════════════════════════════
-    // 4️⃣ ANTI-FORCE BRUTE (3 tentatives max)
-    // ═══════════════════════════════════════════════════════
-    let attemptCount = parseInt(sessionStorage.getItem('adminAttempts') || '0');
-    if (attemptCount >= 3) {
-        alert("🔒 Trop de tentatives. Accès bloqué pour 30 minutes.");
-        window.location.href = "/";
-        return;
-    }
-    
-    console.log("✅ Sécurité admin activée - Accès autorisé");
-    console.log("📅 Heure de connexion :", new Date().toLocaleString());
-})();
-</script>
-
 <!-- ===== ÉCRAN DE CONNEXION ===== -->
 <div id="loginScreen">
   <div class="login-box">
@@ -835,7 +758,7 @@
           </div>
           <div>
             <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Prix (FCFA)</label>
-            <input id="evPrix" type="number" placeholder="0 = Gratuit" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
+            <input id="evPrix" type="number" placeholder="0 = Gratuit, -1 = Sur inscription" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;outline:none;">
           </div>
           <div style="grid-column:1/-1;">
             <label style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Description *</label>
@@ -871,6 +794,19 @@
 <script>
   const API_URL = 'https://cabane-des-arts-backend.onrender.com/api';
   let token = localStorage.getItem('adminToken');
+
+  // Toutes les routes admin protégées doivent passer par authFetch
+  // (elle ajoute automatiquement le token, et déconnecte si la session a expiré).
+  async function authFetch(url, options = {}) {
+    const headers = { ...(options.headers || {}), 'Authorization': `Bearer ${token}` };
+    const res = await fetch(url, { ...options, headers });
+    if (res.status === 401) {
+      showToast('Session expirée, veuillez vous reconnecter', 'error');
+      logout();
+      throw new Error('401 Unauthorized');
+    }
+    return res;
+  }
 
   async function login() {
     const email = document.getElementById('loginEmail').value.trim();
@@ -945,7 +881,7 @@
 
   async function loadCommandes() {
     try {
-      const res = await fetch(`${API_URL}/commandes`);
+      const res = await authFetch(`${API_URL}/commandes`);
       const data = await res.json();
       document.getElementById('statCommandes').textContent = data.length;
       document.getElementById('badgeCommandes').textContent = data.filter(c => c.statut === 'en_attente').length;
@@ -968,7 +904,7 @@
 
   async function updateStatutCommande(id, statut) {
     try {
-      const res = await fetch(`${API_URL}/commandes/${id}/statut`, {
+      const res = await authFetch(`${API_URL}/commandes/${id}/statut`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ statut })
@@ -980,7 +916,7 @@
 
   async function loadReservations() {
     try {
-      const res = await fetch(`${API_URL}/reservations`);
+      const res = await authFetch(`${API_URL}/reservations`);
       const data = await res.json();
       document.getElementById('statReservations').textContent = data.length;
       document.getElementById('badgeReservations').textContent = data.filter(r => r.statut === 'en_attente').length;
@@ -1002,7 +938,7 @@
 
   async function updateStatutReservation(id, statut) {
     try {
-      const res = await fetch(`${API_URL}/reservations/${id}/statut`, {
+      const res = await authFetch(`${API_URL}/reservations/${id}/statut`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ statut })
@@ -1014,7 +950,7 @@
 
   async function loadMessages() {
     try {
-      const res = await fetch(`${API_URL}/contact`);
+      const res = await authFetch(`${API_URL}/contact`);
       const data = await res.json();
       const nonLus = data.filter(m => !m.lu).length;
       document.getElementById('statMessages').textContent = nonLus;
@@ -1037,7 +973,7 @@
 
   async function marquerLu(id) {
     try {
-      const res = await fetch(`${API_URL}/contact/${id}/lu`, { method: 'PATCH' });
+      const res = await authFetch(`${API_URL}/contact/${id}/lu`, { method: 'PATCH' });
       if (res.ok) { showToast('Message marqué comme lu', 'success'); loadMessages(); }
       else showToast('Erreur', 'error');
     } catch { showToast('Erreur serveur', 'error'); }
@@ -1045,7 +981,7 @@
 
   async function loadNewsletter() {
     try {
-      const res = await fetch(`${API_URL}/newsletter`);
+      const res = await authFetch(`${API_URL}/newsletter`);
       const data = await res.json();
       document.getElementById('statNewsletter').textContent = data.total;
       document.getElementById('badgeNewsletter').textContent = data.total;
@@ -1067,7 +1003,7 @@
 
   async function loadAvis() {
     try {
-      const res = await fetch(API_URL + '/avis/admin');
+      const res = await authFetch(API_URL + '/avis/admin');
       const data = await res.json();
       const enAttente = data.filter(a => a.statut === 'en_attente').length;
       document.getElementById('badgeAvis').textContent = enAttente;
@@ -1101,7 +1037,7 @@
 
   async function updateStatutAvis(id, statut) {
     try {
-      const res = await fetch(API_URL + '/avis/' + id + '/statut', {
+      const res = await authFetch(API_URL + '/avis/' + id + '/statut', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ statut })
@@ -1115,7 +1051,7 @@
 
   async function loadEvenements() {
     try {
-      const res = await fetch(API_URL + '/evenements/admin');
+      const res = await authFetch(API_URL + '/evenements/admin');
       const data = await res.json();
       document.getElementById('badgeEvenements').textContent = data.length;
       document.getElementById('countEvenements').textContent = data.length + ' événement(s)';
@@ -1125,7 +1061,7 @@
       }
       let html = '<table><thead><tr><th>#</th><th>Titre</th><th>Type</th><th>Date début</th><th>Lieu</th><th>Prix</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
       data.forEach(ev => {
-        const prix = ev.prix > 0 ? Number(ev.prix).toLocaleString('fr-FR') + ' FCFA' : 'Gratuit';
+        const prix = ev.prix < 0 ? 'Sur inscription' : (ev.prix > 0 ? Number(ev.prix).toLocaleString('fr-FR') + ' FCFA' : 'Gratuit');
         html += '<tr>' +
           '<td class="td-bold">#' + ev.id + '</td>' +
           '<td class="td-bold">' + ev.titre + '</td>' +
@@ -1168,7 +1104,7 @@
 
   async function editEvenement(id) {
     try {
-      const res = await fetch(API_URL + '/evenements/admin');
+      const res = await authFetch(API_URL + '/evenements/admin');
       const data = await res.json();
       const ev = data.find(e => e.id === id);
       if (!ev) return;
@@ -1208,13 +1144,13 @@
     try {
       let res;
       if (editingEvenementId) {
-        res = await fetch(API_URL + '/evenements/' + editingEvenementId, {
+        res = await authFetch(API_URL + '/evenements/' + editingEvenementId, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body)
         });
       } else {
-        res = await fetch(API_URL + '/evenements', {
+        res = await authFetch(API_URL + '/evenements', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body)
@@ -1236,7 +1172,7 @@
   async function deleteEvenement(id) {
     if (!confirm('Supprimer cet événement ?')) return;
     try {
-      const res = await fetch(API_URL + '/evenements/' + id, { method: 'DELETE' });
+      const res = await authFetch(API_URL + '/evenements/' + id, { method: 'DELETE' });
       const data = await res.json();
       if (res.ok) { showToast(data.message, 'success'); loadEvenements(); }
       else showToast(data.erreur || 'Erreur', 'error');
@@ -1256,7 +1192,7 @@
     };
     const loaders = { commandes: loadCommandes, reservations: loadReservations, messages: loadMessages, newsletter: loadNewsletter, avis: loadAvis, evenements: loadEvenements };
     try {
-      const res = await fetch(urls[table], { method: 'DELETE' });
+      const res = await authFetch(urls[table], { method: 'DELETE' });
       const data = await res.json();
       if (res.ok) { showToast(data.message, 'success'); if (loaders[table]) loaders[table](); }
       else showToast(data.erreur || 'Erreur lors de la suppression', 'error');

@@ -7,8 +7,21 @@
     <meta name="keywords" content="artisanat Bénin, Porto-Novo, art africain, textile, tressage, accessoires traditionnels">
     <meta name="author" content="Cabane des Arts">
     <meta name="theme-color" content="#C4943B">
+
+    <!-- Open Graph (partage WhatsApp / Facebook / etc.) -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Cabane des Arts">
+    <meta property="og:title" content="Boutique | Cabane des Arts">
+    <meta property="og:description" content="Découvrez nos créations artisanales à vendre : tapisseries, parures, textiles et accessoires inspirés des cultures du Bénin.">
+    <meta property="og:image" content="https://cabane-des-arts.netlify.app/logo.jpg">
+    <meta property="og:url" content="https://cabane-des-arts.netlify.app/boutique">
     
     <title>Boutique | Cabane des Arts</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
@@ -70,10 +83,13 @@
                     
                     <ul class="nav-menu" id="navMenu">
                         <li class="nav-item">
-                            <a href="index.html" class="nav-link active" data-i18n="nav.home">Accueil</a>
+                            <a href="index.html" class="nav-link" data-i18n="nav.home">Accueil</a>
                         </li>
                         <li class="nav-item">
                             <a href="histoire.html" class="nav-link" data-i18n="nav.story">Notre Histoire</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="decouverte.html" class="nav-link" data-i18n="nav.discovery">Découverte</a>
                         </li>
                         <li class="nav-item">
                             <a href="galerie.html" class="nav-link" data-i18n="nav.gallery">Galerie & Cours</a>
@@ -201,6 +217,7 @@
                     <ul>
                         <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
                         <li><a href="histoire.html" data-i18n="nav.story">Notre Histoire</a></li>
+                        <li><a href="decouverte.html" data-i18n="nav.discovery">Découverte</a></li>
                         <li><a href="galerie.html" data-i18n="nav.gallery">Galerie & Cours</a></li>
                         <li><a href="boutique.html" data-i18n="nav.shop">Boutique</a></li>
                         <li><a href="agenda.html" data-i18n="nav.events">Agenda</a></li>
@@ -233,10 +250,31 @@
             
             <div class="footer-bottom">
                 <p>&copy; 2026 La Cabane des Arts - Porto-Novo, Bénin. <span data-i18n="footer.rights">Tous droits réservés.</span></p>
+                <p class="footer-legal-links">
+                    <a href="mentions-legales.html">Mentions légales</a>
+                    <span class="footer-legal-sep">·</span>
+                    <a href="cgv.html">CGV</a>
+                    <span class="footer-legal-sep">·</span>
+                    <a href="politique-confidentialite.html">Politique de confidentialité</a>
+                </p>
                 <p class="footer-credit">Développé avec ❤️ pour l'artisanat béninois</p>
             </div>
         </div>
     </footer>
+
+    <!-- ========== BANNIÈRE COOKIES ========== -->
+    <div class="cookie-banner" id="cookie-banner">
+        <div class="cookie-banner-content">
+            <p>
+                Ce site utilise des cookies et des technologies similaires (stockage local) pour faire fonctionner le panier d'achat, retenir vos préférences (langue, mode sombre) et mesurer la fréquentation. Vous pouvez accepter ou refuser les cookies non essentiels.
+                <a href="politique-confidentialite.html">En savoir plus</a>
+            </p>
+            <div class="cookie-banner-actions">
+                <button id="cookie-decline" class="btn btn-outline">Refuser</button>
+                <button id="cookie-accept" class="btn btn-primary">Accepter</button>
+            </div>
+        </div>
+    </div>
 
     
 <!-- ========== MODAL RÉSERVATION ATELIER ========== -->
@@ -289,68 +327,38 @@
     </div>
 
     
-                    <!-- ========== MODAL COMMANDE ========== -->
-<div class="modal-overlay" id="checkoutModal">
-    <div class="modal">
-        <button class="modal-close" id="checkoutModalClose" aria-label="Fermer">&times;</button>
-        <div class="modal-header">
-            <h3 data-i18n="checkout.title">Finaliser la commande</h3>
-        </div>
-        <div class="modal-body">
-            <div class="checkout-summary" id="checkoutSummary"></div>
-            <div class="checkout-total">
-                <strong data-i18n="checkout.total">Total :</strong>
-                <span id="checkoutTotalPrice">0 FCFA</span>
-            </div>
-            
-            <!-- Formulaire avec paiement KkiaPay -->
-            <form id="checkoutForm">
-                <div class="form-group">
-                    <label for="checkoutName" data-i18n="checkout.name">Nom complet *</label>
-                    <input type="text" id="checkoutName" name="name" placeholder="Votre nom complet" required>
+
+
+    <!-- ========== MODALE DE DÉTAIL (histoire de la discipline) ========== -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal detail-modal">
+            <button class="modal-close" id="detailModalClose" aria-label="Fermer">&times;</button>
+            <div class="detail-modal-image" id="detailImage"></div>
+            <div class="detail-modal-body">
+                <span class="detail-category" id="detailCategory"></span>
+                <h3 class="detail-title" id="detailTitle"></h3>
+                <p class="detail-description" id="detailDescription"></p>
+
+                <div class="detail-price-row" id="detailPriceRow">
+                    <span class="detail-price" id="detailPrice"></span>
                 </div>
-                <div class="form-group">
-                    <label for="checkoutEmail" data-i18n="checkout.email">Email *</label>
-                    <input type="email" id="checkoutEmail" name="email" placeholder="votre@email.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="checkoutPhone" data-i18n="checkout.phone">Téléphone Mobile Money *</label>
-                    <input type="tel" id="checkoutPhone" name="phone" placeholder="+229 90 00 00 01" required>
-                    <small style="color: var(--text-light); font-size: 12px;">
-                        <i class="fas fa-info-circle"></i> 
-                        Numéro MTN, Moov ou Celtiis pour le paiement
-                    </small>
-                </div>
-                <div class="form-group">
-                    <label for="checkoutAddress" data-i18n="checkout.address">Adresse de livraison</label>
-                    <textarea id="checkoutAddress" name="address" rows="2" placeholder="Votre adresse complète (optionnel)"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="checkoutDelivery" data-i18n="checkout.delivery">Mode de livraison</label>
-                    <select id="checkoutDelivery" name="delivery">
-                        <option value="pickup">📍 Retrait à la Cabane (Porto-Novo)</option>
-                        <option value="local">🚚 Livraison locale (Porto-Novo)</option>
-                        <option value="national">🚛 Livraison nationale (Bénin)</option>
-                        <option value="international">✈️ Livraison internationale</option>
-                    </select>
-                </div>
-                
-                <!-- Informations de paiement KkiaPay -->
-                <div style="background: var(--color-ocre-pale); padding: 12px 16px; border-radius: var(--border-radius); margin-bottom: 16px;">
-                    <p style="font-size: 13px; color: var(--color-ocre-dark); margin: 0; display: flex; align-items: center; gap: 8px;">
-                        <i class="fas fa-lock" style="color: var(--color-ocre-primary);"></i>
-                        <span>Paiement sécurisé via <strong>MTN MoMo, Moov Money ou Celtiis</strong></span>
-                    </p>
-                </div>
-                
-                <button type="submit" class="btn btn-primary btn-full" id="checkoutSubmitBtn">
-                    <i class="fas fa-credit-card"></i>
-                    <span>Payer avec Mobile Money</span>
+
+                <button class="btn btn-primary btn-full detail-add-to-cart" id="detailAddToCart">
+                    <i class="fas fa-cart-plus"></i> <span data-i18n="cart.title">Ajouter au panier</span>
                 </button>
-            </form>
+
+                <div class="detail-story" id="detailStorySection">
+                    <h4><i class="fas fa-feather"></i> <span id="detailStoryTitle"></span></h4>
+                    <p id="detailStoryText"></p>
+                </div>
+
+                <div class="detail-note" id="detailNoteSection">
+                    <h5><i class="fas fa-quote-left"></i> Note de l'artisan</h5>
+                    <p id="detailNoteText"></p>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- ========== NOTIFICATION TOAST ========== -->
     <div class="toast-container" id="toastContainer"></div>
@@ -370,6 +378,7 @@
     // Charger les avis validés
     async function loadAvisPublic() {
         const grid = document.getElementById('temoignagesGrid');
+        if (!grid) return;
         try {
             const res = await fetch(AVIS_API + '/avis');
             const avis = await res.json();
@@ -422,7 +431,8 @@
     });
 
     // Soumettre un avis
-    document.getElementById('avisForm').addEventListener('submit', async function(e) {
+    const avisFormEl = document.getElementById('avisForm');
+    if (avisFormEl) avisFormEl.addEventListener('submit', async function(e) {
         e.preventDefault();
         const nom = document.getElementById('avisNom').value.trim();
         const email = document.getElementById('avisEmail').value.trim();
@@ -462,7 +472,6 @@
     // Charger les avis au démarrage
     loadAvisPublic();
     </script>
-
 
     <!-- ===== BOUTON FLOTTANT RÉSEAUX SOCIAUX ===== -->
     <div class="floating-social" id="floatingSocial">
@@ -611,21 +620,7 @@
     });
     </script>
 
-
-    <!-- ===== BARRE DE PROGRESSION + SCROLL ANIMÉ ===== -->
-    <div id="progressBarContainer" style="position:fixed;top:0;left:0;width:100%;height:3px;z-index:99999;pointer-events:none;">
-        <div id="progressBar" style="height:100%;width:0%;background:linear-gradient(90deg,#B5561A,#C8922A);transition:width 0.1s ease;"></div>
-    </div>
-
     <script>
-    // ===== BARRE DE PROGRESSION =====
-    window.addEventListener('scroll', function() {
-        var scrollTop = window.scrollY || document.documentElement.scrollTop;
-        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        document.getElementById('progressBar').style.width = pct + '%';
-    });
-
     // ===== SCROLL FLUIDE + ANIMATION TITRE =====
     document.querySelectorAll('a[href^="#"]').forEach(function(link) {
         link.addEventListener('click', function(e) {
@@ -655,11 +650,11 @@
     });
     </script>
 
-
     <script>
     // ===== AGENDA DYNAMIQUE =====
     async function loadAgenda() {
         const grid = document.getElementById('agendaGrid');
+        if (!grid) return; // Cette page n'a pas de grille agenda
         try {
             const res = await fetch('https://cabane-des-arts-backend.onrender.com/api/evenements');
             const evenements = await res.json();
@@ -727,7 +722,6 @@
     });
     </script>
 
-
     <script>
     function reserverEvenement(titre, prix) {
         document.getElementById('resAtelier').value = titre;
@@ -738,8 +732,5 @@
     }
     </script>
 <!-- ===== SDK KKIAPAY ===== -->
-<script src="https://cdn.kkiapay.me/k.js"></script>
-</body>
-</html>
 </body>
 </html>

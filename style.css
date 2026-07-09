@@ -129,6 +129,22 @@ body.dark-mode .btn-outline:hover {
     color: var(--bg-color);
 }
 
+body.dark-mode .boutique-commander {
+    background: #D4A94F;
+}
+
+body.dark-mode .boutique-commander:hover {
+    background: #B8923A;
+}
+
+body.dark-mode .boutique-offrir {
+    background: #6BA3C7;
+}
+
+body.dark-mode .boutique-offrir:hover {
+    background: #4A8AB0;
+}
+
 /* ===== RESET & BASE ===== */
 *,
 *::before,
@@ -1068,6 +1084,9 @@ img {
     box-shadow: var(--shadow-sm);
     transition: all var(--transition);
     position: relative;
+    /* légère transparence pour laisser apparaître le motif de la section */
+    background: rgba(var(--bg-color-rgb, 255,255,255), 0.92);
+    backdrop-filter: blur(2px);
 }
 
 .atelier-card:hover {
@@ -1447,6 +1466,40 @@ img {
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.contact-map-wrapper {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contact-map-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    color: var(--color-ocre-primary, #C4943B);
+}
+
+.contact-map-frame {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(196, 148, 59, 0.2);
+}
+
+.contact-map-frame iframe {
+    display: block;
+    width: 100%;
+}
+
+.contact-map-link {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .info-card {
@@ -2296,7 +2349,8 @@ body,
 .contact-section,
 .agenda-section,
 .boutique-section,
-.galerie-section {
+.galerie-section,
+.ateliers-section {
     background-image: url('motif-artisanal-clair.svg');
     background-repeat: repeat;
     background-attachment: fixed;
@@ -2308,6 +2362,862 @@ body.dark-mode .histoire-section,
 body.dark-mode .contact-section,
 body.dark-mode .agenda-section,
 body.dark-mode .boutique-section,
-body.dark-mode .galerie-section {
+body.dark-mode .galerie-section,
+body.dark-mode .ateliers-section {
     background-image: url('motif-artisanal-sombre.svg');
+}
+/* ===== LIENS LÉGAUX DANS LE FOOTER ===== */
+.footer-legal-links {
+    font-size: 13px;
+    color: #B0A090;
+    margin: 6px 0;
+}
+
+.footer-legal-links a {
+    color: #B0A090;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.footer-legal-links a:hover {
+    color: var(--color-ocre-light, #D4A94F);
+}
+
+.footer-legal-sep {
+    margin: 0 8px;
+    opacity: 0.6;
+}
+
+/* ===== BANNIÈRE CONSENTEMENT COOKIES ===== */
+.cookie-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background: var(--color-black, #1A1A1A);
+    color: #FAF5EB;
+    padding: 18px 24px;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.cookie-banner.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.cookie-banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.cookie-banner-content p {
+    flex: 1;
+    min-width: 240px;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    color: #E8DFD0;
+}
+
+.cookie-banner-content p a {
+    color: var(--color-ocre-light, #D4A94F);
+    text-decoration: underline;
+}
+
+.cookie-banner-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.cookie-banner-actions .btn {
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.cookie-banner-actions .btn-outline {
+    border-color: #5A5347;
+    color: #FAF5EB;
+}
+
+.cookie-banner-actions .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 600px) {
+    .cookie-banner-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .cookie-banner-actions {
+        width: 100%;
+    }
+    .cookie-banner-actions .btn {
+        flex: 1;
+    }
+}
+
+/* ===== PAGES LÉGALES (Mentions légales / CGV / Confidentialité) ===== */
+.legal-section {
+    padding: 140px 0 80px;
+    background: var(--bg-color, #FAF5EB);
+    min-height: 60vh;
+}
+
+.legal-content {
+    max-width: 760px;
+    margin: 0 auto;
+    color: var(--text-color);
+}
+
+.legal-updated {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 24px;
+}
+
+.legal-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--color-ocre-primary, #C4943B);
+    margin: 32px 0 12px;
+}
+
+.legal-content h3:first-of-type {
+    margin-top: 8px;
+}
+
+.legal-content p,
+.legal-content li {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.legal-content ul {
+    padding-left: 20px;
+    margin-bottom: 16px;
+}
+
+.legal-content a {
+    color: var(--color-ocre-primary, #C4943B);
+}
+
+.legal-notice-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--color-ocre-pale, #F5E6C8);
+    border-left: 3px solid var(--color-ocre-primary, #C4943B);
+    border-radius: var(--border-radius);
+    padding: 16px 18px;
+    margin-bottom: 32px;
+}
+
+.legal-notice-box i {
+    color: var(--color-ocre-primary, #C4943B);
+    font-size: 18px;
+    margin-top: 2px;
+}
+
+.legal-notice-box p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.legal-notice-warning {
+    background: #FDEDE6;
+    border-left-color: #D85A30;
+}
+
+.legal-notice-warning i {
+    color: #D85A30;
+}
+
+.legal-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 16px;
+}
+
+.legal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.legal-table th,
+.legal-table td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-color, #E5DCC8);
+}
+
+.legal-table th {
+    color: var(--color-ocre-primary, #C4943B);
+    font-weight: 600;
+}
+
+.legal-contact-cta {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color, #E5DCC8);
+    font-size: 15px;
+}
+
+/* ===== PAGE 404 ===== */
+.not-found-section {
+    display: flex;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.not-found-content {
+    max-width: 540px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.not-found-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.not-found-text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-light);
+    margin: 16px 0 28px;
+}
+
+.not-found-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ===== MODALE DE DÉTAIL (histoire de la discipline) ===== */
+.detail-modal {
+    max-width: 600px;
+    padding: 0;
+}
+
+.detail-modal-image {
+    width: 100%;
+    height: 320px;
+    background: var(--color-ocre-pale, #F5E6C8);
+    overflow: hidden;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.detail-modal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.detail-modal-image .card-placeholder {
+    height: 320px;
+    font-size: 48px;
+    color: var(--color-ocre-primary);
+}
+
+.detail-modal-body {
+    padding: 28px 28px 32px;
+}
+
+.detail-category {
+    display: inline-block;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-terracotta, #B5561A);
+    margin-bottom: 8px;
+}
+
+.detail-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--text-color);
+    margin: 0 0 10px;
+}
+
+.detail-description {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-light);
+    margin-bottom: 18px;
+}
+
+.detail-price-row {
+    margin-bottom: 16px;
+}
+
+.detail-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-ocre-primary);
+}
+
+.detail-add-to-cart {
+    margin-bottom: 24px;
+}
+
+.detail-story {
+    background: var(--color-ocre-pale, #F5E6C8);
+    border-radius: var(--border-radius);
+    padding: 20px 22px;
+    margin-bottom: 16px;
+}
+
+.detail-story h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--color-ocre-dark, #8a6225);
+    margin: 0 0 10px;
+}
+
+.detail-story h4 i {
+    color: var(--color-ocre-primary);
+}
+
+.detail-story p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.detail-note {
+    border-left: 3px solid var(--color-ocre-primary);
+    padding: 4px 0 4px 16px;
+    margin-bottom: 20px;
+}
+
+.detail-note h5 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-light);
+    margin: 0 0 6px;
+}
+
+.detail-note p {
+    font-size: 14px;
+    line-height: 1.6;
+    font-style: italic;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.detail-shop-link {
+    margin-top: 4px;
+}
+
+@media (max-width: 600px) {
+    .detail-modal-image {
+        height: 200px;
+    }
+    .detail-modal-body {
+        padding: 22px 20px 26px;
+    }
+}
+
+/* ===== SECTION FORMATION CQM (Métiers d'Accessoires) ===== */
+.formation-cqm-section {
+    padding: 100px 0;
+}
+
+.formation-audience-cards {
+    margin-bottom: 48px;
+}
+
+.formation-programme {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 32px;
+    align-items: start;
+    margin-bottom: 32px;
+}
+
+.formation-programme-text {
+    background: rgba(var(--bg-color-rgb, 255,255,255), 0.92);
+    border-radius: var(--border-radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-sm);
+}
+
+.formation-programme-text h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    color: var(--color-ocre-primary);
+    margin-bottom: 18px;
+}
+
+.formation-programme-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.formation-programme-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+.formation-programme-list li i {
+    color: var(--color-ocre-primary);
+    margin-top: 3px;
+}
+
+.formation-cta-box {
+    background: linear-gradient(160deg, var(--color-black, #1A1A1A), #2D1810);
+    color: #FAF5EB;
+    border-radius: var(--border-radius-lg);
+    padding: 32px 28px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.formation-cta-tagline {
+    font-size: 14px;
+    color: #C9BDA9;
+    margin: 0;
+}
+
+.formation-cta-highlight {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 6px;
+}
+
+.formation-cta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(196, 148, 59, 0.18);
+    color: var(--color-ocre-light, #D4A94F);
+    font-size: 12px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+}
+
+.formation-cta-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.formation-cta-contact a {
+    color: #FAF5EB;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.formation-cta-contact a:hover {
+    color: var(--color-ocre-light, #D4A94F);
+}
+
+.formation-partners {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-light);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .formation-programme {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== MODALE PARTENAIRES / COMMANDE WHATSAPP ===== */
+.partner-modal {
+    max-width: 480px;
+}
+
+.partner-cart-list {
+    background: var(--color-ocre-pale, #F5E6C8);
+    border-radius: var(--border-radius);
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.partner-cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--text-color);
+    gap: 8px;
+}
+
+.partner-cart-item i {
+    color: var(--color-ocre-primary);
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.partner-cart-item span {
+    margin-left: auto;
+    font-weight: 600;
+    color: var(--color-ocre-primary);
+}
+
+.partner-zones {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.partner-zone-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.partner-zone-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+}
+
+.partner-zone-divider {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-light);
+    opacity: 0.6;
+}
+
+.partner-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.partner-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--bg-color);
+    border: 1.5px solid var(--border-color, #E5DCC8);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    text-align: left;
+    width: 100%;
+}
+
+.partner-card:hover {
+    border-color: #25D366;
+    background: #F0FFF4;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.15);
+}
+
+.partner-card-logo {
+    font-size: 24px;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.partner-card-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.partner-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.partner-card-info strong {
+    font-size: 15px;
+    color: var(--text-color);
+}
+
+.partner-card-info span {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.partner-wa-icon {
+    font-size: 22px;
+    color: #25D366;
+    flex-shrink: 0;
+}
+
+.partner-footer-note {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--text-light);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* ===== CARTES BOUTIQUE - BOUTONS (Commander, Offrir) ===== */
+.boutique-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.boutique-card-actions {
+    display: flex;
+    gap: 6px;
+    padding: 12px 14px;
+    background: var(--bg-color);
+    border-top: 1px solid var(--border-color, #E5DCC8);
+}
+
+.boutique-action-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 9px 6px;
+    border-radius: var(--border-radius);
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition-fast);
+    white-space: nowrap;
+}
+
+/* Bouton Commander - couleur marron comme "Cabane" */
+.boutique-commander {
+    background: #8B6B3D;
+    color: #FFFFFF;
+}
+
+.boutique-commander:hover {
+    background: #6B4F2E;
+    transform: translateY(-1px);
+}
+
+/* Bouton Offrir - couleur bleue comme "Arts" */
+.boutique-offrir {
+    background: #1B3A6B;
+    color: #FFFFFF;
+}
+
+.boutique-offrir:hover {
+    background: #0F284A;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+    .boutique-action-btn {
+        font-size: 11px;
+        padding: 8px 4px;
+    }
+    .boutique-action-btn i {
+        display: none;
+    }
+}
+/* ===== MODALE DISTRIBUTEURS — FILTRES & BADGES ===== */
+.partner-badge {
+    display: inline-block;
+    background: var(--color-ocre-pale, #F5E6C8);
+    color: var(--color-ocre-dark, #A67B2E);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-top: 2px;
+}
+
+.partner-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.partner-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color, #E5DCC8);
+    border-radius: var(--border-radius);
+    padding: 8px 12px;
+}
+
+.partner-search i { color: var(--text-light); }
+
+.partner-search input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    width: 100%;
+    color: var(--text-color);
+    font-family: inherit;
+}
+
+.partner-filter-selects {
+    display: flex;
+    gap: 8px;
+}
+
+.partner-filter-selects select {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid var(--border-color, #E5DCC8);
+    border-radius: var(--border-radius);
+    font-size: 13px;
+    font-family: inherit;
+    background: var(--bg-color);
+    color: var(--text-color);
+    outline: none;
+    cursor: pointer;
+}
+
+.partner-empty {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 14px;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.partner-cart-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.partner-cart-item .qty {
+    margin-left: auto;
+    font-weight: 600;
+    color: var(--color-ocre-primary);
+}
+
+@media (max-width: 480px) {
+    .partner-filter-selects { flex-direction: column; }
+}
+
+/* ===== PAGE COMMANDE (commande.html) ===== */
+.commande-section {
+    padding: 60px 0 100px;
+    min-height: 60vh;
+}
+
+.commande-card {
+    background: var(--bg-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-xl);
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+.commande-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.commande-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--color-ocre-dark, #A67B2E);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.commande-header p {
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+.commande-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.commande-state i {
+    font-size: 56px;
+    color: var(--color-ocre-primary, #C4943B);
+    margin-bottom: 20px;
+    display: block;
+}
+
+.commande-state h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.commande-state p {
+    color: var(--text-light);
+    margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+    .commande-card { padding: 24px; }
 }

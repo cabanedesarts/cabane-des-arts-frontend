@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conditions générales de vente du site Cabane des Arts : produits, prix, paiement, livraison et retours.">
+    <meta name="keywords" content="artisanat Bénin, Porto-Novo, art africain, textile, tressage, accessoires traditionnels">
+    <meta name="author" content="Cabane des Arts">
+    <meta name="theme-color" content="#C4943B">
+
+    <!-- Open Graph (partage WhatsApp / Facebook / etc.) -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Cabane des Arts">
+    <meta property="og:title" content="Conditions Générales de Vente | Cabane des Arts">
+    <meta property="og:description" content="Conditions générales de vente du site Cabane des Arts : produits, prix, paiement, livraison et retours.">
+    <meta property="og:image" content="https://cabane-des-arts.netlify.app/logo.jpg">
+    <meta property="og:url" content="https://cabane-des-arts.netlify.app/cgv">
+
+    <title>Conditions Générales de Vente | Cabane des Arts</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ========== HEADER ========== -->
+    <header class="header" id="header">
+        <!-- Barre supérieure -->
+        <div class="top-bar">
+            <div class="container">
+                <div class="top-bar-content">
+                    <div class="top-bar-left">
+                        <a href="tel:+22961750141" class="top-bar-item">
+                            <i class="fas fa-phone"></i> +229 01 61 75 01 41
+                        </a>
+                        <span class="top-bar-separator">|</span>
+                        <a href="tel:+2290154540684" class="top-bar-item">
+                            <i class="fas fa-phone"></i> +229 01 54 54 06 84
+                        </a>
+                        <span class="top-bar-separator">|</span>
+                        <a href="mailto:cabanedesarts61@gmail.com" class="top-bar-item">
+                            <i class="fas fa-envelope"></i> cabanedesarts61@gmail.com
+                        </a>
+                    </div>
+                    <div class="top-bar-right">
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/CabaneDesArts" target="_blank" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/cabane_des_arts" target="_blank" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.youtube.com/channel/UCnYrRoik0l54eAIrJpQTi5w" target="_blank" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="https://wa.me/22961750141?text=Bonjour%20Cabane%20des%20Arts" target="_blank" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                        <div class="language-switcher">
+                            <button class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
+                            <span class="lang-separator">|</span>
+                            <button class="lang-btn" data-lang="en" aria-label="English">EN</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation principale -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <a href="index.html" class="logo">
+                        <img src="logo.jpg" alt="Logo" style="width:50px; height:50px; border-radius:10px;">
+                        <div class="logo-text">
+                            <span class="logo-title">Cabane des Arts</span>
+                            <span class="logo-subtitle">Porto-Novo, Bénin</span>
+                        </div>
+                    </a>
+
+                    <ul class="nav-menu" id="navMenu">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link" data-i18n="nav.home">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="histoire.html" class="nav-link" data-i18n="nav.story">Notre Histoire</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="galerie.html" class="nav-link" data-i18n="nav.gallery">Galerie & Cours</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="boutique.html" class="nav-link" data-i18n="nav.shop">Boutique</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="agenda.html" class="nav-link" data-i18n="nav.events">Agenda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                        </li>
+                    </ul>
+
+                    <div class="nav-actions">
+                        <button class="cart-btn" id="cartBtn" aria-label="Panier">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </button>
+                        <!-- BOUTON MODE SOMBRE -->
+                        <button id="theme-toggle" class="theme-toggle">
+                            🌙 Mode Sombre
+                        </button>
+                        <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========== PANIER LATÉRAL ========== -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-bag"></i> <span data-i18n="cart.title">Mon Panier</span></h3>
+            <button class="cart-close" id="cartClose" aria-label="Fermer le panier">&times;</button>
+        </div>
+        <div class="cart-body" id="cartBody">
+            <div class="cart-empty" id="cartEmpty">
+                <i class="fas fa-shopping-cart"></i>
+                <p data-i18n="cart.empty">Votre panier est vide</p>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-total">
+                <span data-i18n="cart.total">Total</span>
+                <span id="cartTotal">0 FCFA</span>
+            </div>
+            <button class="btn btn-primary btn-full" id="checkoutBtn">
+                <i class="fas fa-lock"></i> <span data-i18n="cart.checkout">Commander</span>
+            </button>
+            <div class="payment-methods">
+                <span><i class="fas fa-mobile-alt"></i> MTN MoMo</span>
+                <span><i class="fas fa-mobile-alt"></i> Moov Money</span>
+                <span><i class="fas fa-mobile-alt"></i> Celtiis</span>
+            </div>
+        </div>
+    </div>
+
+
+<!-- ========== SECTION CGV ========== -->
+    <section id="cgv" class="legal-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Avant de commander</span>
+                <h2 class="section-title">Conditions Générales de Vente</h2>
+                <div class="section-divider">
+                    <span class="divider-line"></span>
+                    <i class="fas fa-file-contract"></i>
+                    <span class="divider-line"></span>
+                </div>
+            </div>
+
+            <div class="legal-content">
+                <p class="legal-updated">Dernière mise à jour : 27 juin 2026</p>
+
+                <div class="legal-notice-box">
+                    <i class="fas fa-circle-info"></i>
+                    <p>Cabane des Arts est actuellement en phase de test et de préparation (projet de fin d'études). Certaines informations ci-dessous seront finalisées avant l'ouverture officielle au public.</p>
+                </div>
+
+                <h3>Article 1 — Objet</h3>
+                <p>Les présentes conditions générales de vente (CGV) régissent les ventes de créations artisanales (textile, tressage, accessoires, tapisserie, parures, ornements) réalisées via le site cabane-des-arts.netlify.app, édité par Cabane des Arts, Porto-Novo, Bénin.</p>
+
+                <h3>Article 2 — Produits</h3>
+                <p>Les produits proposés sont des créations artisanales fabriquées à la main. De légères variations (couleur, motif, dimensions) peuvent exister d'une pièce à l'autre : cela fait partie du caractère unique de l'artisanat et ne constitue pas un défaut.</p>
+
+                <h3>Article 3 — Prix</h3>
+                <p>Les prix sont indiqués en Francs CFA (FCFA). Cabane des Arts se réserve le droit de modifier ses prix à tout moment ; le prix appliqué est celui en vigueur au moment de la commande.</p>
+
+                <h3>Article 4 — Commande</h3>
+                <p>La commande s'effectue en ajoutant un ou plusieurs produits au panier, puis en complétant le formulaire de commande (coordonnées, mode de livraison) et en validant le paiement.</p>
+
+                <h3>Article 5 — Paiement</h3>
+                <p>Les modalités de paiement seront précisées lors de la finalisation de la commande. Cabane des Arts propose plusieurs options adaptées au contexte local (Mobile Money, virement, paiement à la remise). <em>Détails en cours de finalisation avant ouverture officielle.</em></p>
+
+                <h3>Article 6 — Livraison</h3>
+                <p>Plusieurs modes sont proposés : retrait à la Cabane (Porto-Novo), livraison locale, nationale ou internationale. Les délais et frais de livraison seront communiqués lors de la confirmation de commande. <em>Modalités précises en cours de définition avant ouverture officielle.</em></p>
+
+                <h3>Article 7 — Retours et réclamations</h3>
+                <p>Pour toute réclamation concernant un produit reçu (défaut, non-conformité), contactez-nous dans un délai de 7 jours après réception à <a href="mailto:cabanedesarts61@gmail.com">cabanedesarts61@gmail.com</a> avec une photo du produit. Une solution (échange ou remboursement) sera proposée au cas par cas. <em>Politique de retour détaillée en cours de finalisation.</em></p>
+
+                <h3>Article 8 — Responsabilité</h3>
+                <p>Cabane des Arts ne pourra être tenue responsable des retards ou défauts d'exécution dus à un cas de force majeure ou au fait d'un tiers (transporteur, opérateur de paiement mobile money).</p>
+
+                <h3>Article 9 — Litiges et droit applicable</h3>
+                <p>Les présentes CGV sont soumises au droit béninois. En cas de litige, une solution amiable sera recherchée en priorité, avant toute action devant les juridictions compétentes du Bénin.</p>
+
+                <p class="legal-contact-cta">Une question sur une commande ? <a href="contact.html">Contactez-nous</a>.</p>
+            </div>
+        </div>
+    </section>
+
+<!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <div class="footer-logo">
+                        <img src="logo.jpg" alt="La Cabane des Arts" class="logo-img">
+                    </div>
+                    <p data-i18n="footer.desc">
+                        Espace de création, de formation et de transmission dédié à l'artisanat
+                        et aux arts inspirés des cultures locales du Bénin.
+                    </p>
+                    <p class="footer-slogan" data-i18n="footer.slogan">Créer pour Transformer, Vendre pour Élever</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="footer.quicklinks">Liens rapides</h4>
+                    <ul>
+                        <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
+                        <li><a href="histoire.html" data-i18n="nav.story">Notre Histoire</a></li>
+                        <li><a href="galerie.html" data-i18n="nav.gallery">Galerie & Cours</a></li>
+                        <li><a href="boutique.html" data-i18n="nav.shop">Boutique</a></li>
+                        <li><a href="agenda.html" data-i18n="nav.events">Agenda</a></li>
+                        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="footer.disciplines">Disciplines</h4>
+                    <ul>
+                        <li><span data-i18n="tags.textile">Création Textile</span></li>
+                        <li><span data-i18n="tags.tressage">Tressage Artisanal</span></li>
+                        <li><span data-i18n="tags.accessoires">Accessoires de Mode</span></li>
+                        <li><span data-i18n="tags.tapisserie">Tapisserie Artisanale</span></li>
+                        <li><span data-i18n="tags.parures">Parures Traditionnelles</span></li>
+                        <li><span data-i18n="tags.ornements">Ornements</span></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="footer.contact">Contact</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> Porto-Novo, Adjina, Rue de l'Inspection, Bénin</li>
+                        <li><i class="fas fa-phone"></i> +229 01 61 75 01 41</li>
+                        <li><i class="fas fa-phone"></i> +229 01 54 54 06 84</li>
+                        <li><i class="fas fa-envelope"></i> cabanedesarts61@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 La Cabane des Arts - Porto-Novo, Bénin. <span data-i18n="footer.rights">Tous droits réservés.</span></p>
+                <p class="footer-legal-links">
+                    <a href="mentions-legales.html">Mentions légales</a>
+                    <span class="footer-legal-sep">·</span>
+                    <a href="cgv.html">CGV</a>
+                    <span class="footer-legal-sep">·</span>
+                    <a href="politique-confidentialite.html">Politique de confidentialité</a>
+                </p>
+                <p class="footer-credit">Développé avec ❤️ pour l'artisanat béninois</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== BANNIÈRE COOKIES ========== -->
+    <div class="cookie-banner" id="cookie-banner">
+        <div class="cookie-banner-content">
+            <p>
+                Ce site utilise des cookies et des technologies similaires (stockage local) pour faire fonctionner le panier d'achat, retenir vos préférences (langue, mode sombre) et mesurer la fréquentation. Vous pouvez accepter ou refuser les cookies non essentiels.
+                <a href="politique-confidentialite.html">En savoir plus</a>
+            </p>
+            <div class="cookie-banner-actions">
+                <button id="cookie-decline" class="btn btn-outline">Refuser</button>
+                <button id="cookie-accept" class="btn btn-primary">Accepter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== NOTIFICATION TOAST ========== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ========== BOUTON RETOUR EN HAUT ========== -->
+    <button class="back-to-top" id="backToTop" aria-label="Retour en haut">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
